@@ -5,19 +5,23 @@ const Signin = () => {
   const history = useHistory();
 
   const signin = async () => {
-    if (isSign()) {
+    console.log(isSign);
+    if (isSign) {
       history.push('/main');
     } else {
       try {
         await handleAuthClick();
-        if (isSign()) history.push('/main');
-      } catch {
+        console.log('target', isSign);
+        if (isSign) history.push('/main');
+      } catch (e) {
+        console.error(e);
         alert('알서포트 계정으로 로그인해야 합니다.');
       }
     }
   };
   const signout = async () => {
-    if (isSign()) handleSignoutClick();
+    console.log(isSign);
+    if (isSign) handleSignoutClick();
   };
 
   return (
