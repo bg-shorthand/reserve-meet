@@ -1,9 +1,8 @@
-import { isSign } from 'gcp/gcp';
 import { useEffect } from 'react';
 
 const Main = () => {
   useEffect(() => {
-    console.log('main', isSign);
+    console.log(gapi.client.calendar);
   });
 
   return <h1>Hello World</h1>;
