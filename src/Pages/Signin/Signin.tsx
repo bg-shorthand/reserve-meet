@@ -1,12 +1,11 @@
-import handleClientLoad, { authApi } from 'gcp/api';
-import { useEffect } from 'react';
+import authApi from 'gcp/authApi';
 import { useHistory } from 'react-router-dom';
 
 const Signin = () => {
   const history = useHistory();
 
   const signin = async () => {
-    authApi.signIn();
+    await authApi.signIn();
     history.push('/main');
   };
   const signout = async () => {
