@@ -1,12 +1,14 @@
-import authApi from 'gcp/authApi';
+import authApi from 'api/authApi';
 import { useHistory } from 'react-router-dom';
 
 const Signin = () => {
   const history = useHistory();
 
   const signin = async () => {
+    console.log('?');
     await authApi.signIn();
     history.push('/main');
+    console.log('??');
   };
   const signout = async () => {
     authApi.signOut();

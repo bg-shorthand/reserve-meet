@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { calendarApi } from 'gcp/calendarApi.js';
-import { userApi } from 'gcp/userApi';
+import { calendarApi } from 'api/calendarApi.js';
+import { userApi } from 'api/userApi';
 
 const Main = () => {
   const [name, setName] = useState('');
@@ -10,6 +10,7 @@ const Main = () => {
   useEffect(() => {
     const getProfile = async () => {
       const profile = await userApi.getProfile();
+      console.log(profile);
       setName(profile.getName());
       setImage(profile.getImageUrl());
     };

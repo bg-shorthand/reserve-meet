@@ -1,24 +1,20 @@
-declare let onGoogleScriptLoad: () => {};
-
-const loadGoogleScript = () => {
-  // Loads the Google JavaScript Library
+const loadGoogleApiLibrary = () => {
   (function () {
     const id = 'newScript';
-    const src = 'https://apis.google.com/js/api.js'; // (Ref. 1)
+    const src = 'https://apis.google.com/js/api.js';
 
-    // We have at least one script (React)
-    const $firstScript = document.querySelector('script'); // (Ref. 2)
+    const $firstScript = document.querySelector('script');
 
-    // Prevent script from loading twice
     if (document.getElementById(id)) {
       return;
-    } // (Ref. 3)
-    const $script = document.createElement('script'); // (Ref. 4)
+    }
+
+    const $script = document.createElement('script');
     $script.id = id;
     $script.src = src;
-    $script.onload = onGoogleScriptLoad; // (Ref. 5)
+    $script.onload = window.onGoogleApiLibraryLoad;
     $firstScript && $firstScript.before($script);
   })();
 };
 
-export { loadGoogleScript, onGoogleScriptLoad };
+export { loadGoogleApiLibrary };

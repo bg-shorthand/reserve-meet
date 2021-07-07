@@ -1,4 +1,4 @@
-import { GoogleAuth } from './initClient';
+import { GoogleAuth } from 'App/App';
 
 const authApi = {
   async signIn() {
