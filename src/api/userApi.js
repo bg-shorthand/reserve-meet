@@ -1,8 +1,7 @@
-import { GoogleUser, initClient } from 'App/App';
+import { GoogleUser, initClient } from 'lib/googleApiLibrary';
 
 const userApi = {
   async getProfile() {
-    await initClient();
     return GoogleUser.getBasicProfile();
   },
 };

@@ -5,10 +5,8 @@ const Signin = () => {
   const history = useHistory();
 
   const signin = async () => {
-    console.log('?');
     await authApi.signIn();
     history.push('/main');
-    console.log('??');
   };
   const signout = async () => {
     authApi.signOut();
