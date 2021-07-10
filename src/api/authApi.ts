@@ -12,9 +12,7 @@ const authApi = {
     await GoogleAuth.signOut();
   },
   async isSign() {
-    const res = await GoogleAuth.isSignedIn.get();
-    const isSign = res.json();
-    return isSign;
+    return GoogleAuth.isSignedIn.get();
   },
 };
 

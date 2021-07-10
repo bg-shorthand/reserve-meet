@@ -2,12 +2,10 @@ import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { initClient, loadGoogleApiLibrary } from 'lib/googleApiLibrary';
 import Signin from 'Pages/Signin/Signin';
-import Main from 'Pages/Main/Main.jsx';
+import Main from 'Pages/Main/Main';
 
 const App = () => {
   useEffect(() => {
-    console.log(1);
-
     window.onGoogleApiLibraryLoad = () => {
       const gapi = window.gapi;
       gapi.load('client:auth2', initClient);

@@ -9,10 +9,8 @@ let GoogleUser: gapi.auth2.GoogleUser;
 const observeSigninStatus = (isSignedIn: boolean) => {
   if (isSignedIn) {
     console.log('로그인 중');
-    // window.sessionStorage.setItem('access_token', GoogleUser.getAuthResponse().access_token);
   } else {
     console.log('로그아웃 중');
-    // window.sessionStorage.removeItem('access_token');
     if (window.location.pathname !== '/') window.location.replace('/');
   }
 };
@@ -41,12 +39,13 @@ const initClient = async () => {
     scope: SCOPES,
     discoveryDocs: DISCOVERY_DOCS,
   });
+
   GoogleAuth = gapi.auth2.getAuthInstance();
-  GoogleUser = gapi.auth2.getAuthInstance().currentUser.get();
-  gapi.auth2.getAuthInstance().isSignedIn.listen(observeSigninStatus);
+  GoogleUser = GoogleAuth.currentUser.get();
+
+  GoogleAuth.isSignedIn.listen(observeSigninStatus);
   observeSigninStatus(GoogleAuth.isSignedIn.get());
   gapi.client.setToken(gapi.client.getToken());
-  console.log(gapi.client.getToken());
   console.log('init');
 };
 
