@@ -6,8 +6,6 @@ type props = {
 };
 
 const Modal = ({ children }: props) => {
-  console.log(children);
-
   return <StyledModal>{children}</StyledModal>;
 };
 
