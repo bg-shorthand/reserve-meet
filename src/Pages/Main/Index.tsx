@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { calendarApi } from 'api/calendarApi';
 import Menu from 'Containers/Menu/Menu';
 
-const Main = () => {
+const Index = () => {
   const [events, setEvents] = useState([{ location: '', summary: '', time: '' }]);
 
   useEffect(() => {
@@ -36,4 +36,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Index;

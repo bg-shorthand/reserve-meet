@@ -11,7 +11,7 @@ const observeSigninStatus = (isSignedIn: boolean) => {
     console.log('로그인 중');
   } else {
     console.log('로그아웃 중');
-    if (window.location.pathname !== '/') window.location.replace('/');
+    if (window.location.pathname !== '/signin') window.location.replace('/signin');
   }
 };
 

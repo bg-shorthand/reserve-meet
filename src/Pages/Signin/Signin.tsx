@@ -6,7 +6,7 @@ const Signin = () => {
 
   const signin = async () => {
     await authApi.signIn();
-    history.push('/main');
+    history.push('/');
   };
   const signout = async () => {
     authApi.signOut();
