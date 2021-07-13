@@ -16,7 +16,8 @@ const CurrentUserInfo = () => {
         clearTimeout(timerId);
         const name = profile.getName();
         const imageUrl = profile.getImageUrl();
-        setUser({ name, imageUrl });
+        const email = profile.getEmail();
+        setUser({ name, imageUrl, email });
       } else {
         timerId = setTimeout(getProfile, 100);
       }
