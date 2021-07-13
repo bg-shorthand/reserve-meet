@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
-import { calendarApi } from 'api/calendarApi';
+import { Route } from 'react-router';
+import { Switch, Redirect } from 'react-router-dom';
+import ReserveState from 'Pages/ReserveState/ReserveState';
 import Menu from 'Containers/Menu/Menu';
 import Main from 'Containers/Main/Main';
-import getDate from 'module/getDate';
-import { useRecoilValue } from 'recoil';
-import { userState } from 'state/state';
 
 const Index = () => {
   return (
     <>
       <Menu />
-      <Main />
+      <Switch>
+        <Route exact path={'/'} component={Main} />
+        <Route path={'/reserve-state/:calId'} component={ReserveState} />
+        <Redirect to={'/'} />
+      </Switch>
     </>
   );
 };

@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { calendarListState } from 'state/state';
 import { calendarApi } from 'api/calendarApi';
-import { Calendars } from 'const/type';
-import { useEffect, useState } from 'react';
 
 const CalendarList = () => {
-  const [calendarList, setCalendarList] = useState<Calendars>([]);
+  const [calendarList, setCalendarList] = useRecoilState(calendarListState);
 
   useEffect(() => {
     let calendarsTimerId: NodeJS.Timeout;
@@ -30,7 +32,11 @@ const CalendarList = () => {
   return (
     <ul>
       {calendarList.map(calendar => {
-        return <li key={calendar.id}>{calendar.summary}</li>;
+        return (
+          <li key={calendar.id}>
+            <Link to={`/reserve-state/:${calendar.id}`}>{calendar.summary}</Link>
+          </li>
+        );
       })}
     </ul>
   );
