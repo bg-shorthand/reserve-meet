@@ -11,12 +11,11 @@ const Main = () => {
   const { email } = useRecoilValue(userState);
 
   useEffect(() => {
-    let examTimerId: NodeJS.Timeout;
+    let timerId: NodeJS.Timeout;
 
-    const exam = async () => {
-      console.log(email);
+    const getEventsThisWeek = async () => {
       const [start, end] = getDate.thisWeek();
-      clearTimeout(examTimerId);
+      clearTimeout(timerId);
       if (email) {
         const res = await calendarApi.getEvents(email, start, end);
         if (res && res.result.items) {
@@ -29,11 +28,11 @@ const Main = () => {
           }));
           setEvents(newEvents);
         } else {
-          examTimerId = setTimeout(exam, 100);
+          timerId = setTimeout(getEventsThisWeek, 100);
         }
       }
     };
-    exam();
+    getEventsThisWeek();
   }, [email]);
 
   return (
