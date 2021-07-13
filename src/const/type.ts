@@ -8,4 +8,11 @@ type Event = {
 
 type Events = Event[];
 
-export type { Event, Events };
+type Calendar = {
+  summary: string;
+  id: string;
+};
+
+type Calendars = Calendar[];
+
+export type { Event, Events, Calendar, Calendars };
