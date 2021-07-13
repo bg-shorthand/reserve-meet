@@ -3,6 +3,7 @@ type Event = {
   location: string;
   date: string;
   time: string;
+  id: string;
 };
 
 type Events = Event[];
