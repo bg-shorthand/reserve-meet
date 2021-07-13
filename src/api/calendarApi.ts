@@ -1,15 +1,25 @@
 import { GoogleAuth } from 'lib/googleApiLibrary';
 
 const calendarApi = {
-  async getEvents() {
+  async getEvents(calId: string, start: string, end: string) {
     if (GoogleAuth) {
       return await gapi.client.calendar.events.list({
-        calendarId: 'bkhan@rsupport.com',
+        calendarId: calId,
         singleEvents: true,
         orderBy: 'startTime',
-        timeMin: '2021-07-12T00:00:00Z',
-        timeMax: '2021-07-17T00:00:00Z',
+        timeMin: start,
+        timeMax: end,
       });
+    }
+  },
+  async getCalendarList() {
+    if (GoogleAuth) {
+      return await gapi.client.calendar.calendarList.list({});
+    }
+  },
+  async getCalendars() {
+    if (GoogleAuth) {
+      return await gapi.client.calendar.calendars.get({ calendarId: 'bkhan@rsupport.com' });
     }
   },
 };
