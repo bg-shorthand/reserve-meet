@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import authApi from 'api/authApi';
+import { DefaultProps } from 'const/type';
 
-const Header = () => {
+const Header = ({ className }: DefaultProps) => {
   const signout = () => {
     authApi.signOut();
   };
 
   return (
-    <header>
+    <header className={className}>
       <h1>
         <Link to="/">Rsupport Reserve Meet</Link>
       </h1>

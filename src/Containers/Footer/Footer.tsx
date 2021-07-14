@@ -1,6 +1,8 @@
-const Footer = () => {
+import { DefaultProps } from 'const/type';
+
+const Footer = ({ className }: DefaultProps) => {
   return (
-    <footer>
+    <footer className={className}>
       <small>Han Byeong-guk</small>
     </footer>
   );

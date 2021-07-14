@@ -1,24 +1,25 @@
 import { Route } from 'react-router';
 import { Switch, Redirect } from 'react-router-dom';
 import ReserveTable from 'Containers/Main/Contents/ReserveState/ReserveTable';
-import Menu from 'Containers/Main/Menu/Menu';
+import StyledMenu from 'Containers/Main/Menu/Menu.style';
 import Summary from 'Containers/Main/Contents/Summary/Summary';
-import Header from 'Containers/Header/Header';
-import Footer from 'Containers/Footer/Footer';
+import StyledHeader from 'Containers/Header/Header.style';
+import StyledFooter from 'Containers/Footer/Footer.style';
+import StyledMain from 'Containers/Main/Main.style';
 
 const Index = () => {
   return (
     <>
-      <Header />
-      <main>
-        <Menu />
+      <StyledHeader />
+      <StyledMain>
+        <StyledMenu />
         <Switch>
           <Route exact path={'/'} component={Summary} />
           <Route path={'/reserve-state/:calId'} component={ReserveTable} />
           <Redirect to={'/'} />
         </Switch>
-      </main>
-      <Footer />
+      </StyledMain>
+      <StyledFooter />
     </>
   );
 };
