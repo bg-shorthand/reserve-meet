@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-size: 14px;
   }
+  body, body * {
+    box-sizing: border-box;
+  }
   a {
     color: inherit;
     text-decoration: none;
