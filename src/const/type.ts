@@ -1,3 +1,8 @@
+interface DefaultProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
 type Event = {
   summary: string;
   location: string;
@@ -15,4 +20,4 @@ type Calendar = {
 
 type Calendars = Calendar[];
 
-export type { Event, Events, Calendar, Calendars };
+export type { DefaultProps, Event, Events, Calendar, Calendars };
