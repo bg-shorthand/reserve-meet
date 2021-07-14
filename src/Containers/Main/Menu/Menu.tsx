@@ -1,4 +1,4 @@
-import CurrentUserInfo from 'Containers/Menu/CurrentUserInfo';
+import CurrentUserInfo from 'Containers/Main/Menu/CurrentUserInfo';
 import CalendarList from './Calendars';
 
 const Menu = () => {

@@ -6,7 +6,7 @@ import getDate from 'module/getDate';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'state/state';
 
-const Main = () => {
+const Contents = () => {
   const [events, setEvents] = useState<Events>([]);
   const { email } = useRecoilValue(userState);
 
@@ -49,4 +49,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Contents;

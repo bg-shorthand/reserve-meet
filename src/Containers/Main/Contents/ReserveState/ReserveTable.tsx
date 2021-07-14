@@ -9,7 +9,7 @@ type params = {
   calId: string;
 };
 
-const ReserveState = () => {
+const ReserveTable = () => {
   const [events, setEvents] = useState<Events>([]);
 
   const params: params = useParams();
@@ -55,4 +55,4 @@ const ReserveState = () => {
   );
 };
 
-export default ReserveState;
+export default ReserveTable;

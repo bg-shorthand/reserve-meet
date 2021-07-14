@@ -1,18 +1,24 @@
 import { Route } from 'react-router';
 import { Switch, Redirect } from 'react-router-dom';
-import ReserveState from 'Pages/ReserveState/ReserveState';
-import Menu from 'Containers/Menu/Menu';
-import Main from 'Containers/Main/Main';
+import ReserveTable from 'Containers/Main/Contents/ReserveState/ReserveTable';
+import Menu from 'Containers/Main/Menu/Menu';
+import Summary from 'Containers/Main/Contents/Summary/Summary';
+import Header from 'Containers/Header/Header';
+import Footer from 'Containers/Footer/Footer';
 
 const Index = () => {
   return (
     <>
-      <Menu />
-      <Switch>
-        <Route exact path={'/'} component={Main} />
-        <Route path={'/reserve-state/:calId'} component={ReserveState} />
-        <Redirect to={'/'} />
-      </Switch>
+      <Header />
+      <main>
+        <Menu />
+        <Switch>
+          <Route exact path={'/'} component={Summary} />
+          <Route path={'/reserve-state/:calId'} component={ReserveTable} />
+          <Redirect to={'/'} />
+        </Switch>
+      </main>
+      <Footer />
     </>
   );
 };
