@@ -16,11 +16,12 @@ const CalendarList = () => {
       clearTimeout(calendarsTimerId);
 
       if (res && res.result.items) {
-        console.log('claendars', res.result.items);
-        const newCalendarList = res.result.items.map(calendar => ({
-          summary: calendar.summary ? calendar.summary : '',
-          id: calendar.id ? calendar.id : '',
-        }));
+        const newCalendarList = res.result.items
+          .filter(calendar => !calendar.description)
+          .map(calendar => ({
+            summary: calendar.summary ? calendar.summary : '',
+            id: calendar.id ? calendar.id : '',
+          }));
         setCalendarList([...newCalendarList]);
       } else {
         calendarsTimerId = setTimeout(getCalendars, 100);
