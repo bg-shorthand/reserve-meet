@@ -11,4 +11,9 @@ const calendarListState = atom({
   default: [] as Calendars,
 });
 
-export { userState, calendarListState };
+const floorState = atom({
+  key: 'floorState',
+  default: '',
+});
+
+export { userState, calendarListState, floorState };
