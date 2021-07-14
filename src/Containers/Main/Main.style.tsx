@@ -6,6 +6,10 @@ const StyledMain = styled.main`
   section:first-child {
     width: 300px;
   }
+
+  section:last-child {
+    flex-grow: 1;
+  }
 `;
 
 export default StyledMain;

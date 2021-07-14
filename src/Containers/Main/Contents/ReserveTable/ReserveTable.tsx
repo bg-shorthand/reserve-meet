@@ -1,15 +1,16 @@
 import { calendarApi } from 'api/calendarApi';
-import { Events } from 'const/type';
+import { DefaultProps, Events } from 'const/type';
 import getDate from 'module/getDate';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import StyledTable from 'Components/Table/Table';
 
 type params = {
   calId: string;
 };
 
-const ReserveTable = () => {
+const ReserveTable = ({ className }: DefaultProps) => {
   const [events, setEvents] = useState<Events>([]);
 
   const params: params = useParams();
@@ -42,7 +43,7 @@ const ReserveTable = () => {
   }, [params]);
 
   return (
-    <>
+    <section className={className}>
       <h1>예약 현황</h1>
       <ul>
         {events.length
@@ -51,7 +52,19 @@ const ReserveTable = () => {
             ))
           : null}
       </ul>
-    </>
+      <StyledTable
+        rooms={[
+          '1회의실',
+          '2회의실',
+          '3회의실',
+          '4회의실',
+          '5회의실',
+          '6회의실',
+          '7회의실',
+          '8회의실',
+        ]}
+      />
+    </section>
   );
 };
 

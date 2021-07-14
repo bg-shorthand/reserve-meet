@@ -1,6 +1,6 @@
 import { Route } from 'react-router';
 import { Switch, Redirect } from 'react-router-dom';
-import ReserveTable from 'Containers/Main/Contents/ReserveState/ReserveTable';
+import StyledReserveTable from 'Containers/Main/Contents/ReserveTable/ReserveTable.style';
 import StyledMenu from 'Containers/Main/Menu/Menu.style';
 import Summary from 'Containers/Main/Contents/Summary/Summary';
 import StyledHeader from 'Containers/Header/Header.style';
@@ -15,7 +15,7 @@ const Index = () => {
         <StyledMenu />
         <Switch>
           <Route exact path={'/'} component={Summary} />
-          <Route path={'/reserve-state/:calId'} component={ReserveTable} />
+          <Route path={'/reserve-state/:calId'} component={StyledReserveTable} />
           <Redirect to={'/'} />
         </Switch>
       </StyledMain>
