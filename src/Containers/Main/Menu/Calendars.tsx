@@ -32,6 +32,9 @@ const CalendarList = () => {
 
   return (
     <ul>
+      <li>
+        <Link to="/">Summary</Link>
+      </li>
       {calendarList.map(calendar => {
         return (
           <li key={calendar.id}>
