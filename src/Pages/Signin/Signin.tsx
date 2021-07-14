@@ -8,15 +8,11 @@ const Signin = () => {
     await authApi.signIn();
     history.push('/');
   };
-  const signout = async () => {
-    authApi.signOut();
-  };
 
   return (
     <>
       <h1>RESERVE MEET</h1>
       <button onClick={signin}>Signin</button>
-      <button onClick={signout}>Signout</button>
     </>
   );
 };
