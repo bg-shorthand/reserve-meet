@@ -13,7 +13,7 @@ const calendarListState = atom({
 
 const floorState = atom({
   key: 'floorState',
-  default: '',
+  default: 'floor9',
 });
 
 export { userState, calendarListState, floorState };

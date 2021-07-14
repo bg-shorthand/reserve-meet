@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StyledTable from 'Components/Table/Table';
+import StyledFloor from 'Components/Floor/Floor.style';
 
 type params = {
   calId: string;
@@ -44,6 +45,7 @@ const ReserveTable = ({ className }: DefaultProps) => {
 
   return (
     <section className={className}>
+      <StyledFloor />
       <h1>예약 현황</h1>
       <ul>
         {events.length
