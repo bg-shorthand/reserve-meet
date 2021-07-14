@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { initClient, loadGoogleApiLibrary } from 'lib/googleApiLibrary';
+import GlobalStyle from '../GlobalStyle';
 import { RecoilRoot } from 'recoil';
 import Signin from 'Pages/Signin/Signin';
 import Index from 'Pages/Main/Index';
@@ -18,6 +19,7 @@ const App = () => {
 
   return (
     <RecoilRoot>
+      <GlobalStyle />
       <Suspense fallback={<Spinner />}>
         <Switch>
           <Route path="/signin" component={Signin} />
