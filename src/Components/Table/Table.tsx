@@ -3,8 +3,7 @@ import { DefaultProps } from 'const/type';
 import styled from 'styled-components';
 
 interface props extends DefaultProps {
-  room?: string;
-  rooms: props['room'][];
+  rooms: string[];
 }
 
 const Table = ({ className, rooms }: props) => {

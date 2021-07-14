@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StyledTable from 'Components/Table/Table';
 import StyledFloor from 'Components/Floor/Floor.style';
+import { useRecoilValue } from 'recoil';
+import { roomsState } from 'state/state';
 
 type params = {
   calId: string;
@@ -13,6 +15,7 @@ type params = {
 
 const ReserveTable = ({ className }: DefaultProps) => {
   const [events, setEvents] = useState<Events>([]);
+  const rooms = useRecoilValue(roomsState);
 
   const params: params = useParams();
   const calId = params.calId.slice(1);
@@ -54,18 +57,7 @@ const ReserveTable = ({ className }: DefaultProps) => {
             ))
           : null}
       </ul>
-      <StyledTable
-        rooms={[
-          '1회의실',
-          '2회의실',
-          '3회의실',
-          '4회의실',
-          '5회의실',
-          '6회의실',
-          '7회의실',
-          '8회의실',
-        ]}
-      />
+      {rooms && <StyledTable rooms={rooms} />}
     </section>
   );
 };
