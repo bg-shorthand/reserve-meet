@@ -19,15 +19,17 @@ const Table = ({ className, rooms }: props) => {
   return (
     <table className={className}>
       <thead>
-        <th>시간</th>
-        {rooms.map(room => {
-          return <th>{room}</th>;
-        })}
+        <tr>
+          <th>시간</th>
+          {rooms.map((room, index) => {
+            return <th key={index}>{room}</th>;
+          })}
+        </tr>
       </thead>
       <tbody>
-        {timeTable.map(time => {
+        {timeTable.map((time, i) => {
           return (
-            <tr key={time}>
+            <tr key={i}>
               <td>{time}</td>
               {rooms.map((room, index) => (
                 <td key={index} id={time + '-' + room}></td>
