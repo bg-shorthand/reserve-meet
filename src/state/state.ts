@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { Calendars } from 'const/type';
+import { Calendars, Events } from 'const/type';
 
 const userState = atom({
   key: 'userState',
@@ -41,4 +41,26 @@ const curDateState = atom({
   default: new Date().toISOString().slice(0, 10),
 });
 
-export { userState, calendarListState, curFloorState, roomsState, curDateState };
+const eventsState = atom({
+  key: 'eventsState',
+  default: [] as Events,
+});
+
+const renderEventsState = selector({
+  key: 'renderEventsState',
+  get: ({ get }) =>
+    get(eventsState).filter(
+      ({ location, date }) =>
+        location.match(/^[0-9]+/)![0] === get(curFloorState) + '' && date === get(curDateState),
+    ),
+});
+
+export {
+  userState,
+  calendarListState,
+  curFloorState,
+  roomsState,
+  curDateState,
+  eventsState,
+  renderEventsState,
+};
