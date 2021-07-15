@@ -4,7 +4,7 @@ import getDate from 'module/getDate';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import StyledTable from 'Components/Table/Table';
+import StyledTable from 'Components/Table/Table.style';
 import StyledFloor from 'Components/Floor/Floor.style';
 import { useRecoilValue } from 'recoil';
 import { roomsState } from 'state/state';

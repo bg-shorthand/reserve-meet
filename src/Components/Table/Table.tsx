@@ -1,6 +1,5 @@
 import { END_TIME, START_TIME } from 'const/const';
 import { DefaultProps } from 'const/type';
-import styled from 'styled-components';
 
 interface props extends DefaultProps {
   rooms: string[];
@@ -41,13 +40,4 @@ const Table = ({ className, rooms }: props) => {
   );
 };
 
-const StyledTable = styled(Table)`
-  width: 100%;
-  border-collapse: collapse;
-
-  & * {
-    border: 1px solid black;
-  }
-`;
-
-export default StyledTable;
+export default Table;
