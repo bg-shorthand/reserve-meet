@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StyledTable from 'Components/Table/Table.style';
 import StyledFloor from 'Components/Floor/Floor.style';
+import DatePicker from 'Components/DatePicker/DatePicker';
 import { useRecoilValue } from 'recoil';
 import { roomsState } from 'state/state';
 
@@ -48,6 +49,7 @@ const ReserveTable = ({ className }: DefaultProps) => {
 
   return (
     <section className={className}>
+      <DatePicker />
       <StyledFloor />
       <h1>예약 현황</h1>
       <ul>

@@ -36,4 +36,9 @@ const roomsState = selector({
   },
 });
 
-export { userState, calendarListState, curFloorState, roomsState };
+const curDateState = atom({
+  key: 'curDatestate',
+  default: new Date().toISOString().slice(0, 10),
+});
+
+export { userState, calendarListState, curFloorState, roomsState, curDateState };
