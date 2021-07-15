@@ -57,6 +57,11 @@ const renderEventsState = selector({
     ),
 });
 
+const newEventState = atom({
+  key: 'newEventState',
+  default: { calendarId: '', summary: '', location: '', start: '', end: '' },
+});
+
 export {
   userState,
   calendarListState,
@@ -65,4 +70,5 @@ export {
   curDateState,
   eventsState,
   renderEventsState,
+  newEventState,
 };
