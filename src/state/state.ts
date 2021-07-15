@@ -51,7 +51,9 @@ const renderEventsState = selector({
   get: ({ get }) =>
     get(eventsState).filter(
       ({ location, date }) =>
-        location.match(/^[0-9]+/)![0] === get(curFloorState) + '' && date === get(curDateState),
+        location &&
+        location.match(/^[0-9]+/)![0] === get(curFloorState) + '' &&
+        date === get(curDateState),
     ),
 });
 

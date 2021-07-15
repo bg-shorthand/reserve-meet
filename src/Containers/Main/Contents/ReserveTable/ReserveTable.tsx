@@ -39,7 +39,6 @@ const ReserveTable = ({ className }: DefaultProps) => {
           date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
           time: start ? (start.dateTime ? start.dateTime.slice(11, 17) : '') : '',
         }));
-        console.log('newEvents', newEvents);
         setEvents([...newEvents]);
       } else {
         timerId = setTimeout(getEvents, 100);

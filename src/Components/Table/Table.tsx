@@ -28,7 +28,7 @@ const Table = ({ className, rooms }: props) => {
         {timeTable.map((time, i) => {
           return (
             <tr key={i}>
-              <td>{time}</td>
+              <th>{time}</th>
               {rooms.map((room, index) => (
                 <td key={index} id={time + '-' + room}></td>
               ))}

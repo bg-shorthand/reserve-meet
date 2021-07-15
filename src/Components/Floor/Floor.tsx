@@ -1,21 +1,16 @@
-import { DefaultProps } from 'const/type';
-import { useEffect } from 'react';
-import { ButtonHTMLAttributes, MouseEventHandler } from 'react';
-import { useRecoilState } from 'recoil';
+import { MouseEventHandler } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { curFloorState } from 'state/state';
+import { DefaultProps } from 'const/type';
 
 const Floor = ({ className }: DefaultProps) => {
   const floors = [9, 10, 11, 12, 15];
 
-  const [floor, setFloor] = useRecoilState(curFloorState);
+  const setFloor = useSetRecoilState(curFloorState);
 
   const changeFloorHandler: MouseEventHandler<Element> = e => {
     setFloor(+e.currentTarget.id);
   };
-
-  useEffect(() => {
-    console.log(floor);
-  }, [floor]);
 
   return (
     <ul className={className}>
