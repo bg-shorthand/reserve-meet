@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 import { Calendars, Events } from 'const/type';
+import createRoomsArray from 'module/createRoomsArray';
 
 const userState = atom({
   key: 'userState',
@@ -21,18 +22,7 @@ const roomsState = selector({
   get: ({ get }) => {
     const curFloor = get(curFloorState);
 
-    switch (curFloor) {
-      case 9:
-        return ['대', 'M2', 'M3'].map(str => str + '회의실');
-      case 10:
-        return ['대', '중', '소'].map(str => str + '회의실');
-      case 11:
-        return ['대', 'Studio'].map(str => str + '회의실');
-      case 12:
-        return ['소1', '소2'].map(str => str + '회의실');
-      case 15:
-        return ['대', '소3', '소4'].map(str => str + '회의실');
-    }
+    return createRoomsArray(curFloor);
   },
 });
 
