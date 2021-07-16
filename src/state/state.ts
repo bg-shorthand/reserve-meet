@@ -59,7 +59,16 @@ const renderEventsState = selector({
 
 const newEventState = atom({
   key: 'newEventState',
-  default: { calendarId: '', summary: '', location: '', start: '', end: '' },
+  default: {
+    calendarId: '',
+    summary: '',
+    floor: '',
+    room: '',
+    startDate: '',
+    startTime: '',
+    endDate: '',
+    endTime: '',
+  },
 });
 
 const isOpenState = atom({
