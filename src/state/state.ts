@@ -62,6 +62,13 @@ const newEventState = atom({
   default: { calendarId: '', summary: '', location: '', start: '', end: '' },
 });
 
+const isOpenState = atom({
+  key: 'isOpenState',
+  default: {
+    addEvent: false,
+  },
+});
+
 export {
   userState,
   calendarListState,
@@ -71,4 +78,5 @@ export {
   eventsState,
   renderEventsState,
   newEventState,
+  isOpenState,
 };
