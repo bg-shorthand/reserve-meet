@@ -20,4 +20,15 @@ type Calendar = {
 
 type Calendars = Calendar[];
 
-export type { DefaultProps, Event, Events, Calendar, Calendars };
+type newEvent = {
+  calendarId: string;
+  summary: string;
+  floor: string;
+  room: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+};
+
+export type { DefaultProps, Event, Events, Calendar, Calendars, newEvent };

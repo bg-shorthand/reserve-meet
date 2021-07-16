@@ -1,3 +1,4 @@
+import { newEvent } from 'const/type';
 import { GoogleAuth } from 'lib/googleApiLibrary';
 
 const calendarApi = {
@@ -9,6 +10,42 @@ const calendarApi = {
         orderBy: 'startTime',
         timeMin: start,
         timeMax: end,
+      });
+    }
+  },
+  async insertEvent(newEvent: newEvent) {
+    const { calendarId, summary, floor, room, startDate, startTime, endDate, endTime } = newEvent;
+    if (GoogleAuth) {
+      console.log({
+        calendarId,
+        resource: {
+          start: {
+            dateTime: startDate + 'T' + startTime + ':00Z',
+            timeZone: 'Asia/Seoul',
+          },
+          end: {
+            dateTime: endDate + 'T' + endTime + ':00Z',
+            timeZone: 'Asia/Seoul',
+          },
+          summary,
+          location: floor + '층 ' + room,
+        },
+      });
+
+      return await gapi.client.calendar.events.insert({
+        calendarId,
+        resource: {
+          start: {
+            dateTime: startDate + 'T' + startTime + ':00+09:00',
+            timeZone: 'Asia/Seoul',
+          },
+          end: {
+            dateTime: endDate + 'T' + endTime + ':00+09:00',
+            timeZone: 'Asia/Seoul',
+          },
+          summary,
+          location: floor + '층 ' + room,
+        },
       });
     }
   },
