@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 import Signin from 'Pages/Signin/Signin';
 import Index from 'Pages/Main/Index';
 import Spinner from 'Components/Spinner/Spinner';
+import ModalDialogs from 'Pages/ModalDialogs/ModalDialogs';
 
 const App = () => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/" component={Index} />
           <Redirect to="/" />
         </Switch>
+        <ModalDialogs />
       </Suspense>
     </RecoilRoot>
   );
