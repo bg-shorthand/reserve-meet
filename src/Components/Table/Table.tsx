@@ -1,9 +1,9 @@
-import { END_TIME, START_TIME } from 'const/const';
-import { DefaultProps } from 'const/type';
 import { MouseEventHandler } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, curFloorState, isOpenState, newEventState } from 'state/state';
+import { DefaultProps } from 'const/type';
+import { END_TIME, START_TIME } from 'const/const';
 
 interface props extends DefaultProps {
   rooms: string[];
@@ -31,7 +31,7 @@ const Table = ({ className, rooms }: props) => {
     const endDate = curDate;
     const floor = curFloor + '';
     const [startTime, room] = e.currentTarget.id.split('-');
-    const endTime = startTime + 1;
+    const endTime = +startTime.slice(0, 2) + 1 + ':00';
 
     setNewEvent(pre => ({
       ...pre,
