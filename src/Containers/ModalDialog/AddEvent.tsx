@@ -2,13 +2,13 @@ import { calendarApi } from 'api/calendarApi';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { END_TIME } from 'const/const';
 import { newEvent } from 'const/type';
-import { useEffect } from 'react';
 import { ChangeEventHandler } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { isOpenState, newEventState } from 'state/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { eventsState, isOpenState, newEventState } from 'state/state';
 
 const AddEvent = () => {
-  const isOpen = useRecoilValue(isOpenState);
+  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
+  const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endDate, endTime } = newEvent;
 
@@ -30,11 +30,21 @@ const AddEvent = () => {
   const insertNewEvent = async (newEvent: newEvent) => {
     const res = await calendarApi.insertEvent(newEvent);
     console.log(res);
+    if (res && res.result) {
+      setIsOpen(pre => ({ ...pre, addEvent: false }));
+      const { id, summary, location, start } = res?.result;
+      setEvents(pre => [
+        ...pre,
+        {
+          id: id ? id : '',
+          summary: summary ? summary : '',
+          location: location ? location : '',
+          date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
+          time: start ? (start.dateTime ? start.dateTime.slice(11, 17) : '') : '',
+        },
+      ]);
+    }
   };
-
-  useEffect(() => {
-    console.log(newEvent);
-  }, [newEvent]);
 
   return isOpen.addEvent ? (
     <ModalDialog>
