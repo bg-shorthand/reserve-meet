@@ -13,12 +13,15 @@ const AddEvent = () => {
   const { floor, room, startDate, startTime, endDate, endTime } = newEvent;
 
   const endTimes = () => {
-    const res: string[] = [];
+    const temp: string[] = [];
     const start = +startTime.slice(0, 2);
+    if (/00$/.test(startTime)) temp.push(start + ':30');
     for (let i = start + 1; i <= END_TIME + 1; i++) {
-      res.push(i + ':00');
+      temp.push(i + ':00');
+      temp.push(i + ':30');
     }
-    return res;
+    temp.push(END_TIME + 2 + ':00');
+    return temp;
   };
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
@@ -28,11 +31,10 @@ const AddEvent = () => {
     setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
   };
   const insertNewEvent = async (newEvent: newEvent) => {
-    const res = await calendarApi.insertEvent(newEvent);
-    console.log(res);
-    if (res && res.result) {
+    const temp = await calendarApi.insertEvent(newEvent);
+    if (temp && temp.result) {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
-      const { id, summary, location, start } = res?.result;
+      const { id, summary, location, start } = temp?.result;
       setEvents(pre => [
         ...pre,
         {

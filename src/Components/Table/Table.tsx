@@ -21,7 +21,9 @@ const Table = ({ className, rooms }: props) => {
     const temp: string[] = [];
     for (let i = START_TIME; i <= END_TIME; i++) {
       temp.push(i + ':00');
+      temp.push(i + ':30');
     }
+    temp.push(END_TIME + 1 + ':00');
     return temp;
   })();
 
@@ -31,7 +33,9 @@ const Table = ({ className, rooms }: props) => {
     const endDate = curDate;
     const floor = curFloor + '';
     const [startTime, room] = e.currentTarget.id.split('-');
-    const endTime = +startTime.slice(0, 2) + 1 + ':00';
+    const endTime = /00$/.test(startTime)
+      ? +startTime.slice(0, 2) + ':30'
+      : +startTime.slice(0, 2) + 1 + ':00';
 
     setNewEvent(pre => ({
       ...pre,
