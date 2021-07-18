@@ -32,12 +32,13 @@ const ReserveTable = ({ className }: DefaultProps) => {
       const res = await calendarApi.getEvents(calId, start, end);
 
       if (res && res.result.items) {
-        const newEvents = res.result.items.map(({ id, summary, location, start }) => ({
+        const newEvents = res.result.items.map(({ id, summary, location, start, end }) => ({
           id: id ? id : '',
           summary: summary ? summary : '',
           location: location ? location : '',
           date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
-          time: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
+          startTime: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
+          endTime: end ? (end.dateTime ? end.dateTime.slice(11, 16) : '') : '',
         }));
         setEvents([...newEvents]);
       } else {
@@ -57,7 +58,7 @@ const ReserveTable = ({ className }: DefaultProps) => {
           ? events.map(event => (
               <li
                 key={event.id}
-              >{`${event.summary}, ${event.location}, ${event.date}, ${event.time}`}</li>
+              >{`${event.summary}, ${event.location}, ${event.date}, ${event.startTime}~${event.endTime}`}</li>
             ))
           : null}
       </ul>

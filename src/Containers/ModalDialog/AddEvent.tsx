@@ -34,7 +34,7 @@ const AddEvent = () => {
     const temp = await calendarApi.insertEvent(newEvent);
     if (temp && temp.result) {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
-      const { id, summary, location, start } = temp?.result;
+      const { id, summary, location, start, end } = temp?.result;
       setEvents(pre => [
         ...pre,
         {
@@ -42,7 +42,8 @@ const AddEvent = () => {
           summary: summary ? summary : '',
           location: location ? location : '',
           date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
-          time: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
+          startTime: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
+          endTime: end ? (end.dateTime ? end.dateTime.slice(11, 16) : '') : '',
         },
       ]);
     }

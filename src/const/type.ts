@@ -4,11 +4,12 @@ interface DefaultProps {
 }
 
 type Event = {
+  id: string;
   summary: string;
   location: string;
   date: string;
-  time: string;
-  id: string;
+  startTime: string;
+  endTime: string;
 };
 
 type Events = Event[];

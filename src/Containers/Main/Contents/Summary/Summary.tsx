@@ -22,8 +22,9 @@ const Contents = () => {
           const newEvents = res.result.items.map((v: any) => ({
             summary: v.summary,
             location: v.location,
-            time: v.start.dateTime,
-            date: v.start.dateTime,
+            startTime: v.start ? (v.start.dateTime ? v.start.dateTime.slice(11, 16) : '') : '',
+            endTime: v.end ? (v.end.dateTime ? v.end.dateTime.slice(11, 16) : '') : '',
+            date: v.start ? (v.start.dateTime ? v.start.dateTime.slice(0, 10) : '') : '',
             id: v.id,
           }));
           setEvents(newEvents);
@@ -41,7 +42,11 @@ const Contents = () => {
       {events.length ? (
         <ul>
           {events.map(event => {
-            return <li key={event.id}>{`${event.summary}, ${event.location}, ${event.time}`}</li>;
+            return (
+              <li
+                key={event.id}
+              >{`${event.summary}, ${event.location}, ${event.startTime}~${event.endTime}`}</li>
+            );
           })}
         </ul>
       ) : null}
