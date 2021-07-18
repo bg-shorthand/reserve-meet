@@ -42,7 +42,7 @@ const AddEvent = () => {
           summary: summary ? summary : '',
           location: location ? location : '',
           date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
-          time: start ? (start.dateTime ? start.dateTime.slice(11, 17) : '') : '',
+          time: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
         },
       ]);
     }
