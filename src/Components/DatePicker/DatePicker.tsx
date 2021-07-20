@@ -1,9 +1,10 @@
+import { DefaultProps } from 'const/type';
 import { MouseEventHandler } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { curDateState } from 'state/state';
 
-const DatePicker = () => {
+const DatePicker = ({ className }: DefaultProps) => {
   const [curDate, setCurDate] = useRecoilState(curDateState);
 
   const selectDateHandler: ChangeEventHandler<HTMLInputElement> = e => {
@@ -25,7 +26,7 @@ const DatePicker = () => {
   };
 
   return (
-    <div>
+    <section className={className}>
       <button title="이전 날짜" onClick={changeDateHandler}>
         {'<'}
       </button>
@@ -33,7 +34,7 @@ const DatePicker = () => {
       <button title="다음 날짜" onClick={changeDateHandler}>
         {'>'}
       </button>
-    </div>
+    </section>
   );
 };
 

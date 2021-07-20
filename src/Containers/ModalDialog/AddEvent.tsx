@@ -1,12 +1,12 @@
 import { calendarApi } from 'api/calendarApi';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { END_TIME } from 'const/const';
-import { newEvent } from 'const/type';
+import { DefaultProps, newEvent } from 'const/type';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState } from 'state/state';
 
-const AddEvent = () => {
+const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
@@ -50,25 +50,44 @@ const AddEvent = () => {
   };
 
   return isOpen.addEvent ? (
-    <ModalDialog>
+    <ModalDialog className={className}>
       <h1>Add Event</h1>
-      <label htmlFor="newEventSummary">회의 이름</label>
+      <label htmlFor="newEventSummary" className="a11y-hidden">
+        회의 이름
+      </label>
       <input
         type="text"
         id="newEventSummary"
-        placeholder="ex) 웹개발2팀 세미나"
+        placeholder="회의 이름 (ex. 웹개발2팀 세미나)"
         onChange={setSummaryHandler}
       />
-      <p>{`장소: ${floor}층 ${room}`}</p>
-      <p>{`시작: ${startDate}, ${startTime}`}</p>
-      <p>
-        {`종료: ${endDate}`}
-        <select name="endTime" id="newEventEndTime" value={endTime} onChange={changeendTime}>
-          {endTimes().map(time => (
-            <option key={time}>{time}</option>
-          ))}
-        </select>
-      </p>
+
+      <table>
+        <tr>
+          <th>장소</th>
+          <td>{`${floor}층 ${room}`}</td>
+        </tr>
+        <tr>
+          <th>날짜</th>
+          <td>{startDate}</td>
+        </tr>
+        <tr>
+          <th>시작</th>
+          <td>{startTime}</td>
+        </tr>
+        <tr>
+          <th>종료</th>
+          <td>
+            {
+              <select name="endTime" id="newEventEndTime" value={endTime} onChange={changeendTime}>
+                {endTimes().map(time => (
+                  <option key={time}>{time}</option>
+                ))}
+              </select>
+            }
+          </td>
+        </tr>
+      </table>
       <button
         onClick={() => {
           insertNewEvent(newEvent);

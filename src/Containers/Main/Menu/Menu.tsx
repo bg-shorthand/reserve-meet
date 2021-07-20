@@ -5,7 +5,6 @@ import CalendarList from './Calendars';
 const Menu = ({ className }: DefaultProps) => {
   return (
     <section className={className}>
-      <h1>RESERVE MEET</h1>
       <CurrentUserInfo />
       <CalendarList />
     </section>

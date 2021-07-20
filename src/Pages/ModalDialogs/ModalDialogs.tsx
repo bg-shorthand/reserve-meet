@@ -1,7 +1,7 @@
-import AddEvent from 'Containers/ModalDialog/AddEvent';
+import StyledAddevent from 'Containers/ModalDialog/AddEvent.style';
 
 const ModalDialogs = () => {
-  return <AddEvent />;
+  return <StyledAddevent />;
 };
 
 export default ModalDialogs;

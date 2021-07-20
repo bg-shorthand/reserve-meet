@@ -6,7 +6,7 @@ import { isOpenState } from 'state/state';
 import StyledDialog from './Dialog/Dialog.style';
 import StyledModal from './Modal/Modal.style';
 
-const ModalDialog = ({ children }: DefaultProps) => {
+const ModalDialog = ({ className, children }: DefaultProps) => {
   const resetIsOpen = useResetRecoilState(isOpenState);
 
   const closeModal: MouseEventHandler<Element> = e => {
@@ -17,7 +17,7 @@ const ModalDialog = ({ children }: DefaultProps) => {
   return (
     <Portal>
       <StyledModal onClick={closeModal}>
-        <StyledDialog>{children}</StyledDialog>
+        <StyledDialog className={className}>{children}</StyledDialog>
       </StyledModal>
     </Portal>
   );

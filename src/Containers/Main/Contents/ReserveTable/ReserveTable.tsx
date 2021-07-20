@@ -7,7 +7,7 @@ import { DefaultProps } from 'const/type';
 import getDate from 'module/getDate';
 import StyledTable from 'Components/Table/Table.style';
 import StyledFloor from 'Components/Floor/Floor.style';
-import DatePicker from 'Components/DatePicker/DatePicker';
+import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
 
 type params = {
   calId: string;
@@ -50,18 +50,10 @@ const ReserveTable = ({ className }: DefaultProps) => {
 
   return (
     <section className={className}>
-      <DatePicker />
-      <StyledFloor />
       <h1>예약 현황</h1>
-      <ul>
-        {renderEvents.length
-          ? events.map(event => (
-              <li
-                key={event.id}
-              >{`${event.summary}, ${event.location}, ${event.date}, ${event.startTime}~${event.endTime}`}</li>
-            ))
-          : null}
-      </ul>
+      <StyledDatePicker />
+      <StyledFloor />
+      {renderEvents.length ? null : <p>일정이 없습니다</p>}
       {rooms && <StyledTable rooms={rooms} />}
     </section>
   );
