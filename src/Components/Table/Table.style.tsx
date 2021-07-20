@@ -8,6 +8,10 @@ const StyledTable = styled(Table)`
   margin: 0;
   table-layout: fixed;
 
+  td {
+    position: relative;
+  }
+
   & th,
   & td {
     border-bottom: 1px solid ${COLORS.TEAL_LEVEL_2};
