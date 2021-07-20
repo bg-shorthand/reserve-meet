@@ -16,22 +16,6 @@ const calendarApi = {
   async insertEvent(newEvent: newEvent) {
     const { calendarId, summary, floor, room, startDate, startTime, endDate, endTime } = newEvent;
     if (GoogleAuth) {
-      console.log({
-        calendarId,
-        resource: {
-          start: {
-            dateTime: startDate + 'T' + startTime + ':00Z',
-            timeZone: 'Asia/Seoul',
-          },
-          end: {
-            dateTime: endDate + 'T' + endTime + ':00Z',
-            timeZone: 'Asia/Seoul',
-          },
-          summary,
-          location: floor + '층 ' + room,
-        },
-      });
-
       return await gapi.client.calendar.events.insert({
         calendarId,
         resource: {
@@ -46,6 +30,14 @@ const calendarApi = {
           summary,
           location: floor + '층 ' + room,
         },
+      });
+    }
+  },
+  async deleteEvent(calendarId: string, eventId: string) {
+    if (GoogleAuth) {
+      return await gapi.client.calendar.events.delete({
+        calendarId,
+        eventId,
       });
     }
   },

@@ -30,7 +30,7 @@ const Table = ({ className, rooms }: props) => {
 
   const setNewEventHandler: MouseEventHandler<Element> = e => {
     const target = e.target as Element;
-    if (target.matches('article')) return;
+    if (target.matches('article, article *')) return;
 
     const calendarId = params.calId;
     const startDate = curDate;

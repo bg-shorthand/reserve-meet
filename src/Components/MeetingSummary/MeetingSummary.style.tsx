@@ -14,6 +14,18 @@ const StyledMeetingSummary = styled(MeetingSummary)`
   background-color: ${COLORS.GRAY_LEVEL_2};
   width: 100%;
   z-index: 999;
+
+  button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    padding: 0;
+    display: none;
+  }
+
+  &:hover button {
+    display: block;
+  }
 `;
 
 export default StyledMeetingSummary;
