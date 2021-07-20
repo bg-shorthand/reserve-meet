@@ -3,11 +3,12 @@ import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { END_TIME } from 'const/const';
 import { DefaultProps, newEvent } from 'const/type';
 import { ChangeEventHandler } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState } from 'state/state';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { eventsState, isOpenState, newEventState, userState } from 'state/state';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
+  const curUser = useRecoilValue(userState);
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endDate, endTime } = newEvent;
@@ -44,6 +45,7 @@ const AddEvent = ({ className }: DefaultProps) => {
           date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
           startTime: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
           endTime: end ? (end.dateTime ? end.dateTime.slice(11, 16) : '') : '',
+          creatorEmail: curUser.email,
         },
       ]);
     }

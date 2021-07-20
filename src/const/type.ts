@@ -10,6 +10,7 @@ type Event = {
   date: string;
   startTime: string;
   endTime: string;
+  creatorEmail: string;
 };
 
 type Events = Event[];

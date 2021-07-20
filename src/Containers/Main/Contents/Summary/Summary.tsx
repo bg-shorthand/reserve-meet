@@ -26,6 +26,7 @@ const Contents = () => {
             endTime: v.end ? (v.end.dateTime ? v.end.dateTime.slice(11, 16) : '') : '',
             date: v.start ? (v.start.dateTime ? v.start.dateTime.slice(0, 10) : '') : '',
             id: v.id,
+            creatorEmail: v.creator?.email,
           }));
           setEvents(newEvents);
         } else {

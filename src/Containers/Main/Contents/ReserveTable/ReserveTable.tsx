@@ -32,14 +32,18 @@ const ReserveTable = ({ className }: DefaultProps) => {
       const res = await calendarApi.getEvents(calId, start, end);
 
       if (res && res.result.items) {
-        const newEvents = res.result.items.map(({ id, summary, location, start, end }) => ({
-          id: id ? id : '',
-          summary: summary ? summary : '',
-          location: location ? location : '',
-          date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
-          startTime: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
-          endTime: end ? (end.dateTime ? end.dateTime.slice(11, 16) : '') : '',
-        }));
+        console.log(res.result.items);
+        const newEvents = res.result.items.map(
+          ({ id, summary, location, start, end, creator }) => ({
+            id: id || '',
+            summary: summary || '',
+            location: location || '',
+            date: start?.dateTime?.slice(0, 10) || '',
+            startTime: start?.dateTime?.slice(11, 16) || '',
+            endTime: end?.dateTime?.slice(11, 16) || '',
+            creatorEmail: creator?.email || '',
+          }),
+        );
         setEvents([...newEvents]);
       } else {
         timerId = setTimeout(getEvents, 100);
