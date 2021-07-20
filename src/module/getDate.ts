@@ -6,8 +6,8 @@ const getDate = {
     const date = today.getDate();
 
     return [
-      `${year}-${month < 10 ? '0' + month : month}-${date}T00:00:00Z`,
-      `${year}-${month < 10 ? '0' + month : month}-${date + 1}T00:00:00Z`,
+      `${year}-${month < 10 ? '0' + month : month}-${date}T00:00:00+09:00`,
+      `${year}-${month < 10 ? '0' + month : month}-${date + 1}T00:00:00+09:00`,
     ];
   },
   thisWeek(target?: string) {
@@ -25,7 +25,7 @@ const getDate = {
       const month = start.getMonth() + 1;
       const date = start.getDate();
 
-      return `${year}-${month < 10 ? '0' + month : month}-${date}T00:00:00Z`;
+      return `${year}-${month < 10 ? '0' + month : month}-${date}T00:00:00+09:00`;
     };
 
     switch (day) {
@@ -66,10 +66,10 @@ const getDate = {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
 
-    start = `${year}-${month < 10 ? '0' + month : month}-${1}T00:00:00Z`;
+    start = `${year}-${month < 10 ? '0' + month : month}-${1}T00:00:00+09:00`;
     end = `${year}-${
       month === 12 ? 1 : month + 1 < 10 ? '0' + (month + 1) : month + 1
-    }-${1}T00:00:00Z`;
+    }-${1}T00:00:00+09:00`;
 
     return [start, end];
   },

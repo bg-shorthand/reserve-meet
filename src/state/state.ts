@@ -26,9 +26,11 @@ const roomsState = selector({
   },
 });
 
+const current = new Date().getTime() + 1000 * 60 * 60 * 9;
+
 const curDateState = atom({
   key: 'curDatestate',
-  default: new Date().toISOString().slice(0, 10),
+  default: new Date(current).toISOString().slice(0, 10),
 });
 
 const eventsState = atom({
