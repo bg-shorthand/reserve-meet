@@ -4,25 +4,40 @@ import { END_TIME } from 'const/const';
 import { DefaultProps, newEvent } from 'const/type';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState, userState } from 'state/state';
+import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const curUser = useRecoilValue(userState);
+  const renderEvents = useRecoilValue(renderEventsState);
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endDate, endTime } = newEvent;
 
   const endTimes = () => {
-    const temp: string[] = [];
-    const start = +startTime.slice(0, 2);
-    if (/00$/.test(startTime)) temp.push(start + ':30');
-    for (let i = start + 1; i <= END_TIME + 1; i++) {
-      temp.push(i + ':00');
-      temp.push(i + ':30');
+    const res: string[] = [];
+
+    let temp = startTime;
+
+    const nextEvent = renderEvents.find(
+      event => event.startTime > startTime && event.location === `${floor}층 ${room}`,
+    );
+
+    if (nextEvent) {
+      while (temp < nextEvent.startTime) {
+        const tempHour = temp.slice(0, 2);
+        temp = /00$/.test(temp) ? tempHour + ':30' : +tempHour + 1 + ':00';
+        res.push(temp);
+      }
+    } else {
+      while (temp < END_TIME + 1 + ':00') {
+        const tempHour = temp.slice(0, 2);
+        temp = /00$/.test(temp) ? tempHour + ':30' : +tempHour + 1 + ':00';
+        res.push(temp);
+      }
     }
-    temp.push(END_TIME + 2 + ':00');
-    return temp;
+
+    return res;
   };
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
