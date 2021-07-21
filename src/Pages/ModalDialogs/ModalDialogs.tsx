@@ -1,4 +1,4 @@
-import StyledAddevent from 'Containers/ModalDialog/AddEvent.style';
+import StyledAddevent from 'Containers/ModalDialog/AddEvent/AddEvent.style';
 
 const ModalDialogs = () => {
   return <StyledAddevent />;
