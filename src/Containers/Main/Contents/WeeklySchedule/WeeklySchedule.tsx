@@ -5,10 +5,14 @@ import { calendarApi } from 'api/calendarApi';
 import getDate from 'module/getDate';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'state/state';
+import { useParams } from 'react-router-dom';
 
-const Contents = () => {
+const WeeklySchedule = () => {
   const [events, setEvents] = useState<Events>([]);
-  const { email } = useRecoilValue(userState);
+  const curUser = useRecoilValue(userState);
+
+  const params = useParams<{ calId: string }>();
+  const email = params.calId ? params.calId : curUser.email;
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;
@@ -55,4 +59,4 @@ const Contents = () => {
   );
 };
 
-export default Contents;
+export default WeeklySchedule;
