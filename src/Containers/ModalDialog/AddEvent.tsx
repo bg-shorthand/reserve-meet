@@ -80,30 +80,37 @@ const AddEvent = ({ className }: DefaultProps) => {
       />
 
       <table>
-        <tr>
-          <th>장소</th>
-          <td>{`${floor}층 ${room}`}</td>
-        </tr>
-        <tr>
-          <th>날짜</th>
-          <td>{startDate}</td>
-        </tr>
-        <tr>
-          <th>시작</th>
-          <td>{startTime}</td>
-        </tr>
-        <tr>
-          <th>종료</th>
-          <td>
-            {
-              <select name="endTime" id="newEventEndTime" value={endTime} onChange={changeendTime}>
-                {endTimes().map(time => (
-                  <option key={time}>{time}</option>
-                ))}
-              </select>
-            }
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>장소</th>
+            <td>{`${floor}층 ${room}`}</td>
+          </tr>
+          <tr>
+            <th>날짜</th>
+            <td>{startDate}</td>
+          </tr>
+          <tr>
+            <th>시작</th>
+            <td>{startTime}</td>
+          </tr>
+          <tr>
+            <th>종료</th>
+            <td>
+              {
+                <select
+                  name="endTime"
+                  id="newEventEndTime"
+                  value={endTime}
+                  onChange={changeendTime}
+                >
+                  {endTimes().map(time => (
+                    <option key={time}>{time}</option>
+                  ))}
+                </select>
+              }
+            </td>
+          </tr>
+        </tbody>
       </table>
       <button
         onClick={() => {
