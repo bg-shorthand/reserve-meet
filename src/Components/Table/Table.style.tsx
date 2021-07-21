@@ -8,6 +8,33 @@ const StyledTable = styled(Table)`
   margin: 0;
   table-layout: fixed;
 
+  thead {
+    position: relative;
+  }
+
+  thead::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: ${props => {
+      let height = 0;
+
+      const curHour = props.curTime.getHours();
+      const curMin = props.curTime.getMinutes();
+
+      height = (curHour - 10) * 34 + curMin > 30 ? 35 : 0 - 1;
+
+      return 35 * 5 - 1 + 'px';
+
+      return height + 'px';
+    }};
+    border-bottom: 1px solid red;
+    position: absolute;
+    z-index: 99;
+    background: rgba(203, 241, 245, 0.01);
+    backdrop-filter: blur(2px);
+  }
+
   td {
     position: relative;
   }

@@ -8,6 +8,7 @@ import StyledMeetingSummary from 'Components/MeetingSummary/MeetingSummary.style
 
 interface props extends DefaultProps {
   rooms: string[];
+  curTime: Date;
 }
 type params = { calId: '' };
 

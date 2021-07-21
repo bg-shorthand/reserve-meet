@@ -13,7 +13,7 @@ const StyledMeetingSummary = styled(MeetingSummary)`
   align-items: center;
   background-color: ${COLORS.GRAY_LEVEL_2};
   width: 100%;
-  z-index: 999;
+  z-index: 9;
 
   button {
     position: absolute;

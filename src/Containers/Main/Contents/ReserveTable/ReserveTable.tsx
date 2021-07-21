@@ -58,7 +58,7 @@ const ReserveTable = ({ className }: DefaultProps) => {
       <StyledDatePicker />
       <StyledFloor />
       {renderEvents.length ? null : <p>일정이 없습니다</p>}
-      {rooms && <StyledTable rooms={rooms} />}
+      {rooms && <StyledTable rooms={rooms} curTime={new Date()} />}
     </section>
   );
 };
