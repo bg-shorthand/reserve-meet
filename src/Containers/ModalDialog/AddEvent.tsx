@@ -30,7 +30,7 @@ const AddEvent = ({ className }: DefaultProps) => {
         res.push(temp);
       }
     } else {
-      while (temp < END_TIME + 1 + ':00') {
+      while (temp < END_TIME + ':00') {
         const tempHour = temp.slice(0, 2);
         temp = /00$/.test(temp) ? tempHour + ':30' : +tempHour + 1 + ':00';
         res.push(temp);

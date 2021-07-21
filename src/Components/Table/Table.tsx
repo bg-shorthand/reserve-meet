@@ -20,11 +20,10 @@ const Table = ({ className, rooms }: props) => {
 
   const timeTable = (() => {
     const temp: string[] = [];
-    for (let i = START_TIME; i <= END_TIME; i++) {
+    for (let i = START_TIME; i <= END_TIME - 1; i++) {
       temp.push(i + ':00');
       temp.push(i + ':30');
     }
-    temp.push(END_TIME + 1 + ':00');
     return temp;
   })();
 
