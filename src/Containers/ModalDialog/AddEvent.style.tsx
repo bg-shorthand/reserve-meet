@@ -1,4 +1,6 @@
 import { COLORS } from 'const/const';
+import { useRecoilValue } from 'recoil';
+import { newEventState } from 'state/state';
 import styled from 'styled-components';
 import AddEvent from './AddEvent';
 
@@ -41,6 +43,10 @@ const StyledAddEvent = styled(AddEvent)`
 
   button {
     margin: 0;
+    cursor: ${() => {
+      const newEvent = useRecoilValue(newEventState);
+      return newEvent.summary ? 'pointer' : 'not-allowed';
+    }};
   }
 `;
 

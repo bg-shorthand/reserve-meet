@@ -113,11 +113,12 @@ const AddEvent = ({ className }: DefaultProps) => {
         </tbody>
       </table>
       <button
+        disabled={newEvent.summary ? false : true}
         onClick={() => {
           insertNewEvent(newEvent);
         }}
       >
-        등록
+        {newEvent.summary ? '등록' : '회의 이름을 입력하세요'}
       </button>
     </ModalDialog>
   ) : null;
