@@ -22,9 +22,9 @@ const StyledTable = styled(Table)`
       const curHour = props.curTime.getHours();
       const curMin = props.curTime.getMinutes();
 
-      height = (curHour - 10) * 34 + curMin > 30 ? 35 : 0 - 1;
+      height = Math.floor(((curHour - 9) * 60 + curMin) / 30) * 35 - 1;
 
-      return 35 * 5 - 1 + 'px';
+      console.log(curHour, curMin, height);
 
       return height + 'px';
     }};
