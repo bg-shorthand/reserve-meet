@@ -1,4 +1,7 @@
-import { COLORS } from 'const/const';
+import { COLORS, END_TIME } from 'const/const';
+import { NONAME } from 'dns';
+import { useRecoilValue } from 'recoil';
+import { curDateState } from 'state/state';
 import styled from 'styled-components';
 import Table from './Table';
 
@@ -14,18 +17,27 @@ const StyledTable = styled(Table)`
 
   thead::after {
     content: '';
-    display: block;
+    display: ${() => {
+      const curDate = useRecoilValue(curDateState);
+      const current = new Date().getTime() + 1000 * 60 * 60 * 9;
+      return curDate === new Date(current).toISOString().slice(0, 10) ||
+        curDate < new Date(current).toISOString().slice(0, 10)
+        ? 'block'
+        : 'none';
+    }};
     width: 100%;
     height: ${props => {
       let height = 0;
-
+      const curDate = useRecoilValue(curDateState);
+      const current = new Date().getTime() + 1000 * 60 * 60 * 9;
       const curHour = props.curTime.getHours();
       const curMin = props.curTime.getMinutes();
-
-      height = Math.floor(((curHour - 9) * 60 + curMin) / 30) * 35 - 1;
-
-      console.log(curHour, curMin, height);
-
+      height =
+        curDate < new Date(current).toISOString().slice(0, 10)
+          ? 489
+          : curHour >= END_TIME
+          ? 489
+          : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * 35 - 1;
       return height + 'px';
     }};
     border-bottom: 1px solid red;
