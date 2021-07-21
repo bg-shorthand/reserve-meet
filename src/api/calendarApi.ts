@@ -51,6 +51,15 @@ const calendarApi = {
       return await gapi.client.calendar.calendars.get({ calendarId: 'bkhan@rsupport.com' });
     }
   },
+  async insertCalendar(summary: string) {
+    if (GoogleAuth) {
+      return await gapi.client.calendar.calendars.insert({
+        resource: {
+          summary,
+        },
+      });
+    }
+  },
 };
 
 export { calendarApi };

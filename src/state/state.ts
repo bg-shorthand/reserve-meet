@@ -67,6 +67,7 @@ const isOpenState = atom({
   key: 'isOpenState',
   default: {
     addEvent: false,
+    addCalendar: false,
   },
 });
 
