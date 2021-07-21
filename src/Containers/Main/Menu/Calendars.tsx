@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { calendarListState, isOpenState } from 'state/state';
 import { calendarApi } from 'api/calendarApi';
@@ -40,12 +40,27 @@ const CalendarList = () => {
     <>
       <ul>
         <li>
-          <Link to="/">Summary</Link>
+          <NavLink
+            exact
+            to="/"
+            activeStyle={{
+              fontWeight: 700,
+            }}
+          >
+            Summary
+          </NavLink>
         </li>
         {calendarList.map(calendar => {
           return (
             <li key={calendar.id}>
-              <Link to={`/reserve-state/:${calendar.id}`}>{calendar.summary}</Link>
+              <NavLink
+                to={`/reserve-state/:${calendar.id}`}
+                activeStyle={{
+                  fontWeight: 700,
+                }}
+              >
+                {calendar.summary}
+              </NavLink>
             </li>
           );
         })}
