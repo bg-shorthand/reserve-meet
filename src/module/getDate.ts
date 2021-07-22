@@ -58,6 +58,44 @@ const getDate = {
 
     return [start, end];
   },
+  sundayToSaturday(target?: string) {
+    const sun = this.thisWeek(target)[0];
+
+    const plusDay = (pre: Date, num: number) => {
+      return new Date(pre.getTime() + 1000 * 60 * 60 * 24 * num + 1000 * 60 * 60 * 9).toISOString();
+    };
+
+    const mon = plusDay(new Date(sun), 1);
+    const tue = plusDay(new Date(sun), 2);
+    const wed = plusDay(new Date(sun), 3);
+    const tur = plusDay(new Date(sun), 4);
+    const fri = plusDay(new Date(sun), 5);
+    const sat = plusDay(new Date(sun), 6);
+
+    return [sun, mon, tue, wed, tur, fri, sat];
+  },
+  changeDateToDay(target: Date) {
+    const day = target.getDay();
+
+    switch (day) {
+      case 0:
+        return 'SUN';
+      case 1:
+        return 'MON';
+      case 2:
+        return 'TUE';
+      case 3:
+        return 'WED';
+      case 4:
+        return 'TUR';
+      case 5:
+        return 'FRI';
+      case 6:
+        return 'SAT';
+      default:
+        return '';
+    }
+  },
   thisMonth(target?: string) {
     let start = '';
     let end = '';
