@@ -1472,6 +1472,13 @@
   dependencies:
     "@types/gapi.client" "*"
 
+"@maxim_mazurok/gapi.client.people@latest":
+  "integrity" "sha512-fGoQSzolE6V9IODr+kmcpvSr15G1LBCLcbigUshx2oWxcHOjG+WiAEc7AbtL/f0LsY6Ldislq3yAyC9l6Q3uSw=="
+  "resolved" "https://registry.npmjs.org/@maxim_mazurok/gapi.client.people/-/gapi.client.people-1.0.20210720.tgz"
+  "version" "1.0.20210720"
+  dependencies:
+    "@types/gapi.client" "*"
+
 "@nodelib/fs.scandir@2.1.4":
   "integrity" "sha512-33g3pMJk3bg5nXbL/+CY6I2eJDzZAni49PfJnL5fghPTggPvBd/pFNSgJsdAgWptuFu7qq/ERvOYFlhvsLTCKA=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz"
@@ -1785,10 +1792,24 @@
   dependencies:
     "@maxim_mazurok/gapi.client.calendar" "latest"
 
+"@types/gapi.client.people@^1.0.3":
+  "integrity" "sha512-NZB90BKZaAruKeI8y0wTRSW6roLhlnIB2nRH9RIwam3/PxnNqtW5g0FDHeLqrnLnoxXarn9JokGUKKcA+vEUbQ=="
+  "resolved" "https://registry.npmjs.org/@types/gapi.client.people/-/gapi.client.people-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "@maxim_mazurok/gapi.client.people" "latest"
+
 "@types/gapi.client@*":
   "integrity" "sha512-MVC0ukq+bVfmQnrkaJdyFBJVuQ7W9QtqH4aGqQaEmLBj/fwsbQ7IMk8M6q2LffEoKlYBuJNpGz4nTnckthoIpg=="
   "resolved" "https://registry.npmjs.org/@types/gapi.client/-/gapi.client-1.0.4.tgz"
   "version" "1.0.4"
+
+"@types/gapi.people@^1.0.8":
+  "integrity" "sha512-vS/3LwpE7OMweymguNd2312g2H0owgpFl0hVHHDupy6K/rXnFqiD9iWBLFKEATwsvLcBnG1yngH+pkowgJVGHg=="
+  "resolved" "https://registry.npmjs.org/@types/gapi.people/-/gapi.people-1.0.8.tgz"
+  "version" "1.0.8"
+  dependencies:
+    "@types/gapi" "*"
 
 "@types/gapi@*", "@types/gapi@^0.0.39":
   "integrity" "sha512-R1TZeZbvvbIC60DBJMhuOEivQHzOQtzl3uMDOOENTYQTSSDB6oEMpJo8HVPOTWivdUTbyEcB5qQOVr/JCKRlCQ=="
