@@ -2,6 +2,8 @@ import { calendarApi } from 'api/calendarApi';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { END_TIME } from 'const/const';
 import { DefaultProps, newEvent } from 'const/type';
+import { KeyboardEventHandler, useState } from 'react';
+import { useEffect } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
@@ -12,7 +14,10 @@ const AddEvent = ({ className }: DefaultProps) => {
   const renderEvents = useRecoilValue(renderEventsState);
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
-  const { floor, room, startDate, startTime, endDate, endTime } = newEvent;
+  const { floor, room, startDate, startTime, endTime } = newEvent;
+
+  const [attendantsName, setAttendantsName] = useState('');
+  const [attendants, setAttendants] = useState<{ name: string; eventEmpty: boolean }[]>([]);
 
   const endTimes = () => {
     const res: string[] = [];
@@ -65,6 +70,26 @@ const AddEvent = ({ className }: DefaultProps) => {
       ]);
     }
   };
+  const getOtherUsersEvents: KeyboardEventHandler<HTMLInputElement> = async e => {
+    if (e.key !== 'Enter') return;
+
+    setAttendantsName(e.currentTarget.value);
+
+    const start = startDate + 'T' + startTime + ':00+09:00';
+    const end = startDate + 'T' + endTime + ':00+09:00';
+    const res = await calendarApi.getEvents(e.currentTarget.value, start, end);
+    console.log(res);
+    const events = res?.result.items;
+
+    if (events) {
+      setAttendants(pre => [...pre, { name: attendantsName, eventEmpty: !events.length }]);
+      setAttendantsName('');
+    }
+  };
+
+  useEffect(() => {
+    setAttendants([]);
+  }, [isOpen]);
 
   return isOpen.addEvent ? (
     <ModalDialog className={className}>
@@ -112,6 +137,18 @@ const AddEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
+      <input
+        type="text"
+        placeholder="참석자 이름"
+        value={attendantsName}
+        onChange={e => setAttendantsName(e.currentTarget.value)}
+        onKeyUp={getOtherUsersEvents}
+      />
+      <ul>
+        {attendants.map(user => (
+          <li key={user.name}>{`${user.name} ${user.eventEmpty ? 'O' : 'X'}`}</li>
+        ))}
+      </ul>
       <button
         disabled={newEvent.summary ? false : true}
         onClick={() => {
