@@ -3,6 +3,15 @@ const END_TIME = 17;
 
 const FLOORS = [9, 10, 11, 12, 15];
 
+const TIME_TABLE = (() => {
+  const temp: string[] = [];
+  for (let i = START_TIME; i <= END_TIME - 1; i++) {
+    temp.push(i + ':00');
+    temp.push(i + ':30');
+  }
+  return temp;
+})();
+
 const COLORS = {
   BLACK: '#212529',
   GRAY_LEVEL_1: '#f8f9fa',
@@ -17,4 +26,4 @@ const COLORS = {
   TEAL_LEVEL_4: '#71C9CE',
 };
 
-export { START_TIME, END_TIME, FLOORS, COLORS };
+export { START_TIME, END_TIME, FLOORS, TIME_TABLE, COLORS };
