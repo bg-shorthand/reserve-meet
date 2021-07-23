@@ -75,6 +75,10 @@ const AddEvent = ({ className }: DefaultProps) => {
     setAttendants([]);
   }, [isOpen]);
 
+  useEffect(() => {
+    setNewEvent(pre => ({ ...pre, attendees: attendants.map(user => ({ email: user.name })) }));
+  }, [attendants.length]);
+
   return isOpen.addEvent ? (
     <ModalDialog className={className}>
       <h1>Add Event</h1>

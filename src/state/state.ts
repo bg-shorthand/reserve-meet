@@ -60,6 +60,7 @@ const newEventState = atom({
     startTime: '',
     endDate: '',
     endTime: '',
+    attendees: [{ email: '' }],
   },
 });
 

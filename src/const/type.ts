@@ -31,6 +31,7 @@ type newEvent = {
   startTime: string;
   endDate: string;
   endTime: string;
+  attendees: { email: string }[];
 };
 
 export type { DefaultProps, Event, Events, Calendar, Calendars, newEvent };
