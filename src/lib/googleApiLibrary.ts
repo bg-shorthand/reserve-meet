@@ -1,7 +1,11 @@
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
-const SCOPES = 'https://www.googleapis.com/auth/calendar';
-const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+const SCOPES =
+  'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/directory.readonly';
+const DISCOVERY_DOCS = [
+  'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+  'https://people.googleapis.com/$discovery/rest?version=v1',
+];
 
 let GoogleAuth: gapi.auth2.GoogleAuth;
 let GoogleUser: gapi.auth2.GoogleUser;
