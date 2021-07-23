@@ -1,8 +1,9 @@
 import { calendarApi } from 'api/calendarApi';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
+import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { END_TIME } from 'const/const';
-import { DefaultProps, newEvent } from 'const/type';
-import { KeyboardEventHandler, useState } from 'react';
+import { DefaultProps, Events, newEvent } from 'const/type';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -16,8 +17,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
 
-  const [attendantsName, setAttendantsName] = useState('');
-  const [attendants, setAttendants] = useState<{ name: string; eventEmpty: boolean }[]>([]);
+  const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
 
   const endTimes = () => {
     const res: string[] = [];
@@ -48,7 +48,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
   };
-  const changeendTime: ChangeEventHandler<HTMLSelectElement> = e => {
+  const changeEndTime: ChangeEventHandler<HTMLSelectElement> = e => {
     setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
   };
   const insertNewEvent = async (newEvent: newEvent) => {
@@ -68,22 +68,6 @@ const AddEvent = ({ className }: DefaultProps) => {
           creatorEmail: curUser.email,
         },
       ]);
-    }
-  };
-  const getOtherUsersEvents: KeyboardEventHandler<HTMLInputElement> = async e => {
-    if (e.key !== 'Enter') return;
-
-    setAttendantsName(e.currentTarget.value);
-
-    const start = startDate + 'T' + startTime + ':00+09:00';
-    const end = startDate + 'T' + endTime + ':00+09:00';
-    const res = await calendarApi.getEvents(e.currentTarget.value, start, end);
-    console.log(res);
-    const events = res?.result.items;
-
-    if (events) {
-      setAttendants(pre => [...pre, { name: attendantsName, eventEmpty: !events.length }]);
-      setAttendantsName('');
     }
   };
 
@@ -126,7 +110,7 @@ const AddEvent = ({ className }: DefaultProps) => {
                   name="endTime"
                   id="newEventEndTime"
                   value={endTime}
-                  onChange={changeendTime}
+                  onChange={changeEndTime}
                 >
                   {endTimes().map(time => (
                     <option key={time}>{time}</option>
@@ -137,17 +121,22 @@ const AddEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
-      <input
-        type="text"
-        placeholder="참석자 이름"
-        value={attendantsName}
-        onChange={e => setAttendantsName(e.currentTarget.value)}
-        onKeyUp={getOtherUsersEvents}
-      />
+      <StyledSearchUser setAttendants={setAttendants} />
       <ul>
-        {attendants.map(user => (
-          <li key={user.name}>{`${user.name} ${user.eventEmpty ? 'O' : 'X'}`}</li>
-        ))}
+        {attendants.map(user => {
+          const { name, events } = user;
+
+          return (
+            <li key={name}>
+              <p>{name}</p>
+              {events.length ? (
+                <p>{`${events[0].summary} ${events[0].startTime
+                  .split('T')[1]
+                  .slice(0, 5)}~${events[0].endTime.split('T')[1].slice(0, 5)}`}</p>
+              ) : null}
+            </li>
+          );
+        })}
       </ul>
       <button
         disabled={newEvent.summary ? false : true}
