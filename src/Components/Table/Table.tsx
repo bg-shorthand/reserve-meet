@@ -23,25 +23,19 @@ const Table = ({ className, rooms }: props) => {
     const target = e.target as Element;
     if (target.matches('article, article *')) return;
 
-    const calendarId = params.calId;
-    const startDate = curDate;
-    const endDate = curDate;
-    const floor = curFloor + '';
-    const [startTime, room] = e.currentTarget.id.split('-');
-    const endTime = /00$/.test(startTime)
-      ? +startTime.slice(0, 2) + ':30'
-      : +startTime.slice(0, 2) + 1 + ':00';
-
     setNewEvent(pre => ({
       ...pre,
-      calendarId: calendarId.slice(1),
-      floor,
-      room,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
+      calendarId: params.calId.slice(1),
+      floor: curFloor + '',
+      room: e.currentTarget.id.split('-')[1],
+      startDate: curDate,
+      startTime: e.currentTarget.id.split('-')[0],
+      endDate: curDate,
+      endTime: /00$/.test(e.currentTarget.id.split('-')[0])
+        ? +e.currentTarget.id.split('-')[0].slice(0, 2) + ':30'
+        : +e.currentTarget.id.split('-')[0].slice(0, 2) + 1 + ':00',
     }));
+
     setIsOpen(pre => ({ ...pre, addEvent: true }));
   };
 

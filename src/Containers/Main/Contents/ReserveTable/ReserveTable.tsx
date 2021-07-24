@@ -1,20 +1,21 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { calendarApi } from 'api/calendarApi';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, eventsState, renderEventsState, roomsState } from 'state/state';
 import { DefaultProps } from 'const/type';
 import getDate from 'module/getDate';
 import StyledTable from 'Components/Table/Table.style';
 import StyledFloor from 'Components/Floor/Floor.style';
 import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
+import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 type params = {
   calId: string;
 };
 
 const ReserveTable = ({ className }: DefaultProps) => {
-  const [events, setEvents] = useRecoilState(eventsState);
+  const setEvents = useSetRecoilState(eventsState);
   const renderEvents = useRecoilValue(renderEventsState);
   const curDate = useRecoilValue(curDateState);
   const rooms = useRecoilValue(roomsState);
@@ -32,18 +33,8 @@ const ReserveTable = ({ className }: DefaultProps) => {
       const res = await calendarApi.getEvents(calId, start, end);
 
       if (res && res.result.items) {
-        console.log(res.result.items);
-        const newEvents = res.result.items.map(
-          ({ id, summary, location, start, end, creator }) => ({
-            id: id || '',
-            summary: summary || '',
-            location: location || '',
-            date: start?.dateTime?.slice(0, 10) || '',
-            startTime: start?.dateTime?.slice(11, 16) || '',
-            endTime: end?.dateTime?.slice(11, 16) || '',
-            creatorEmail: creator?.email || '',
-          }),
-        );
+        const items = res.result.items;
+        const newEvents = createEventsFromAsyncRes(items);
         setEvents([...newEvents]);
       } else {
         timerId = setTimeout(getEvents, 100);

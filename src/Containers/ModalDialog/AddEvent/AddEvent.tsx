@@ -3,6 +3,7 @@ import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { END_TIME } from 'const/const';
 import { DefaultProps, Events, newEvent } from 'const/type';
+import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { ChangeEventHandler } from 'react';
@@ -54,20 +55,10 @@ const AddEvent = ({ className }: DefaultProps) => {
   const insertNewEvent = async (newEvent: newEvent) => {
     const temp = await calendarApi.insertEvent(newEvent);
     if (temp && temp.result) {
+      const res = temp.result;
+      const newEvents = createEventsFromAsyncRes([res]);
+      setEvents(pre => [...pre, ...newEvents]);
       setIsOpen(pre => ({ ...pre, addEvent: false }));
-      const { id, summary, location, start, end } = temp?.result;
-      setEvents(pre => [
-        ...pre,
-        {
-          id: id ? id : '',
-          summary: summary ? summary : '',
-          location: location ? location : '',
-          date: start ? (start.dateTime ? start.dateTime.slice(0, 10) : '') : '',
-          startTime: start ? (start.dateTime ? start.dateTime.slice(11, 16) : '') : '',
-          endTime: end ? (end.dateTime ? end.dateTime.slice(11, 16) : '') : '',
-          creatorEmail: curUser.email,
-        },
-      ]);
     }
   };
 

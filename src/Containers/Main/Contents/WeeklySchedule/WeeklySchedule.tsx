@@ -7,12 +7,11 @@ import { useRecoilValue } from 'recoil';
 import { userState } from 'state/state';
 import { useParams } from 'react-router-dom';
 import { TIME_TABLE } from 'const/const';
+import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 const WeeklySchedule = ({ className }: DefaultProps) => {
   const [events, setEvents] = useState<Events>([]);
   const [curWeek, setCurWeek] = useState(getDate.sundayToSaturday());
-
-  console.log(curWeek);
 
   const [startAndEnd, setStartAndEnd] = useState(getDate.thisWeek());
   const [start, end] = startAndEnd;
@@ -29,15 +28,8 @@ const WeeklySchedule = ({ className }: DefaultProps) => {
       if (email) {
         const res = await calendarApi.getEvents(email, start, end);
         if (res && res.result.items) {
-          const newEvents = res.result.items.map((v: any) => ({
-            summary: v.summary,
-            location: v.location,
-            startTime: v.start ? (v.start.dateTime ? v.start.dateTime.slice(11, 16) : '') : '',
-            endTime: v.end ? (v.end.dateTime ? v.end.dateTime.slice(11, 16) : '') : '',
-            date: v.start ? (v.start.dateTime ? v.start.dateTime.slice(0, 10) : '') : '',
-            id: v.id,
-            creatorEmail: v.creator?.email,
-          }));
+          const items = res.result.items;
+          const newEvents = createEventsFromAsyncRes(items);
           setEvents(newEvents);
         } else {
           timerId = setTimeout(getEventsThisWeek, 100);

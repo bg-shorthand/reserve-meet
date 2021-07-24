@@ -21,7 +21,6 @@ const roomsState = selector({
   key: 'roomsState',
   get: ({ get }) => {
     const curFloor = get(curFloorState);
-
     return createRoomsArray(curFloor);
   },
 });

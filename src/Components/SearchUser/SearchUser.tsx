@@ -1,12 +1,11 @@
-import peopleApi from 'api/peopleApi';
-import { DefaultProps, Events } from 'const/type';
 import { useState } from 'react';
-import _ from 'lodash';
-import { ChangeEventHandler } from 'react';
-import { MouseEventHandler } from 'react';
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { newEventState } from 'state/state';
+import peopleApi from 'api/peopleApi';
 import { calendarApi } from 'api/calendarApi';
+import _ from 'lodash';
+import { DefaultProps, Events } from 'const/type';
 
 interface Props extends DefaultProps {
   setAttendants: React.Dispatch<
@@ -21,8 +20,9 @@ interface Props extends DefaultProps {
 
 const SearchUser = ({ className, setAttendants }: Props) => {
   const [searchResert, setSearchResert] = useState<{ email: string; photo: string }[]>([]);
-  const [newEvent, setNewEvent] = useRecoilState(newEventState);
-  const { floor, room, startDate, startTime, endTime } = newEvent;
+
+  const [newEvent] = useRecoilState(newEventState);
+  const { startDate, startTime, endTime } = newEvent;
 
   const searchUserHandler: ChangeEventHandler<HTMLInputElement> = async e => {
     if (!e.target.value) {
@@ -30,7 +30,6 @@ const SearchUser = ({ className, setAttendants }: Props) => {
       return;
     }
     const res = await peopleApi.searchUser(e.target.value);
-    console.log(res?.result.people);
     if (res?.result.people) {
       const people = res.result.people;
       const newSearchResert = people.map(({ emailAddresses, photos }) => ({

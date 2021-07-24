@@ -1,6 +1,6 @@
-import { COLORS } from 'const/const';
 import styled from 'styled-components';
 import DatePicker from './DatePicker';
+import { COLORS } from 'const/const';
 
 const StyledDatePicker = styled(DatePicker)`
   display: flex;

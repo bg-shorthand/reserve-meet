@@ -1,12 +1,11 @@
-import { COLORS } from 'const/const';
-import { DefaultProps } from 'const/type';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import { DefaultProps } from 'const/type';
+import { COLORS } from 'const/const';
 
 const Dialog = ({ className, children }: DefaultProps) => {
   return (
     <section className={className}>
-      {/* <CloseIcon /> */}
       <button>
         <CloseIcon />
       </button>

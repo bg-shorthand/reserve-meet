@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { curFloorState } from 'state/state';
 import { DefaultProps } from 'const/type';
 import { FLOORS } from 'const/const';

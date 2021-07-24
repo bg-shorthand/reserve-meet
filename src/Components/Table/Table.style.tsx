@@ -1,9 +1,8 @@
-import { COLORS, END_TIME } from 'const/const';
-import { NONAME } from 'dns';
-import { useRecoilValue } from 'recoil';
-import { curDateState } from 'state/state';
 import styled from 'styled-components';
 import Table from './Table';
+import { useRecoilValue } from 'recoil';
+import { curDateState } from 'state/state';
+import { COLORS, END_TIME } from 'const/const';
 
 const StyledTable = styled(Table)`
   width: 100%;

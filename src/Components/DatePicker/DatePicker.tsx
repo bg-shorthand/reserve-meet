@@ -1,8 +1,8 @@
-import { DefaultProps } from 'const/type';
 import { MouseEventHandler } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { curDateState } from 'state/state';
+import { DefaultProps } from 'const/type';
 
 const DatePicker = ({ className }: DefaultProps) => {
   const [curDate, setCurDate] = useRecoilState(curDateState);
@@ -30,7 +30,10 @@ const DatePicker = ({ className }: DefaultProps) => {
       <button title="이전 날짜" onClick={changeDateHandler}>
         {'<'}
       </button>
-      <input type="date" value={curDate} onChange={selectDateHandler} />
+      <label htmlFor="curDatePickerInput" className="a11y-hidden">
+        현재 날짜
+      </label>
+      <input id="curDatePickerInput" type="date" value={curDate} onChange={selectDateHandler} />
       <button title="다음 날짜" onClick={changeDateHandler}>
         {'>'}
       </button>
