@@ -41,7 +41,12 @@ const StyledAddEvent = styled(AddEvent)`
     }
   }
 
-  button {
+  & li > button,
+  & li > button * {
+    margin: 0;
+  }
+
+  & > button {
     margin: 0;
     cursor: ${() => {
       const newEvent = useRecoilValue(newEventState);

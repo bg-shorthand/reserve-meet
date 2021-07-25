@@ -7,6 +7,8 @@ import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
+import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import { MouseEventHandler } from 'react';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -43,6 +45,12 @@ const AddEvent = ({ className }: DefaultProps) => {
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
+  };
+  const deleteAttendanthandler: MouseEventHandler<HTMLButtonElement> = e => {
+    const target = e.target as Element;
+    if (target.closest('li')) {
+      setAttendants(pre => pre.filter(user => user.name !== target.closest('li')?.id));
+    }
   };
   const changeEndTime: ChangeEventHandler<HTMLSelectElement> = e => {
     setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
@@ -116,12 +124,17 @@ const AddEvent = ({ className }: DefaultProps) => {
           const { name, events } = user;
 
           return (
-            <li key={name}>
+            <li key={name} id={name}>
               <p>{name}</p>
               {events.length ? (
-                <p>{`${events[0].summary} ${events[0].startTime
-                  .split('T')[1]
-                  .slice(0, 5)}~${events[0].endTime.split('T')[1].slice(0, 5)}`}</p>
+                <>
+                  <p>{`${events[0].summary} ${events[0].startTime
+                    .split('T')[1]
+                    .slice(0, 5)}~${events[0].endTime.split('T')[1].slice(0, 5)}`}</p>
+                  <button onClick={deleteAttendanthandler}>
+                    <CloseIcon />
+                  </button>
+                </>
               ) : null}
             </li>
           );
