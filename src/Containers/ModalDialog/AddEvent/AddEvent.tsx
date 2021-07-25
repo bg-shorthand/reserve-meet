@@ -1,18 +1,15 @@
+import { useState, useEffect, ChangeEventHandler } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { eventsState, isOpenState, newEventState, renderEventsState } from 'state/state';
 import { calendarApi } from 'api/calendarApi';
-import ModalDialog from 'Components/ModalDialog/ModalDialog';
-import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { END_TIME } from 'const/const';
 import { DefaultProps, Events, newEvent } from 'const/type';
+import ModalDialog from 'Components/ModalDialog/ModalDialog';
+import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { ChangeEventHandler } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
-  const curUser = useRecoilValue(userState);
   const renderEvents = useRecoilValue(renderEventsState);
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
@@ -22,9 +19,7 @@ const AddEvent = ({ className }: DefaultProps) => {
 
   const endTimes = () => {
     const res: string[] = [];
-
     let temp = startTime;
-
     const nextEvent = renderEvents.find(
       event => event.startTime > startTime && event.location === `${floor}층 ${room}`,
     );
@@ -82,7 +77,6 @@ const AddEvent = ({ className }: DefaultProps) => {
         placeholder="회의 이름 (ex. 웹개발2팀 세미나)"
         onChange={setSummaryHandler}
       />
-
       <table>
         <tbody>
           <tr>
@@ -134,12 +128,16 @@ const AddEvent = ({ className }: DefaultProps) => {
         })}
       </ul>
       <button
-        disabled={newEvent.summary ? false : true}
+        disabled={newEvent.summary && !attendants.find(user => user.events.length) ? false : true}
         onClick={() => {
           insertNewEvent(newEvent);
         }}
       >
-        {newEvent.summary ? '등록' : '회의 이름을 입력하세요'}
+        {newEvent.summary
+          ? !attendants.find(user => user.events.length)
+            ? '등록'
+            : '참석 불가한 인원이 있습니다.'
+          : '회의 이름을 입력하세요'}
       </button>
     </ModalDialog>
   ) : null;
