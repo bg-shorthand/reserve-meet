@@ -119,7 +119,7 @@ const AddEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
-      <StyledSearchUser setAttendants={setAttendants} />
+      <StyledSearchUser setAttendants={setAttendants} attendants={attendants} />
       <ul>
         {attendants.map(user => {
           const { name, events } = user;

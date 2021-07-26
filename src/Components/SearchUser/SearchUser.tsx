@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { newEventState } from 'state/state';
 import peopleApi from 'api/peopleApi';
 import { calendarApi } from 'api/calendarApi';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import { DefaultProps, Events } from 'const/type';
 
 interface Props extends DefaultProps {
@@ -16,9 +16,10 @@ interface Props extends DefaultProps {
       }[]
     >
   >;
+  attendants: { name: string; events: Events }[];
 }
 
-const SearchUser = ({ className, setAttendants }: Props) => {
+const SearchUser = ({ className, attendants, setAttendants }: Props) => {
   const [searchResert, setSearchResert] = useState<{ email: string; photo: string }[]>([]);
 
   const [newEvent] = useRecoilState(newEventState);
@@ -55,6 +56,7 @@ const SearchUser = ({ className, setAttendants }: Props) => {
       creatorEmail: event.creator?.email || '',
     }))!;
 
+    if (attendants.find(user => user.name === email)) return;
     if (events) {
       setAttendants(pre => [...pre, { name: email!, events: events }]);
     }
@@ -69,7 +71,7 @@ const SearchUser = ({ className, setAttendants }: Props) => {
         type="text"
         id="searchUserInput"
         placeholder="참석자 이름을 입력하세요"
-        onChange={_.debounce(searchUserHandler, 200)}
+        onChange={debounce(searchUserHandler, 200)}
         autoComplete="off"
       />
       {searchResert.length ? (
