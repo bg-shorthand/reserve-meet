@@ -19,6 +19,7 @@ const calendarApi = {
     if (GoogleAuth) {
       return await gapi.client.calendar.events.insert({
         calendarId,
+        sendNotifications: true,
         resource: {
           start: {
             dateTime: startDate + 'T' + startTime + ':00+09:00',
