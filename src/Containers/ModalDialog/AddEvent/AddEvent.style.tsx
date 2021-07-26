@@ -41,6 +41,20 @@ const StyledAddEvent = styled(AddEvent)`
     }
   }
 
+  .imposible {
+    color: red;
+  }
+
+  & li {
+    position: relative;
+
+    & button {
+      position: absolute;
+      top: -3px;
+      right: 5px;
+    }
+  }
+
   & li > button,
   & li > button * {
     margin: 0;

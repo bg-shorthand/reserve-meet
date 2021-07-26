@@ -67,6 +67,7 @@ const AddEvent = ({ className }: DefaultProps) => {
 
   useEffect(() => {
     setAttendants([]);
+    setNewEvent(pre => ({ ...pre, summary: '' }));
   }, [isOpen]);
 
   useEffect(() => {
@@ -124,18 +125,18 @@ const AddEvent = ({ className }: DefaultProps) => {
           const { name, events } = user;
 
           return (
-            <li key={name} id={name}>
+            <li key={name} id={name} className={events.length ? 'imposible' : ''}>
               <p>{name}</p>
               {events.length ? (
                 <>
                   <p>{`${events[0].summary} ${events[0].startTime
                     .split('T')[1]
                     .slice(0, 5)}~${events[0].endTime.split('T')[1].slice(0, 5)}`}</p>
-                  <button onClick={deleteAttendanthandler}>
-                    <CloseIcon />
-                  </button>
                 </>
               ) : null}
+              <button onClick={deleteAttendanthandler}>
+                <CloseIcon />
+              </button>
             </li>
           );
         })}
