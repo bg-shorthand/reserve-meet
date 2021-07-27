@@ -15,7 +15,7 @@ const Dialog = ({ className, children }: DefaultProps) => {
 };
 
 const StyledDialog = styled(Dialog)`
-  width: 300px;
+  width: 500px;
   background-color: ${COLORS.GRAY_LEVEL_1};
   padding: 50px;
   border-radius: 10px;
