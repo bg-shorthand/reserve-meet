@@ -25,29 +25,28 @@ const StyledTable = styled(Table)`
         : 'none';
     }};
     width: 100%;
-    height: ${props => {
+    top: ${props => {
       let height = 0;
       const curDate = useRecoilValue(curDateState);
       const current = new Date().getTime() + 1000 * 60 * 60 * 9;
       const curHour = props.curTime.getHours();
       const curMin = props.curTime.getMinutes();
+      console.log(curHour, curMin);
       height =
         curDate < new Date(current).toISOString().slice(0, 10)
           ? 489
           : curHour >= END_TIME
           ? 489
           : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * 35 - 1;
-      return height + 'px';
+      return (height < 0 ? 0 + 35 : height + 35) + 'px';
     }};
     border-bottom: 1px solid red;
     position: absolute;
-    z-index: 99;
-    background: rgba(203, 241, 245, 0.01);
-    backdrop-filter: blur(2px);
   }
 
   td {
     position: relative;
+    cursor: pointer;
   }
 
   & th,
