@@ -46,6 +46,9 @@ const AddEvent = ({ className }: DefaultProps) => {
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
   };
+  const setDescriptionHandler: ChangeEventHandler<HTMLTextAreaElement> = e => {
+    setNewEvent(pre => ({ ...pre, description: e.currentTarget.value }));
+  };
   const deleteAttendanthandler: MouseEventHandler<HTMLButtonElement> = e => {
     const target = e.target as Element;
     if (target.closest('li')) {
@@ -85,6 +88,14 @@ const AddEvent = ({ className }: DefaultProps) => {
         id="newEventSummary"
         placeholder="회의 이름 (ex. 웹개발2팀 세미나)"
         onChange={setSummaryHandler}
+      />
+      <label htmlFor="newEventDiscription"></label>
+      <textarea
+        name="newEventDiscription"
+        id="newEventDiscription"
+        rows={10}
+        placeholder="회의 내용"
+        onChange={setDescriptionHandler}
       />
       <table>
         <tbody>

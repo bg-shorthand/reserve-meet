@@ -14,8 +14,18 @@ const calendarApi = {
     }
   },
   async insertEvent(newEvent: newEvent) {
-    const { calendarId, summary, floor, room, startDate, startTime, endDate, endTime, attendees } =
-      newEvent;
+    const {
+      calendarId,
+      summary,
+      floor,
+      room,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      attendees,
+      description,
+    } = newEvent;
     if (GoogleAuth) {
       return await gapi.client.calendar.events.insert({
         calendarId,
@@ -32,6 +42,7 @@ const calendarApi = {
           summary,
           location: floor + '층 ' + room,
           attendees,
+          description,
         },
       });
     }

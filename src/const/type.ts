@@ -25,6 +25,7 @@ type Calendars = Calendar[];
 type newEvent = {
   calendarId: string;
   summary: string;
+  description: string;
   floor: string;
   room: string;
   startDate: string;

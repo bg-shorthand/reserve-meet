@@ -53,6 +53,7 @@ const newEventState = atom({
   default: {
     calendarId: '',
     summary: '',
+    description: '',
     floor: '',
     room: '',
     startDate: '',
