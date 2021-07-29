@@ -42,7 +42,9 @@ const StyledAddEvent = styled(AddEvent)`
   }
 
   .imposible {
-    color: red;
+    span {
+      color: red;
+    }
   }
 
   & li {

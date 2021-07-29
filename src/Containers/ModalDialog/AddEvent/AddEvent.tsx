@@ -137,12 +137,12 @@ const AddEvent = ({ className }: DefaultProps) => {
 
           return (
             <li key={name} id={name} className={events.length ? 'imposible' : ''}>
-              <p>{name}</p>
-              {events.length ? (
-                <>
-                  <p>{`${events[0].summary} ${events[0].startTime}~${events[0].endTime}`}</p>
-                </>
-              ) : null}
+              <p>
+                {name}{' '}
+                {events.length ? (
+                  <span>{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
+                ) : null}
+              </p>
               <button onClick={deleteAttendanthandler}>
                 <CloseIcon />
               </button>
