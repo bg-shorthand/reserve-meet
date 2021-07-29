@@ -1,16 +1,33 @@
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { DefaultProps } from 'const/type';
+import { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { isOpenState, userState, viewEventState } from 'state/state';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isOpenState, newEventState, userState, viewEventState } from 'state/state';
 
 const ViewEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).viewEvent;
   const viewEvent = useRecoilValue(viewEventState);
   const curUserId = useRecoilValue(userState).email;
+  const setIsOpen = useSetRecoilState(isOpenState);
+  const setNewEvent = useSetRecoilState(newEventState);
 
   const [isCreator, setIsCreator] = useState(false);
 
+  const setPatchEventHandler: MouseEventHandler<Element> = () => {
+    setNewEvent(pre => ({
+      ...pre,
+      description: viewEvent?.description || '',
+      floor: viewEvent?.location.split(' ')[0] || '',
+      room: viewEvent?.location.split(' ')[1] || '',
+      startDate: viewEvent?.date || '',
+      startTime: viewEvent?.startTime || '',
+      endDate: viewEvent?.date || '',
+      endTime: viewEvent?.endTime || '',
+      attendees: viewEvent?.attendees?.map(user => ({ email: user.email! }))!,
+    }));
+    setIsOpen(pre => ({ ...pre, viewEvent: false, patchEvent: true }));
+  };
   useEffect(() => {
     setIsCreator(viewEvent?.creatorEmail === curUserId);
   }, [viewEvent]);
@@ -49,7 +66,7 @@ const ViewEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
-      {isCreator ? <button>수정</button> : null}
+      {isCreator ? <button onClick={setPatchEventHandler}>수정</button> : null}
     </ModalDialog>
   ) : null;
 };

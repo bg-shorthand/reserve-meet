@@ -85,6 +85,7 @@ const isOpenState = atom({
     addEvent: false,
     addCalendar: false,
     viewEvent: false,
+    patchEvent: false,
   },
 });
 
