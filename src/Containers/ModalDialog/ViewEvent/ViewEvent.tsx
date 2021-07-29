@@ -19,7 +19,7 @@ const ViewEvent = ({ className }: DefaultProps) => {
     setNewEvent(pre => ({
       ...pre,
       description: viewEvent?.description || '',
-      floor: viewEvent?.location.split(' ')[0] || '',
+      floor: viewEvent?.location.split(' ')[0].match(/[0-9]+/)![0] || '',
       room: viewEvent?.location.split(' ')[1] || '',
       startDate: viewEvent?.date || '',
       startTime: viewEvent?.startTime || '',
