@@ -71,7 +71,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   useEffect(() => {
     setAttendants([]);
     setNewEvent(pre => ({ ...pre, summary: '' }));
-  }, [isOpen]);
+  }, [isOpen.addEvent]);
 
   useEffect(() => {
     setNewEvent(pre => ({ ...pre, attendees: attendants.map(user => ({ email: user.name })) }));

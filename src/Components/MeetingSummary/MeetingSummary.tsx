@@ -6,6 +6,7 @@ import {
   curDateState,
   eventsState,
   isOpenState,
+  newEventState,
   renderEventsState,
   userState,
   viewEventIdState,
@@ -32,6 +33,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const setEvents = useSetRecoilState(eventsState);
   const setIsOpen = useSetRecoilState(isOpenState);
   const setViewEventId = useSetRecoilState(viewEventIdState);
+  const setNewEvent = useSetRecoilState(newEventState);
 
   const params = useParams() as { calId: string };
   const calendarId = params.calId.slice(1);
@@ -47,6 +49,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
     const target = e.target as Element;
     if (target.matches('button, button *')) return;
 
+    setNewEvent(pre => ({ ...pre, calendarId, summary }));
     setViewEventId(eventId);
     setIsOpen(pre => ({ ...pre, viewEvent: true }));
   };
