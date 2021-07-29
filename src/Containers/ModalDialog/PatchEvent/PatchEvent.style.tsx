@@ -63,6 +63,10 @@ const StyledPatchEvent = styled(PatchEvent)`
   & > button {
     margin: 0;
   }
+
+  & textarea {
+    resize: none;
+  }
 `;
 
 export default StyledPatchEvent;

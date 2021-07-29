@@ -65,6 +65,10 @@ const StyledAddEvent = styled(AddEvent)`
   & > button {
     margin: 0;
   }
+
+  & textarea {
+    resize: none;
+  }
 `;
 
 export default StyledAddEvent;
