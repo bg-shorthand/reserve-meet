@@ -43,7 +43,9 @@ const PatchEvent = ({ className }: DefaultProps) => {
   };
 
   useEffect(() => {
-    setAttendants(attendees.map(user => ({ name: user.email, events: [] })));
+    if (attendants.length) {
+      setAttendants(attendees.map(user => ({ name: user.email, events: [] })));
+    }
   }, [isOpen]);
 
   useEffect(() => {
