@@ -31,7 +31,6 @@ const StyledTable = styled(Table)`
       const current = new Date().getTime() + 1000 * 60 * 60 * 9;
       const curHour = props.curTime.getHours();
       const curMin = props.curTime.getMinutes();
-      console.log(curHour, curMin);
       height =
         curDate < new Date(current).toISOString().slice(0, 10)
           ? 489
@@ -42,6 +41,7 @@ const StyledTable = styled(Table)`
     }};
     border-bottom: 1px solid red;
     position: absolute;
+    z-index: 99;
   }
 
   td {
@@ -68,6 +68,10 @@ const StyledTable = styled(Table)`
 
   & tr th:first-child {
     width: 100px;
+  }
+
+  & article {
+    cursor: pointer;
   }
 `;
 
