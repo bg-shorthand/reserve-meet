@@ -1,4 +1,6 @@
-const createEventsFromAsyncRes = (items: gapi.client.calendar.Event[]) => {
+import { Events } from 'const/type';
+
+const createEventsFromAsyncRes = (items: gapi.client.calendar.Event[]): Events => {
   const newEvents = items.map(
     ({ id, summary, location, start, end, creator, description, attendees }) => ({
       id: id || '',
