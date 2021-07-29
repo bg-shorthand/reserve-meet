@@ -48,6 +48,21 @@ const renderEventsState = selector({
     ),
 });
 
+const viewEventIdState = atom({
+  key: 'viewEventIdState',
+  default: '',
+});
+
+const viewEventState = selector({
+  key: 'viewEventState',
+  get: ({ get }) => {
+    const renderEvents = get(renderEventsState);
+    const viewEventId = get(viewEventIdState);
+
+    return renderEvents.find(event => event.id === viewEventId);
+  },
+});
+
 const newEventState = atom({
   key: 'newEventState',
   default: {
@@ -69,6 +84,7 @@ const isOpenState = atom({
   default: {
     addEvent: false,
     addCalendar: false,
+    viewEvent: false,
   },
 });
 
@@ -80,6 +96,8 @@ export {
   curDateState,
   eventsState,
   renderEventsState,
+  viewEventIdState,
+  viewEventState,
   newEventState,
   isOpenState,
 };

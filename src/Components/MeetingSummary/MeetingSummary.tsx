@@ -2,7 +2,14 @@ import { useEffect, useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { curDateState, eventsState, renderEventsState, userState } from 'state/state';
+import {
+  curDateState,
+  eventsState,
+  isOpenState,
+  renderEventsState,
+  userState,
+  viewEventIdState,
+} from 'state/state';
 import { calendarApi } from 'api/calendarApi';
 import { DefaultProps } from 'const/type';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
@@ -23,6 +30,8 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const curDate = useRecoilValue(curDateState);
   const curUser = useRecoilValue(userState);
   const setEvents = useSetRecoilState(eventsState);
+  const setIsOpen = useSetRecoilState(isOpenState);
+  const setViewEventId = useSetRecoilState(viewEventIdState);
 
   const params = useParams() as { calId: string };
   const calendarId = params.calId.slice(1);
@@ -33,6 +42,10 @@ const MeetingSummary = ({ time, room, className }: Props) => {
 
     const newEvents = await getEventsAsync(calendarId, curDate);
     newEvents && setEvents([...newEvents]);
+  };
+  const openViewEvent = () => {
+    setViewEventId(eventId);
+    setIsOpen(pre => ({ ...pre, viewEvent: true }));
   };
 
   useEffect(() => {
@@ -53,7 +66,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   }, [renderEvents, room, time]);
 
   return hasMeeting ? (
-    <article className={className} id={eventId}>
+    <article className={className} id={eventId} onClick={openViewEvent}>
       {summary}
       {isCreator ? (
         <button onClick={deleteEventHandler}>
