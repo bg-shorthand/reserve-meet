@@ -6,6 +6,7 @@ import peopleApi from 'api/peopleApi';
 import { calendarApi } from 'api/calendarApi';
 import debounce from 'lodash/debounce';
 import { DefaultProps, Events } from 'const/type';
+import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 interface Props extends DefaultProps {
   setAttendants: React.Dispatch<
@@ -46,19 +47,14 @@ const SearchUser = ({ className, attendants, setAttendants }: Props) => {
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);
-    const events: Events = res?.result.items?.map(event => ({
-      id: event.id || '',
-      summary: event.summary || '',
-      location: event.location || '',
-      date: event.start?.date || '',
-      startTime: event.start?.dateTime || '',
-      endTime: event.end?.dateTime || '',
-      creatorEmail: event.creator?.email || '',
-    }))!;
 
-    if (attendants.find(user => user.name === email)) return;
-    if (events) {
-      setAttendants(pre => [...pre, { name: email!, events: events }]);
+    if (res && res.result.items) {
+      const events = createEventsFromAsyncRes(res.result.items);
+
+      if (attendants.find(user => user.name === email)) return;
+      if (events) {
+        setAttendants(pre => [...pre, { name: email!, events: events }]);
+      }
     }
   };
 

@@ -11,6 +11,8 @@ type Event = {
   startTime: string;
   endTime: string;
   creatorEmail: string;
+  description: string;
+  attendees: gapi.client.calendar.EventAttendee[] | undefined;
 };
 
 type Events = Event[];
