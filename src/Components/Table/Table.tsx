@@ -6,6 +6,7 @@ import { DefaultProps } from 'const/type';
 import { COLORS, TIME_TABLE } from 'const/const';
 import StyledMeetingSummary from 'Components/MeetingSummary/MeetingSummary.style';
 import { useEffect } from 'react';
+import addPrefix0 from 'module/addPrefix0';
 
 interface props extends DefaultProps {
   rooms: string[];
@@ -23,11 +24,9 @@ const Table = ({ className, rooms }: props) => {
   const today =
     new Date().getFullYear() +
     '-' +
-    (new Date().getMonth() + 1 < 10
-      ? '0' + (new Date().getMonth() + 1)
-      : new Date().getMonth() + 1) +
+    addPrefix0(new Date().getMonth() + 1) +
     '-' +
-    new Date().getDate();
+    addPrefix0(new Date().getDate());
   const curHour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours();
   const curMin = new Date().getMinutes();
 
@@ -36,7 +35,7 @@ const Table = ({ className, rooms }: props) => {
 
     if (target.matches('article, article *')) return;
     if (curDate < today) return;
-    if (target.id.slice(0, 5) < curHour + ':' + curMin) return;
+    if (curDate === today && target.id.slice(0, 5) < curHour + ':' + curMin) return;
 
     setNewEvent(pre => ({
       ...pre,
@@ -61,7 +60,7 @@ const Table = ({ className, rooms }: props) => {
     $td?.forEach(td => {
       if (curDate < today) {
         td.setAttribute('style', 'background-color: rgba(219, 216, 216, 0.2); cursor: not-allowed');
-      } else if (td.id.slice(0, 5) < curHour + ':' + curMin) {
+      } else if (curDate === today && td.id.slice(0, 5) < curHour + ':' + curMin) {
         td.setAttribute('style', 'background-color: rgba(219, 216, 216, 0.2); cursor: not-allowed');
       }
     });
@@ -71,11 +70,7 @@ const Table = ({ className, rooms }: props) => {
       const $td = $table?.querySelectorAll('td');
 
       $td?.forEach(td => {
-        if (curDate < today) {
-          td.setAttribute('style', `background-color: ${COLORS.GRAY_LEVEL_1}`);
-        } else if (td.id.slice(0, 5) < curHour + ':' + curMin) {
-          td.setAttribute('style', `background-color: ${COLORS.GRAY_LEVEL_1}`);
-        }
+        td.setAttribute('style', `background-color: ${COLORS.GRAY_LEVEL_1}`);
       });
     };
   });
