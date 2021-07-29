@@ -1,13 +1,13 @@
 import StyledAddevent from 'Containers/ModalDialog/AddEvent/AddEvent.style';
 import AddCalendar from 'Containers/ModalDialog/AddCalendar/AddCalendar';
-import ViewEvent from 'Containers/ModalDialog/ViewEvent/ViewEvent';
+import StyledViewEvent from 'Containers/ModalDialog/ViewEvent/ViewEvent.style';
 
 const ModalDialogs = () => {
   return (
     <>
       <StyledAddevent />
       <AddCalendar />
-      <ViewEvent />
+      <StyledViewEvent />
     </>
   );
 };

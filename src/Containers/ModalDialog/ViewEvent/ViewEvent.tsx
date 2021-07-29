@@ -1,9 +1,10 @@
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
+import { DefaultProps } from 'const/type';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { isOpenState, userState, viewEventState } from 'state/state';
 
-const ViewEvent = () => {
+const ViewEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).viewEvent;
   const viewEvent = useRecoilValue(viewEventState);
   const curUserId = useRecoilValue(userState).email;
@@ -15,7 +16,7 @@ const ViewEvent = () => {
   }, [viewEvent]);
 
   return isOpen ? (
-    <ModalDialog>
+    <ModalDialog className={className}>
       <h1>{viewEvent?.summary}</h1>
       <pre>{`${viewEvent?.description}`}</pre>
       <table>
