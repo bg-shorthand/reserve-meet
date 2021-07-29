@@ -1,5 +1,6 @@
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { DefaultProps } from 'const/type';
+import addPrefix0 from 'module/addPrefix0';
 import { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -29,7 +30,18 @@ const ViewEvent = ({ className }: DefaultProps) => {
     setIsOpen(pre => ({ ...pre, viewEvent: false, patchEvent: true }));
   };
   useEffect(() => {
-    setIsCreator(viewEvent?.creatorEmail === curUserId);
+    const cur = new Date();
+    const curYear = cur.getFullYear();
+    const curMonth = addPrefix0(cur.getMonth() + 1);
+    const curDate = addPrefix0(cur.getDate());
+    const curHour = addPrefix0(cur.getHours());
+    const curMin = addPrefix0(cur.getMinutes());
+
+    const isOld =
+      viewEvent?.date! < `${curYear}-${curMonth}-${curDate}` ||
+      (viewEvent?.date === `${curYear}-${curMonth}-${curDate}` &&
+        viewEvent.startTime < `${curHour}:${curMin}`);
+    setIsCreator(!isOld && viewEvent?.creatorEmail === curUserId);
   }, [viewEvent]);
 
   return isOpen ? (
