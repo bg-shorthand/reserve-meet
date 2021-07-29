@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     border: none;
     background-color: transparent;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
   h1 {
     font-size: 2rem;

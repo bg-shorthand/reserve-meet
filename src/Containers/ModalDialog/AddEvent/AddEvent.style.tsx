@@ -62,10 +62,6 @@ const StyledAddEvent = styled(AddEvent)`
 
   & > button {
     margin: 0;
-    cursor: ${() => {
-      const newEvent = useRecoilValue(newEventState);
-      return newEvent.summary ? 'pointer' : 'not-allowed';
-    }};
   }
 `;
 
