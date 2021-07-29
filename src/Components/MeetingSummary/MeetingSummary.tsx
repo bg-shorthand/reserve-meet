@@ -25,6 +25,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const [hasMeeting, setHasMeeting] = useState(false);
   const [summary, setSummary] = useState('');
   const [isCreator, setIsCreator] = useState(false);
+  const [isOld, setIsOld] = useState(false);
   const [eventId, setEventId] = useState('');
 
   const renderEvents = useRecoilValue(renderEventsState);
@@ -62,8 +63,13 @@ const MeetingSummary = ({ time, room, className }: Props) => {
       setHasMeeting(true);
       setSummary(event.summary);
       setEventId(event.id);
+      setIsCreator(event.creatorEmail === curUser.email);
 
-      if (event.creatorEmail === curUser.email) setIsCreator(true);
+      const cur = new Date(new Date().getTime() + 1000 * 60 * 60 * 9).toISOString();
+      const curDate = cur.slice(0, 10);
+      const curTime = cur.slice(11, 16);
+      if (event.date < curDate) setIsOld(true);
+      else if (event.date === curDate && event.startTime < curTime) setIsOld(true);
     }
 
     return () => {
@@ -74,7 +80,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   return hasMeeting ? (
     <article className={className} id={eventId} onClick={openViewEventHandler}>
       {summary}
-      {isCreator ? (
+      {!isOld && isCreator ? (
         <button onClick={deleteEventHandler}>
           <CloseIcon />
         </button>
