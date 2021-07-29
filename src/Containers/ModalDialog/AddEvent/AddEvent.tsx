@@ -140,9 +140,7 @@ const AddEvent = ({ className }: DefaultProps) => {
               <p>{name}</p>
               {events.length ? (
                 <>
-                  <p>{`${events[0].summary} ${events[0].startTime
-                    .split('T')[1]
-                    .slice(0, 5)}~${events[0].endTime.split('T')[1].slice(0, 5)}`}</p>
+                  <p>{`${events[0].summary} ${events[0].startTime}~${events[0].endTime}`}</p>
                 </>
               ) : null}
               <button onClick={deleteAttendanthandler}>
