@@ -43,7 +43,10 @@ const MeetingSummary = ({ time, room, className }: Props) => {
     const newEvents = await getEventsAsync(calendarId, curDate);
     newEvents && setEvents([...newEvents]);
   };
-  const openViewEvent = () => {
+  const openViewEventHandler: MouseEventHandler<Element> = e => {
+    const target = e.target as Element;
+    if (target.matches('button, button *')) return;
+
     setViewEventId(eventId);
     setIsOpen(pre => ({ ...pre, viewEvent: true }));
   };
@@ -66,7 +69,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   }, [renderEvents, room, time]);
 
   return hasMeeting ? (
-    <article className={className} id={eventId} onClick={openViewEvent}>
+    <article className={className} id={eventId} onClick={openViewEventHandler}>
       {summary}
       {isCreator ? (
         <button onClick={deleteEventHandler}>
