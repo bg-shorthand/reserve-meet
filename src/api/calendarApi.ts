@@ -55,6 +55,41 @@ const calendarApi = {
       });
     }
   },
+  async patchEvent(eventId: string, newEvent: newEvent) {
+    const {
+      calendarId,
+      summary,
+      floor,
+      room,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      attendees,
+      description,
+    } = newEvent;
+
+    if (GoogleAuth) {
+      return await gapi.client.calendar.events.patch({
+        calendarId,
+        eventId,
+        resource: {
+          start: {
+            dateTime: startDate + 'T' + startTime + ':00+09:00',
+            timeZone: 'Asia/Seoul',
+          },
+          end: {
+            dateTime: endDate + 'T' + endTime + ':00+09:00',
+            timeZone: 'Asia/Seoul',
+          },
+          summary,
+          location: floor + '층 ' + room,
+          attendees,
+          description,
+        },
+      });
+    }
+  },
   async getCalendarList() {
     if (GoogleAuth) {
       return await gapi.client.calendar.calendarList.list({});
