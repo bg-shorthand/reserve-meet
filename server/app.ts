@@ -14,6 +14,7 @@ mongoose
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 
-app.use('/admin', require('./route.ts'));
+app.use('/admin', require('./admin/route.ts'));
+app.use('/room', require('./room/route.ts'));
 
 app.listen(4001, () => console.log(`Server listening on port 4001`));
