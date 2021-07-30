@@ -45,7 +45,7 @@ routerRoom.put('/:floor', async (req, res) => {
 });
 routerRoom.delete('/:floor', async (req, res) => {
   try {
-    await Room.deletefloor(req.params.floor);
+    await Room.deleteFloor(req.params.floor);
     const rooms = await Room.findAll();
     if (!rooms.length) return res.status(404).send({ err: 'Room not found' });
     res.send(rooms);
