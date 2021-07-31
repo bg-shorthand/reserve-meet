@@ -1,4 +1,4 @@
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from './createEventsFromAsyncRes';
 import getDate from './getDate';
 

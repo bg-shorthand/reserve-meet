@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, renderEventsState } from 'state/state';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import { END_TIME } from 'const/const';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { calendarListState, isOpenState } from 'state/state';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import { MouseEventHandler } from 'react';
 
 const CalendarList = () => {

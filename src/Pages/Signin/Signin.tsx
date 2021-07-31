@@ -1,4 +1,4 @@
-import authApi from 'api/authApi';
+import authApi from 'api/googleLib/authApi';
 import { DefaultProps } from 'const/type';
 import { useHistory } from 'react-router-dom';
 

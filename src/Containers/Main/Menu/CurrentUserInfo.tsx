@@ -1,4 +1,4 @@
-import { userApi } from 'api/userApi';
+import { userApi } from 'api/googleLib/userApi';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from 'state/state';

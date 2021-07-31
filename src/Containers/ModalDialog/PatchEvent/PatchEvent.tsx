@@ -6,7 +6,7 @@ import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import { ChangeEventHandler } from 'react';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 const PatchEvent = ({ className }: DefaultProps) => {

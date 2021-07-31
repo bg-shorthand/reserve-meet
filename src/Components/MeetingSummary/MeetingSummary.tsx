@@ -11,7 +11,7 @@ import {
   userState,
   viewEventIdState,
 } from 'state/state';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps } from 'const/type';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import getEventsAsync from 'module/getEventsAsync';

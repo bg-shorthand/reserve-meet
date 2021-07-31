@@ -1,4 +1,4 @@
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { ChangeEventHandler } from 'react';
 import { MouseEventHandler } from 'react';

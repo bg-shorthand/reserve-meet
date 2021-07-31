@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DefaultProps, Events } from 'const/type';
 import { useEffect } from 'react';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import getDate from 'module/getDate';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'state/state';

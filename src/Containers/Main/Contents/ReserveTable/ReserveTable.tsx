@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { calendarApi } from 'api/calendarApi';
+import { calendarApi } from 'api/googleLib/calendarApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, eventsState, roomsState } from 'state/state';
 import { DefaultProps } from 'const/type';

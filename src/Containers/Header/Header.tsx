@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import authApi from 'api/authApi';
+import authApi from 'api/googleLib/authApi';
 import { DefaultProps } from 'const/type';
 
 const Header = ({ className }: DefaultProps) => {
