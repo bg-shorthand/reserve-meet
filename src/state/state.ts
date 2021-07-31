@@ -4,7 +4,7 @@ import createRoomsArray from 'module/createRoomsArray';
 
 const userState = atom({
   key: 'userState',
-  default: { name: '', imageUrl: '', email: '' },
+  default: { name: '', imageUrl: '', email: '', admin: false },
 });
 
 const calendarListState = atom({
