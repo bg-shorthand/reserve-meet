@@ -1,3 +1,4 @@
+import adminApi from 'api/db/adminApi';
 import { userApi } from 'api/googleLib/userApi';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -17,7 +18,16 @@ const CurrentUserInfo = () => {
         const name = profile.getName();
         const imageUrl = profile.getImageUrl();
         const email = profile.getEmail();
-        setUser(pre => ({ ...pre, name, imageUrl, email }));
+
+        const res = await adminApi.get();
+        const admins = (await res.data) as { id: 'string'; email: 'string' }[];
+
+        setUser({
+          name,
+          imageUrl,
+          email,
+          admin: !!admins.find(admin => admin.email === email),
+        });
       } else {
         timerId = setTimeout(getProfile, 100);
       }
