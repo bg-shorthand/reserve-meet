@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { curDateState, eventsState, roomsState } from 'state/state';
+import { curDateState, eventsState, roomsPerFloorState } from 'state/state';
 import { DefaultProps } from 'const/type';
 import getDate from 'module/getDate';
 import StyledTable from 'Components/Table/Table.style';
@@ -17,7 +17,7 @@ type params = {
 const ReserveTable = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
   const curDate = useRecoilValue(curDateState);
-  const rooms = useRecoilValue(roomsState);
+  const rooms = useRecoilValue(roomsPerFloorState);
 
   const params: params = useParams();
   const calId = params.calId.slice(1);

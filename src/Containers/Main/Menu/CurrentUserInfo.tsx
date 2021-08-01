@@ -1,11 +1,11 @@
-import adminApi from 'api/db/adminApi';
 import { userApi } from 'api/googleLib/userApi';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { userState } from 'state/state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { adminsState, userState } from 'state/state';
 
 const CurrentUserInfo = () => {
   const [user, setUser] = useRecoilState(userState);
+  const admins = useRecoilValue(adminsState);
   const { name, imageUrl } = user;
 
   useEffect(() => {
@@ -18,9 +18,6 @@ const CurrentUserInfo = () => {
         const name = profile.getName();
         const imageUrl = profile.getImageUrl();
         const email = profile.getEmail();
-
-        const res = await adminApi.get();
-        const admins = (await res.data) as { id: 'string'; email: 'string' }[];
 
         setUser({
           name,

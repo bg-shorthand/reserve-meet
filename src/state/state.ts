@@ -1,10 +1,23 @@
 import { atom, selector } from 'recoil';
 import { Calendars, Events } from 'const/type';
 import roomApi from 'api/db/roomApi';
+import adminApi from 'api/db/adminApi';
 
 const userState = atom({
   key: 'userState',
   default: { name: '', imageUrl: '', email: '', admin: false },
+});
+
+const adminsState = atom({
+  key: 'adminsState',
+  default: selector({
+    key: 'adminsStateDefault',
+    get: async () => {
+      const res = await adminApi.get();
+      const admins = (await res.data) as { email: string; id: string }[];
+      return admins;
+    },
+  }),
 });
 
 const calendarListState = atom({
@@ -12,39 +25,43 @@ const calendarListState = atom({
   default: [] as Calendars,
 });
 
-const floorsState = atom({
-  key: 'floorsState',
+const roomsState = atom({
+  key: 'roomsState',
   default: selector({
-    key: 'floorsStateDefault',
+    key: 'roomsStateDefault',
     get: async () => {
       const res = await roomApi.get();
-      const rooms = (await res.data) as { floor: number; rooms: string[] }[];
-      const floors = rooms.map(room => room.floor);
-      return floors;
+      const rooms = (await res.data) as { floor: number; rooms: string[]; id: string }[];
+      return rooms;
     },
   }),
 });
 
+const floorsState = selector({
+  key: 'floorsState',
+  get: async ({ get }) => {
+    const rooms = get(roomsState);
+    return rooms.map(room => room.floor);
+  },
+});
+
 const curFloorState = atom({
-  key: 'curFloorState',
+  key: 'curfloorState',
   default: selector({
     key: 'curFloorStateDefault',
-    get: async () => {
-      const res = await roomApi.get();
-      const rooms = (await res.data) as { floor: number; rooms: string[] }[];
-      const floors = rooms.map(room => room.floor);
+    get: async ({ get }) => {
+      const floors = get(floorsState);
       return floors[0];
     },
   }),
 });
 
-const roomsState = selector({
-  key: 'roomsState',
+const roomsPerFloorState = selector({
+  key: 'roomsPerFloorState',
   get: async ({ get }) => {
+    const rooms = get(roomsState);
     const curFloor = get(curFloorState);
-    const res = await roomApi.get();
-    const rooms = (await res.data) as { floor: number; rooms: string[] }[];
-    return rooms.find(data => data.floor === curFloor)?.rooms;
+    return rooms.find(room => room.floor === curFloor)?.rooms;
   },
 });
 
@@ -114,10 +131,12 @@ const isOpenState = atom({
 
 export {
   userState,
+  adminsState,
   calendarListState,
+  roomsState,
   floorsState,
   curFloorState,
-  roomsState,
+  roomsPerFloorState,
   curDateState,
   eventsState,
   renderEventsState,
