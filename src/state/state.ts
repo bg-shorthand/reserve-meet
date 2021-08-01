@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import { Calendars, Events } from 'const/type';
-import createRoomsArray from 'module/createRoomsArray';
+import roomApi from 'api/db/roomApi';
 
 const userState = atom({
   key: 'userState',
@@ -12,16 +12,39 @@ const calendarListState = atom({
   default: [] as Calendars,
 });
 
+const floorsState = atom({
+  key: 'floorsState',
+  default: selector({
+    key: 'floorsStateDefault',
+    get: async () => {
+      const res = await roomApi.get();
+      const rooms = (await res.data) as { floor: number; rooms: string[] }[];
+      const floors = rooms.map(room => room.floor);
+      return floors;
+    },
+  }),
+});
+
 const curFloorState = atom({
   key: 'curFloorState',
-  default: 9,
+  default: selector({
+    key: 'curFloorStateDefault',
+    get: async () => {
+      const res = await roomApi.get();
+      const rooms = (await res.data) as { floor: number; rooms: string[] }[];
+      const floors = rooms.map(room => room.floor);
+      return floors[0];
+    },
+  }),
 });
 
 const roomsState = selector({
   key: 'roomsState',
-  get: ({ get }) => {
+  get: async ({ get }) => {
     const curFloor = get(curFloorState);
-    return createRoomsArray(curFloor);
+    const res = await roomApi.get();
+    const rooms = (await res.data) as { floor: number; rooms: string[] }[];
+    return rooms.find(data => data.floor === curFloor)?.rooms;
   },
 });
 
@@ -92,6 +115,7 @@ const isOpenState = atom({
 export {
   userState,
   calendarListState,
+  floorsState,
   curFloorState,
   roomsState,
   curDateState,

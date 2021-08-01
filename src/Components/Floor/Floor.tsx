@@ -1,11 +1,11 @@
 import { MouseEventHandler } from 'react';
-import { useRecoilState } from 'recoil';
-import { curFloorState } from 'state/state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { curFloorState, floorsState } from 'state/state';
 import { DefaultProps } from 'const/type';
-import { FLOORS } from 'const/const';
 
 const Floor = ({ className }: DefaultProps) => {
   const [curFloor, setCurFloor] = useRecoilState(curFloorState);
+  const floors = useRecoilValue(floorsState);
 
   const changeFloorHandler: MouseEventHandler<Element> = e => {
     setCurFloor(+e.currentTarget.id);
@@ -13,7 +13,7 @@ const Floor = ({ className }: DefaultProps) => {
 
   return (
     <ul className={className}>
-      {FLOORS.map(floor => (
+      {floors.map(floor => (
         <li
           key={floor}
           id={floor + ''}
