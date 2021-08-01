@@ -3,6 +3,7 @@ const Room = require('./model.ts');
 
 routerRoom.get('/', async (_, res) => {
   try {
+    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     const rooms = await Room.findAll();
     if (!rooms.length) return res.status(404).send({ err: 'Room not found' });
     res.send(rooms);
@@ -12,6 +13,7 @@ routerRoom.get('/', async (_, res) => {
 });
 routerRoom.get('/:floor', async (req, res) => {
   try {
+    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     const floor = req.params.floor;
     const room = await Room.findOneByFloor(floor);
     if (!room) return res.status(404).send({ err: 'Room not found' });
@@ -22,6 +24,7 @@ routerRoom.get('/:floor', async (req, res) => {
 });
 routerRoom.post('/', async (req, res) => {
   try {
+    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     // req.body === { floor: 9, rooms: ['대회의실', '중회의실', '소회의실']}
     await Room.create(req.body);
     const rooms = await Room.findAll();
@@ -33,6 +36,7 @@ routerRoom.post('/', async (req, res) => {
 });
 routerRoom.put('/:floor', async (req, res) => {
   try {
+    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     const floor = req.params.floor;
     const payload = req.body;
     await Room.updateFloor(floor, payload);
@@ -45,6 +49,7 @@ routerRoom.put('/:floor', async (req, res) => {
 });
 routerRoom.delete('/:floor', async (req, res) => {
   try {
+    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     await Room.deleteFloor(req.params.floor);
     const rooms = await Room.findAll();
     if (!rooms.length) return res.status(404).send({ err: 'Room not found' });

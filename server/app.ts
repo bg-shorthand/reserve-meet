@@ -18,3 +18,5 @@ app.use('/admin', require('./admin/route.ts'));
 app.use('/room', require('./room/route.ts'));
 
 app.listen(4001, () => console.log(`Server listening on port 4001`));
+
+module.exports = 'http://localhost:3000';
