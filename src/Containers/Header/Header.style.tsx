@@ -9,7 +9,6 @@ const StyledHeader = styled(Header)`
   justify-content: space-between;
   align-items: center;
   background-color: ${COLORS.TEAL_LEVEL_2};
-  box-shadow: 0px 5px 5px black;
 `;
 
 export default StyledHeader;
