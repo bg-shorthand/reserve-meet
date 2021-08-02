@@ -14,7 +14,7 @@ interface props extends DefaultProps {
 }
 type params = { calId: '' };
 
-const Table = ({ className, rooms }: props) => {
+const ReserveTable = ({ className, rooms }: props) => {
   const params = useParams<params>();
   const curFloor = useRecoilValue(curFloorState);
   const curDate = useRecoilValue(curDateState);
@@ -103,4 +103,4 @@ const Table = ({ className, rooms }: props) => {
   );
 };
 
-export default Table;
+export default ReserveTable;

@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, eventsState, roomsPerFloorState } from 'state/state';
 import { DefaultProps } from 'const/type';
 import getDate from 'module/getDate';
-import StyledTable from 'Components/Table/Table.style';
+import StyledReserveTable from 'Components/ReserveTable/ReserveTable.style';
 import StyledFloor from 'Components/Floor/Floor.style';
 import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
@@ -14,7 +14,7 @@ type params = {
   calId: string;
 };
 
-const ReserveTable = ({ className }: DefaultProps) => {
+const ReserveState = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
   const curDate = useRecoilValue(curDateState);
   const rooms = useRecoilValue(roomsPerFloorState);
@@ -47,9 +47,9 @@ const ReserveTable = ({ className }: DefaultProps) => {
       <h1>예약 현황</h1>
       <StyledDatePicker />
       <StyledFloor />
-      {rooms && <StyledTable rooms={rooms} curTime={new Date()} />}
+      {rooms && <StyledReserveTable rooms={rooms} curTime={new Date()} />}
     </section>
   );
 };
 
-export default ReserveTable;
+export default ReserveState;

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Table from './Table';
+import ReserveTable from './ReserveTable';
 import { useRecoilValue } from 'recoil';
 import { curDateState } from 'state/state';
 import { COLORS, END_TIME } from 'const/const';
 
-const StyledTable = styled(Table)`
+const StyledReserveTable = styled(ReserveTable)`
   width: 100%;
   border-collapse: collapse;
   margin: 0;
@@ -75,4 +75,4 @@ const StyledTable = styled(Table)`
   }
 `;
 
-export default StyledTable;
+export default StyledReserveTable;
