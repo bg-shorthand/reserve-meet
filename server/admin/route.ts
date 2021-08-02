@@ -3,7 +3,6 @@ const Admin = require('./model.ts');
 
 routerAdmin.get('/', async (_, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     const admins = await Admin.findAll();
     if (!admins.length) return res.status(404).send({ err: 'Admin not found' });
     res.send(admins);
@@ -13,7 +12,6 @@ routerAdmin.get('/', async (_, res) => {
 });
 routerAdmin.get('/:email', async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     const email = req.params.email;
     const admin = await Admin.findOneByEmail(email);
     if (!admin) return res.status(404).send({ err: 'Admin not found' });
@@ -24,8 +22,8 @@ routerAdmin.get('/:email', async (req, res) => {
 });
 routerAdmin.post('/', async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', require('../app.ts'));
-    await Admin.create(req.body);
+    req.body.map(async user => await Admin.create(user));
+    // await Admin.create(req.body);
     const admins = await Admin.findAll();
     if (!admins.length) return res.status(404).send({ err: 'Creation fail' });
     res.send(admins);
@@ -35,7 +33,6 @@ routerAdmin.post('/', async (req, res) => {
 });
 routerAdmin.delete('/:email', async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', require('../app.ts'));
     await Admin.deleteByEmail(req.params.email);
     const admins = await Admin.findAll();
     if (!admins.length) return res.status(404).send({ err: 'Admin not found' });
