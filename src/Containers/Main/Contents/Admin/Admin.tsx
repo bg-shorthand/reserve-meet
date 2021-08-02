@@ -3,16 +3,16 @@ import { adminsState, roomsState } from 'state/state';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import SearchUser from 'Components/SearchUser/SearchUser';
 import { useState } from 'react';
-import { Events } from 'const/type';
+import { DefaultProps, Events } from 'const/type';
 
-const Admin = () => {
+const Admin = ({ className }: DefaultProps) => {
   const [admins, setAdmins] = useRecoilState(adminsState);
   const [rooms, setRooms] = useRecoilState(roomsState);
 
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
 
   return (
-    <section>
+    <section className={className}>
       <h1>Admin</h1>
       <h2>관리자</h2>
       <ul>

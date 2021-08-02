@@ -6,7 +6,7 @@ import StyledWeeklySchedule from 'Containers/Main/Contents/WeeklySchedule/Weekly
 import StyledHeader from 'Containers/Header/Header.style';
 import StyledFooter from 'Containers/Footer/Footer.style';
 import StyledMain from 'Containers/Main/Main.style';
-import Admin from 'Containers/Main/Contents/Admin/Admin';
+import StyledAdmin from 'Containers/Main/Contents/Admin/Admin.style';
 
 const Index = () => {
   return (
@@ -17,7 +17,7 @@ const Index = () => {
         <Switch>
           <Route exact path={'/'} component={StyledWeeklySchedule} />
           <Route path={'/reserve-state/:calId'} component={StyledReserveTable} />
-          <Route path={'/admin'} component={Admin} />
+          <Route path={'/admin'} component={StyledAdmin} />
           <Redirect to={'/'} />
         </Switch>
       </StyledMain>
