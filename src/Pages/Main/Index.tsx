@@ -1,6 +1,6 @@
 import { Route } from 'react-router';
 import { Switch, Redirect } from 'react-router-dom';
-import StyledReserveState from 'Containers/Main/Contents/ReserveState/ReserveTable.style';
+import StyledReserveState from 'Containers/Main/Contents/ReserveState/ReserveState.style';
 import StyledMenu from 'Containers/Main/Menu/Menu.style';
 import StyledWeeklySchedule from 'Containers/Main/Contents/WeeklySchedule/WeeklySchedule.style';
 import StyledHeader from 'Containers/Header/Header.style';
