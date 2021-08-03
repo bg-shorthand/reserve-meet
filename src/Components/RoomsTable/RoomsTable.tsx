@@ -1,12 +1,13 @@
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import { DefaultProps } from 'const/type';
 import { useRecoilState } from 'recoil';
 import { roomsState } from 'state/state';
 
-const RoomsTable = () => {
+const RoomsTable = ({ className }: DefaultProps) => {
   const [rooms, setRooms] = useRecoilState(roomsState);
 
   return (
-    <>
+    <article className={className}>
       <table>
         <thead>
           <tr>
@@ -31,8 +32,8 @@ const RoomsTable = () => {
                             </li>
                           ))
                         : null}
-                      <li>회의실 추가</li>
                     </ul>
+                    <button>회의실 추가</button>
                   </td>
                 </tr>
               ))
@@ -41,7 +42,7 @@ const RoomsTable = () => {
       </table>
       <button>회의실 추가</button>
       <button>수정</button>
-    </>
+    </article>
   );
 };
 

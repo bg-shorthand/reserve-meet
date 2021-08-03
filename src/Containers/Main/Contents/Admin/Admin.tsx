@@ -1,6 +1,6 @@
 import { DefaultProps } from 'const/type';
 import StyledAdminList from 'Components/AdminList/AdminList.style';
-import RoomsTable from 'Components/RoomsTable/RoomsTable';
+import StyledRoomsTable from 'Components/RoomsTable/RoomsTable.style';
 
 const Admin = ({ className }: DefaultProps) => {
   return (
@@ -9,7 +9,7 @@ const Admin = ({ className }: DefaultProps) => {
       <h2>관리자</h2>
       <StyledAdminList />
       <h2>회의실</h2>
-      <RoomsTable />
+      <StyledRoomsTable />
     </section>
   );
 };
