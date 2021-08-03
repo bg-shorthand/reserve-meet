@@ -1,16 +1,23 @@
-import { Events } from 'const/type';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { adminsState } from 'state/state';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
-import SearchUser from 'Components/SearchUser/SearchUser';
+import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { MouseEventHandler } from 'react';
 import adminApi from 'api/db/adminApi';
 
 const AdminList = () => {
   const [admins, setAdmins] = useRecoilState(adminsState);
-  const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
+  const [newAdmins, setNewAdmins] = useState<{ email: string }[]>([]);
 
+  const setNewAdminsHandler: MouseEventHandler<Element> = async e => {
+    if (
+      newAdmins.find(admin => admin.email === e.currentTarget.id) ||
+      admins.find(admin => admin.email === e.currentTarget.id)
+    )
+      return;
+    setNewAdmins(pre => [...pre, { email: e.currentTarget.id }]);
+  };
   const deleteAdminHandler: MouseEventHandler<Element> = async e => {
     const target = e.target as Element;
     const email = target.closest('li')?.textContent;
@@ -35,9 +42,9 @@ const AdminList = () => {
             ))
           : null}
       </ul>
-      <SearchUser attendants={attendants} setAttendants={setAttendants} />
+      <StyledSearchUser setList={setNewAdminsHandler} />
       <ul>
-        {attendants.length ? attendants.map(user => <li key={user.name}>{user.name}</li>) : null}
+        {newAdmins.length ? newAdmins.map(user => <li key={user.email}>{user.email}</li>) : null}
       </ul>
       <button>관리자 추가</button>
     </>
