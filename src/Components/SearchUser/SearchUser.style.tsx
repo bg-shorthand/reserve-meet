@@ -19,6 +19,7 @@ const StyledSearchUser = styled(SearchUser)`
     top: 0;
     left: 105%;
     box-shadow: 0 5px 10px ${COLORS.BLACK};
+    width: fit-content;
 
     & li {
       display: flex;
