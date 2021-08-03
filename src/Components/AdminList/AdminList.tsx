@@ -11,12 +11,14 @@ const AdminList = () => {
   const [newAdmins, setNewAdmins] = useState<{ email: string }[]>([]);
 
   const setNewAdminsHandler: MouseEventHandler<Element> = async e => {
-    if (
-      newAdmins.find(admin => admin.email === e.currentTarget.id) ||
-      admins.find(admin => admin.email === e.currentTarget.id)
-    )
-      return;
-    setNewAdmins(pre => [...pre, { email: e.currentTarget.id }]);
+    const target = e.target as Element;
+    const id = target.closest('li')?.id;
+
+    if (id) {
+      if (newAdmins.find(admin => admin.email === id) || admins.find(admin => admin.email === id))
+        return;
+      setNewAdmins(pre => [...pre, { email: id }]);
+    }
   };
   const deleteAdminHandler: MouseEventHandler<Element> = async e => {
     const target = e.target as Element;
