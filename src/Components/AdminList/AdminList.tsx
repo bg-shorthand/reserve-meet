@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { adminsState } from 'state/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { adminsState, alertContentState, isOpenState } from 'state/state';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { MouseEventHandler } from 'react';
@@ -8,6 +8,9 @@ import adminApi from 'api/db/adminApi';
 
 const AdminList = () => {
   const [admins, setAdmins] = useRecoilState(adminsState);
+  const setIsOpen = useSetRecoilState(isOpenState);
+  const setAlertContent = useSetRecoilState(alertContentState);
+
   const [newAdmins, setNewAdmins] = useState<{ email: string }[]>([]);
 
   const setNewAdminsHandler: MouseEventHandler<Element> = async e => {
@@ -24,10 +27,22 @@ const AdminList = () => {
     const target = e.target as Element;
     const email = target.closest('li')?.textContent;
     if (email) {
-      const res = await adminApi.delete(email);
-      const newAdmins = await res.data;
-      setAdmins([...newAdmins]);
+      setIsOpen(pre => ({ ...pre, alert: true }));
+      setAlertContent({
+        content: '삭제하시겠습니까?',
+        yesEvent: async () => {
+          const res = await adminApi.delete(email);
+          const newAdmins = await res.data;
+          setAdmins([...newAdmins]);
+        },
+      });
     }
+  };
+  const postAdminHandler: MouseEventHandler<Element> = async () => {
+    if (!newAdmins.length) return;
+    const res = await adminApi.post(newAdmins);
+    const data = await res.data;
+    setAdmins([...data]);
   };
 
   return (
@@ -37,18 +52,29 @@ const AdminList = () => {
           ? admins.map(admin => (
               <li key={admin._id}>
                 {admin.email}
-                <button onClick={deleteAdminHandler}>
-                  <CloseIcon />
-                </button>
+                {admins.length > 1 ? (
+                  <button onClick={deleteAdminHandler}>
+                    <CloseIcon />
+                  </button>
+                ) : null}
               </li>
             ))
           : null}
       </ul>
       <StyledSearchUser setList={setNewAdminsHandler} />
       <ul>
-        {newAdmins.length ? newAdmins.map(user => <li key={user.email}>{user.email}</li>) : null}
+        {newAdmins.length
+          ? newAdmins.map(user => (
+              <li key={user.email}>
+                {user.email}
+                <button>
+                  <CloseIcon />
+                </button>
+              </li>
+            ))
+          : null}
       </ul>
-      <button>관리자 추가</button>
+      <button onClick={postAdminHandler}>관리자 추가</button>
     </>
   );
 };
