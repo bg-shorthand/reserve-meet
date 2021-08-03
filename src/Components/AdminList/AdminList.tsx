@@ -5,8 +5,9 @@ import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { MouseEventHandler } from 'react';
 import adminApi from 'api/db/adminApi';
+import { DefaultProps } from 'const/type';
 
-const AdminList = () => {
+const AdminList = ({ className }: DefaultProps) => {
   const [admins, setAdmins] = useRecoilState(adminsState);
   const setIsOpen = useSetRecoilState(isOpenState);
   const setAlertContent = useSetRecoilState(alertContentState);
@@ -46,7 +47,7 @@ const AdminList = () => {
   };
 
   return (
-    <>
+    <article className={className}>
       <ul>
         {admins.length
           ? admins.map(admin => (
@@ -75,7 +76,7 @@ const AdminList = () => {
           : null}
       </ul>
       <button onClick={postAdminHandler}>관리자 추가</button>
-    </>
+    </article>
   );
 };
 

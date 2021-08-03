@@ -35,7 +35,7 @@ const SearchUser = ({ className, setList }: Props) => {
       <input
         type="text"
         id="searchUserInput"
-        placeholder="참석자 이름을 입력하세요"
+        placeholder="이름을 입력하세요"
         onChange={debounce(searchUserHandler, 200)}
         autoComplete="off"
       />
