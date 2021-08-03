@@ -1,30 +1,15 @@
 import { useState } from 'react';
 import { ChangeEventHandler, MouseEventHandler } from 'react';
-import { useRecoilState } from 'recoil';
-import { newEventState } from 'state/state';
 import peopleApi from 'api/googleLib/peopleApi';
-import { calendarApi } from 'api/googleLib/calendarApi';
 import debounce from 'lodash/debounce';
-import { DefaultProps, Events } from 'const/type';
-import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
+import { DefaultProps } from 'const/type';
 
 interface Props extends DefaultProps {
-  setAttendants: React.Dispatch<
-    React.SetStateAction<
-      {
-        name: string;
-        events: Events;
-      }[]
-    >
-  >;
-  attendants: { name: string; events: Events }[];
+  setList: MouseEventHandler;
 }
 
-const SearchUser = ({ className, attendants, setAttendants }: Props) => {
+const SearchUser = ({ className, setList }: Props) => {
   const [searchResert, setSearchResert] = useState<{ email: string; photo: string }[]>([]);
-
-  const [newEvent] = useRecoilState(newEventState);
-  const { startDate, startTime, endTime } = newEvent;
 
   const searchUserHandler: ChangeEventHandler<HTMLInputElement> = async e => {
     if (!e.target.value) {
@@ -39,22 +24,6 @@ const SearchUser = ({ className, attendants, setAttendants }: Props) => {
         photo: photos?.find(img => img.metadata?.source?.type === 'PROFILE')?.url || '',
       }));
       setSearchResert(newSearchResert);
-    }
-  };
-  const setAttendantsHandler: MouseEventHandler<Element> = async e => {
-    const target = e.target as Element;
-    const email = target.closest('li')?.id;
-    const start = startDate + 'T' + startTime + ':00+09:00';
-    const end = startDate + 'T' + endTime + ':00+09:00';
-    const res = await calendarApi.getEvents(email!, start, end);
-
-    if (res && res.result.items) {
-      const events = createEventsFromAsyncRes(res.result.items);
-
-      if (attendants.find(user => user.name === email)) return;
-      if (events) {
-        setAttendants(pre => [...pre, { name: email!, events: events }]);
-      }
     }
   };
 
@@ -73,7 +42,7 @@ const SearchUser = ({ className, attendants, setAttendants }: Props) => {
       {searchResert.length ? (
         <ul>
           {searchResert.map(person => (
-            <li key={person.email} id={person.email} onClick={setAttendantsHandler}>
+            <li key={person.email} id={person.email} onClick={setList}>
               {person.photo && <img src={person.photo} alt={person.email + '의 프로필'} />}
               <p>{person.email}</p>
             </li>

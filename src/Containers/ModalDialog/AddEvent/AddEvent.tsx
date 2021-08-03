@@ -67,6 +67,22 @@ const AddEvent = ({ className }: DefaultProps) => {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
   };
+  const setAttendantsHandler: MouseEventHandler<Element> = async e => {
+    const target = e.target as Element;
+    const email = target.closest('li')?.id;
+    const start = startDate + 'T' + startTime + ':00+09:00';
+    const end = startDate + 'T' + endTime + ':00+09:00';
+    const res = await calendarApi.getEvents(email!, start, end);
+
+    if (res && res.result.items) {
+      const events = createEventsFromAsyncRes(res.result.items);
+
+      if (attendants.find(user => user.name === email)) return;
+      if (events) {
+        setAttendants(pre => [...pre, { name: email!, events: events }]);
+      }
+    }
+  };
 
   useEffect(() => {
     setAttendants([]);
@@ -130,7 +146,7 @@ const AddEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
-      <StyledSearchUser setAttendants={setAttendants} attendants={attendants} />
+      <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
         {attendants.map(user => {
           const { name, events } = user;
