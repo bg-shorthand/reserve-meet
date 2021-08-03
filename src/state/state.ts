@@ -14,7 +14,7 @@ const adminsState = atom({
     key: 'adminsStateDefault',
     get: async () => {
       const res = await adminApi.get();
-      const admins = (await res.data) as { email: string; id: string }[];
+      const admins = (await res.data) as { email: string; _id: string }[];
       return admins;
     },
   }),
@@ -31,7 +31,7 @@ const roomsState = atom({
     key: 'roomsStateDefault',
     get: async () => {
       const res = await roomApi.get();
-      const rooms = (await res.data) as { floor: number; rooms: string[]; id: string }[];
+      const rooms = (await res.data) as { floor: number; rooms: string[]; _id: string }[];
       return rooms;
     },
   }),

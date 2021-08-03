@@ -33,7 +33,7 @@ const AdminList = () => {
       <ul>
         {admins.length
           ? admins.map(admin => (
-              <li key={admin.id}>
+              <li key={admin._id}>
                 {admin.email}
                 <button onClick={deleteAdminHandler}>
                   <CloseIcon />

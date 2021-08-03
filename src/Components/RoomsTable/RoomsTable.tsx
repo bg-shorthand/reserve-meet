@@ -17,13 +17,13 @@ const RoomsTable = () => {
         <tbody>
           {rooms.length
             ? rooms.map(room => (
-                <tr key={room.id}>
+                <tr key={room._id}>
                   <th>{room.floor}</th>
                   <td>
                     <ul>
                       {room.rooms.length
-                        ? room.rooms.map((room, index) => (
-                            <li key={room + index}>
+                        ? room.rooms.map(room => (
+                            <li key={room}>
                               {room}
                               <button>
                                 <CloseIcon />
