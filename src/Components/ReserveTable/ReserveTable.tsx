@@ -27,8 +27,8 @@ const ReserveTable = ({ className, rooms }: props) => {
     addPrefix0(new Date().getMonth() + 1) +
     '-' +
     addPrefix0(new Date().getDate());
-  const curHour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours();
-  const curMin = new Date().getMinutes();
+  const curHour = addPrefix0(new Date().getHours());
+  const curMin = addPrefix0(new Date().getMinutes());
 
   const setNewEventHandler: MouseEventHandler<Element> = e => {
     const target = e.target as Element;
@@ -54,6 +54,7 @@ const ReserveTable = ({ className, rooms }: props) => {
   };
 
   useEffect(() => {
+    console.log(curHour + ':' + curMin);
     const $table = document.querySelector('table');
     const $td = $table?.querySelectorAll('td');
 
