@@ -2,6 +2,7 @@ import { atom, selector } from 'recoil';
 import { Calendars, Events } from 'const/type';
 import roomApi from 'api/db/roomApi';
 import adminApi from 'api/db/adminApi';
+import { MouseEventHandler } from 'react';
 
 const userState = atom({
   key: 'userState',
@@ -126,6 +127,15 @@ const isOpenState = atom({
     addCalendar: false,
     viewEvent: false,
     patchEvent: false,
+    alert: false,
+  },
+});
+
+const alertContentState = atom({
+  key: 'alertContent',
+  default: {
+    content: '',
+    yesEvent: (() => {}) as MouseEventHandler,
   },
 });
 
@@ -144,4 +154,5 @@ export {
   viewEventState,
   newEventState,
   isOpenState,
+  alertContentState,
 };
