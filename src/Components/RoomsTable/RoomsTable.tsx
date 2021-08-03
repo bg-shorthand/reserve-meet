@@ -22,8 +22,8 @@ const RoomsTable = ({ className }: DefaultProps) => {
                   <th>{room.floor}</th>
                   <td>
                     <ul>
-                      {room.rooms.length
-                        ? room.rooms.map(room => (
+                      {room.roomsPerFloor.length
+                        ? room.roomsPerFloor.map(room => (
                             <li key={room}>
                               {room}
                               <button>

@@ -32,7 +32,7 @@ const roomsState = atom({
     key: 'roomsStateDefault',
     get: async () => {
       const res = await roomApi.get();
-      const rooms = (await res.data) as { floor: number; rooms: string[]; _id: string }[];
+      const rooms = (await res.data) as { floor: number; roomsPerFloor: string[]; _id: string }[];
       return rooms;
     },
   }),
@@ -62,7 +62,7 @@ const roomsPerFloorState = selector({
   get: async ({ get }) => {
     const rooms = get(roomsState);
     const curFloor = get(curFloorState);
-    return rooms.find(room => room.floor === curFloor)?.rooms;
+    return rooms.find(room => room.floor === curFloor)?.roomsPerFloor;
   },
 });
 
