@@ -3,7 +3,7 @@ const mongooseRoom = require('mongoose');
 const roomSchema = new mongooseRoom.Schema(
   {
     floor: { type: Number, required: true, unique: true },
-    rooms: { type: Array, required: true },
+    roomsPerFloor: { type: Array, required: true },
   },
   {
     versionKey: false,
@@ -20,8 +20,9 @@ roomSchema.statics.create = function (payload) {
   const admin = new this(payload);
   return admin.save();
 };
-roomSchema.statics.updateFloor = function (floor, payload) {
-  return this.findOneAndUpdate({ floor }, payload, { new: true });
+roomSchema.statics.updateFloor = async function (floor, roomsPerFloor) {
+  const res = await this.updateOne({ floor }, { $set: { roomsPerFloor } });
+  return res;
 };
 roomSchema.statics.deleteFloor = function (floor) {
   return this.remove({ floor });
