@@ -24,6 +24,10 @@ const AdminList = ({ className }: DefaultProps) => {
       setNewAdmins(pre => [...pre, { email: id }]);
     }
   };
+  const unsetNewAdminsHandler: MouseEventHandler<Element> = e => {
+    const target = e.currentTarget.closest('li')?.textContent;
+    setNewAdmins(pre => pre.filter(admin => admin.email !== target));
+  };
   const deleteAdminHandler: MouseEventHandler<Element> = async e => {
     const target = e.target as Element;
     const email = target.closest('li')?.textContent;
@@ -68,7 +72,7 @@ const AdminList = ({ className }: DefaultProps) => {
           ? newAdmins.map(user => (
               <li key={user.email}>
                 {user.email}
-                <button>
+                <button onClick={unsetNewAdminsHandler}>
                   <CloseIcon />
                 </button>
               </li>
