@@ -1,22 +1,22 @@
 [
   {
     "floor": 9,
-    "rooms": ["대회의실", "M2회의실", "M3회의실"]
+    "roomsPerFloor": ["대회의실", "M2회의실", "M3회의실"]
   },
   {
     "floor": 10,
-    "rooms": ["대회의실", "중회의실", "소회의실"]
+    "roomsPerFloor": ["대회의실", "중회의실", "소회의실"]
   },
   {
     "floor": 11,
-    "rooms": ["대회의실", "studio회의실"]
+    "roomsPerFloor": ["대회의실", "studio회의실"]
   },
   {
     "floor": 12,
-    "rooms": ["소1회의실", "소2회의실"]
+    "roomsPerFloor": ["소1회의실", "소2회의실"]
   },
   {
     "floor": 15,
-    "rooms": ["대회의실", "소2회의실", "소3회의실"]
+    "roomsPerFloor": ["대회의실", "소2회의실", "소3회의실"]
   }
 ]
