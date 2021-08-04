@@ -34,8 +34,8 @@ routerRoom.post('/', async (req, res) => {
 routerRoom.put('/:floor', async (req, res) => {
   try {
     const floor = req.params.floor;
-    const payload = req.body;
-    await Room.updateFloor(floor, payload);
+    const roomsPerFloor = req.body;
+    await Room.updateFloor(floor, roomsPerFloor);
     const rooms = await Room.findAll();
     if (!rooms.length) return res.status(404).send({ err: 'Modify fail' });
     res.send(rooms);
