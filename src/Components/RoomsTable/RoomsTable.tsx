@@ -30,9 +30,12 @@ const RoomsTable = ({ className }: DefaultProps) => {
   const addFloor: MouseEventHandler<Element> = async () => {
     const res = await roomApi.addFloor(+newFloor);
     const newRooms = await res.data;
-    setNewRoom(newRooms);
+    console.log(newRooms);
+    setRooms(newRooms);
   };
   const addRoomPerFloorHandler: MouseEventHandler<Element> = async e => {
+    if (!newRoom) return;
+
     const floor = e.currentTarget.id;
     const preRoomsPerFloor = rooms.find(roomObj => roomObj.floor === +floor)?.roomsPerFloor;
 
