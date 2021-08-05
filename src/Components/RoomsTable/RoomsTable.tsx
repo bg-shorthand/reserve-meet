@@ -10,10 +10,27 @@ import { roomsState } from 'state/state';
 const RoomsTable = ({ className }: DefaultProps) => {
   const [rooms, setRooms] = useRecoilState(roomsState);
 
+  const [newFloor, setNewFloor] = useState('');
   const [newRoom, setNewRoom] = useState('');
 
+  const setNewFloorHandler: ChangeEventHandler<HTMLInputElement> = e => {
+    setNewFloor(e.currentTarget.value);
+  };
   const setNewRoomHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewRoom(e.currentTarget.value);
+  };
+  const deleteFloorhandler: MouseEventHandler<Element> = async e => {
+    const floor = e.currentTarget.closest('th')?.textContent;
+    if (floor) {
+      const res = await roomApi.deleteFloor(+floor);
+      const newRooms = await res.data;
+      setRooms(newRooms);
+    }
+  };
+  const addFloor: MouseEventHandler<Element> = async () => {
+    const res = await roomApi.addFloor(+newFloor);
+    const newRooms = await res.data;
+    setNewRoom(newRooms);
   };
   const addRoomPerFloorHandler: MouseEventHandler<Element> = async e => {
     const floor = e.currentTarget.id;
@@ -22,7 +39,6 @@ const RoomsTable = ({ className }: DefaultProps) => {
     if (preRoomsPerFloor) {
       const res = await roomApi.updateRoomsPerFloor(+floor, [...preRoomsPerFloor, newRoom]);
       const newRooms = await res.data;
-      console.log(newRooms);
       setRooms([...newRooms]);
     }
   };
@@ -55,7 +71,12 @@ const RoomsTable = ({ className }: DefaultProps) => {
           {rooms.length
             ? rooms.map(roomObj => (
                 <tr key={roomObj._id}>
-                  <th>{roomObj.floor}</th>
+                  <th>
+                    {roomObj.floor}
+                    <button onClick={deleteFloorhandler}>
+                      <CloseIcon />
+                    </button>
+                  </th>
                   <td>
                     <ul>
                       {roomObj.roomsPerFloor.length
@@ -84,10 +105,28 @@ const RoomsTable = ({ className }: DefaultProps) => {
                 </tr>
               ))
             : null}
+          <tr>
+            <td colSpan={2}>
+              <label htmlFor="createFloorInput" className="a11y-hidden">
+                새로 만들 층
+              </label>
+              <input
+                type="text"
+                id="createFloorInput"
+                value={newFloor}
+                onChange={setNewFloorHandler}
+              />
+              <button disabled={!/^[0-9]+$/.test(newFloor)} onClick={addFloor}>
+                {!/^[0-9]+$/.test(newFloor)
+                  ? newFloor === ''
+                    ? '층 추가'
+                    : '숫자만 입력하세요'
+                  : '층 추가'}
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <button>회의실 추가</button>
-      <button>수정</button>
     </article>
   );
 };
