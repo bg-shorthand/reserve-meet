@@ -33,7 +33,7 @@ const roomsState = atom({
     get: async () => {
       const res = await roomApi.get();
       const rooms = (await res.data) as { floor: number; roomsPerFloor: string[]; _id: string }[];
-      return rooms.sort((a, b) => a.floor - b.floor);
+      return rooms;
     },
   }),
 });
