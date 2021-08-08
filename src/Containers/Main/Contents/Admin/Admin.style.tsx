@@ -6,7 +6,8 @@ const StyledAdmin = styled(Admin)`
 
   & h2 {
     font-size: 2rem;
-    margin: 20px 0;
+    margin: 10px 0 20px;
+    font-weight: 700;
   }
 
   & > * {

@@ -8,6 +8,10 @@ const StyledAdminList = styled(AdminList)`
   & ul {
     margin-bottom: 10px;
   }
+
+  & > button {
+    margin-bottom: 20px;
+  }
 `;
 
 export default StyledAdminList;
