@@ -1,29 +1,50 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { ChangeEventHandler, MouseEventHandler } from 'react';
 import peopleApi from 'api/googleLib/peopleApi';
 import debounce from 'lodash/debounce';
 import { DefaultProps } from 'const/type';
+import { KeyboardEventHandler } from 'react';
+import { EventHandler } from 'react';
+import { useEffect } from 'react';
 
 interface Props extends DefaultProps {
-  setList: MouseEventHandler;
+  setList: EventHandler<SyntheticEvent>;
 }
 
 const SearchUser = ({ className, setList }: Props) => {
-  const [searchResert, setSearchResert] = useState<{ email: string; photo: string }[]>([]);
+  const [searchResert, setSearchResert] = useState<
+    { email: string; photo: string; selected: boolean }[]
+  >([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const searchUserHandler: ChangeEventHandler<HTMLInputElement> = async e => {
     if (!e.target.value) {
       setSearchResert([]);
+      setSelectedIndex(-1);
       return;
     }
     const res = await peopleApi.searchUser(e.target.value);
     if (res?.result.people) {
       const people = res.result.people;
-      const newSearchResert = people.map(({ emailAddresses, photos }) => ({
+      const newSearchResert = people.map(({ emailAddresses, photos }, index) => ({
         email: emailAddresses?.find(email => /@rsupport.com$/.test(email.value!))?.value || '',
         photo: photos?.find(img => img.metadata?.source?.type === 'PROFILE')?.url || '',
+        selected: index === 0,
       }));
       setSearchResert(newSearchResert);
+    }
+  };
+  const keyboardHandler: KeyboardEventHandler<HTMLInputElement> = e => {
+    if (e.key === 'ArrowDown') {
+      setSelectedIndex(pre => {
+        return pre === -1 ? 0 : pre === searchResert.length - 1 ? 0 : pre + 1;
+      });
+    } else if (e.key === 'ArrowUp') {
+      setSelectedIndex(pre => {
+        return pre === -1 ? 0 : pre === 0 ? searchResert.length - 1 : pre - 1;
+      });
+    } else if (e.key === 'Enter') {
+      console.log('Enter');
     }
   };
   const init = () => {
@@ -32,6 +53,12 @@ const SearchUser = ({ className, setList }: Props) => {
     setSearchResert([]);
     $input.focus();
   };
+
+  useEffect(() => {
+    setSearchResert(pre =>
+      pre.map((person, index) => ({ ...person, selected: index === selectedIndex })),
+    );
+  }, [selectedIndex]);
 
   return (
     <article className={className}>
@@ -43,6 +70,7 @@ const SearchUser = ({ className, setList }: Props) => {
         id="searchUserInput"
         placeholder="이름을 입력하세요"
         onChange={debounce(searchUserHandler, 200)}
+        onKeyUp={keyboardHandler}
         autoComplete="off"
       />
       {searchResert.length ? (
@@ -55,6 +83,7 @@ const SearchUser = ({ className, setList }: Props) => {
                 await setList(e);
                 init();
               }}
+              className={person.selected ? 'selected' : ''}
             >
               {person.photo && <img src={person.photo} alt={person.email + '의 프로필'} />}
               <p>{person.email}</p>

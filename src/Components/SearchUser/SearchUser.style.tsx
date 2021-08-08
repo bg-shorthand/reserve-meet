@@ -28,6 +28,10 @@ const StyledSearchUser = styled(SearchUser)`
       cursor: pointer;
     }
 
+    & .selected {
+      font-weight: 700;
+    }
+
     & img {
       width: 2em;
       border-radius: 50%;

@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEventHandler } from 'react';
+import { useState, useEffect, ChangeEventHandler, SyntheticEvent, EventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, renderEventsState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
@@ -67,7 +67,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
   };
-  const setAttendantsHandler: MouseEventHandler<Element> = async e => {
+  const setAttendantsHandler: EventHandler<SyntheticEvent> = async e => {
     const target = e.target as Element;
     const email = target.closest('li')?.id;
     const start = startDate + 'T' + startTime + ':00+09:00';
