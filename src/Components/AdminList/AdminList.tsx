@@ -14,9 +14,8 @@ const AdminList = ({ className }: DefaultProps) => {
 
   const [newAdmins, setNewAdmins] = useState<{ email: string }[]>([]);
 
-  const setNewAdminsHandler: MouseEventHandler<Element> = async e => {
-    const target = e.target as Element;
-    const id = target.closest('li')?.id;
+  const setNewAdminsHandler = async (email: string) => {
+    const id = email;
 
     if (id) {
       if (newAdmins.find(admin => admin.email === id) || admins.find(admin => admin.email === id))
