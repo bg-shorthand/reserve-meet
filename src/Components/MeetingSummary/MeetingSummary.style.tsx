@@ -9,6 +9,8 @@ const StyledMeetingSummary = styled(MeetingSummary)`
   top: -1px;
   left: 0;
   margin: 0;
+  border-top: 1px dashed ${COLORS.TEAL_LEVEL_4};
+  border-bottom: 1px dashed ${COLORS.TEAL_LEVEL_4};
   border-left: 10px solid ${COLORS.TEAL_LEVEL_4};
   padding: 0 10px;
   display: flex;
