@@ -37,7 +37,9 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const setNewEvent = useSetRecoilState(newEventState);
 
   const params = useParams() as { calId: string };
-  const calendarId = params.calId.slice(1);
+  const calendarId = params.calId
+    ? params.calId.slice(1)
+    : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com';
 
   const deleteEventHandler: MouseEventHandler<Element> = async e => {
     const eventId = e.currentTarget.closest('article')?.id;

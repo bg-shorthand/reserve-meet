@@ -20,7 +20,9 @@ const ReserveState = ({ className }: DefaultProps) => {
   const rooms = useRecoilValue(roomsPerFloorState);
 
   const params: params = useParams();
-  const calId = params.calId.slice(1);
+  const calId = params.calId
+    ? params.calId.slice(1)
+    : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com';
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;

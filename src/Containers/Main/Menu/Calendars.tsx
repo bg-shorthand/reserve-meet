@@ -1,17 +1,12 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { calendarListState, isOpenState } from 'state/state';
+import { calendarListState, userState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
-import { MouseEventHandler } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const CalendarList = () => {
-  const [calendarList, setCalendarList] = useRecoilState(calendarListState);
-  const setIsOpen = useSetRecoilState(isOpenState);
-
-  const openAddCalendarDialogHandler: MouseEventHandler<Element> = () => {
-    setIsOpen(pre => ({ ...pre, addCalendar: true }));
-  };
+  const setCalendarList = useSetRecoilState(calendarListState);
+  const isAdmin = useRecoilValue(userState).admin;
 
   useEffect(() => {
     let calendarsTimerId: NodeJS.Timeout;
@@ -47,25 +42,17 @@ const CalendarList = () => {
               fontWeight: 700,
             }}
           >
-            Summary
+            회의실 예약
           </NavLink>
         </li>
-        {calendarList.map(calendar => {
-          return (
-            <li key={calendar.id}>
-              <NavLink
-                to={`/reserve-state/:${calendar.id}`}
-                activeStyle={{
-                  fontWeight: 700,
-                }}
-              >
-                {calendar.summary}
-              </NavLink>
-            </li>
-          );
-        })}
+        {isAdmin ? (
+          <li>
+            <NavLink to="/admin" activeStyle={{ fontWeight: 700 }}>
+              관리자
+            </NavLink>
+          </li>
+        ) : null}
       </ul>
-      <button onClick={openAddCalendarDialogHandler}>달력 추가</button>
     </>
   );
 };
