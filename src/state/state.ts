@@ -128,7 +128,7 @@ const isOpenState = atom({
     viewEvent: false,
     patchEvent: false,
     alert: false,
-    spinner: false,
+    spinner: true,
   },
 });
 
