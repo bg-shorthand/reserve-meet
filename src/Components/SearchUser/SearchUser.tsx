@@ -26,6 +26,12 @@ const SearchUser = ({ className, setList }: Props) => {
       setSearchResert(newSearchResert);
     }
   };
+  const init = () => {
+    const $input = document.getElementById('searchUserInput') as HTMLInputElement;
+    $input.value = '';
+    setSearchResert([]);
+    $input.focus();
+  };
 
   return (
     <article className={className}>
@@ -42,7 +48,14 @@ const SearchUser = ({ className, setList }: Props) => {
       {searchResert.length ? (
         <ul>
           {searchResert.map(person => (
-            <li key={person.email} id={person.email} onClick={setList}>
+            <li
+              key={person.email}
+              id={person.email}
+              onClick={async e => {
+                await setList(e);
+                init();
+              }}
+            >
               {person.photo && <img src={person.photo} alt={person.email + '의 프로필'} />}
               <p>{person.email}</p>
             </li>
