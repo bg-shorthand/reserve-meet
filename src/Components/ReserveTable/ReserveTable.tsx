@@ -12,7 +12,7 @@ interface props extends DefaultProps {
   rooms: string[];
   curTime: Date;
 }
-type params = { calId: '' };
+type params = { calId: string };
 
 const ReserveTable = ({ className, rooms }: props) => {
   const params = useParams<params>();
@@ -39,7 +39,9 @@ const ReserveTable = ({ className, rooms }: props) => {
 
     setNewEvent(pre => ({
       ...pre,
-      calendarId: params.calId.slice(1),
+      calendarId: params.calId
+        ? params.calId.slice(1)
+        : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com',
       floor: curFloor + '',
       room: e.currentTarget.id.split('-')[1],
       startDate: curDate,
