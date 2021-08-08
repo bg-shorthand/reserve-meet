@@ -1,11 +1,10 @@
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState, ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, viewEventIdState } from 'state/state';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import { DefaultProps, Events, newEvent } from 'const/type';
-import { ChangeEventHandler } from 'react';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
@@ -31,9 +30,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
   const changeDescriptionHandler: ChangeEventHandler<HTMLTextAreaElement> = e => {
     setNewEvent(pre => ({ ...pre, description: e.target.value }));
   };
-  const setAttendantsHandler: MouseEventHandler<Element> = async e => {
-    const target = e.target as Element;
-    const email = target.closest('li')?.id;
+  const setAttendantsHandler = async (email: string) => {
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);

@@ -1,14 +1,10 @@
-import { SyntheticEvent, useState } from 'react';
-import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { useState, ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
 import peopleApi from 'api/googleLib/peopleApi';
 import debounce from 'lodash/debounce';
 import { DefaultProps } from 'const/type';
-import { KeyboardEventHandler } from 'react';
-import { EventHandler } from 'react';
-import { useEffect } from 'react';
 
 interface Props extends DefaultProps {
-  setList: EventHandler<SyntheticEvent>;
+  setList: (email: string) => {};
 }
 
 const SearchUser = ({ className, setList }: Props) => {
@@ -34,7 +30,7 @@ const SearchUser = ({ className, setList }: Props) => {
       setSearchResert(newSearchResert);
     }
   };
-  const keyboardHandler: KeyboardEventHandler<HTMLInputElement> = e => {
+  const keyboardHandler: KeyboardEventHandler<HTMLInputElement> = async e => {
     if (e.key === 'ArrowDown') {
       setSelectedIndex(pre => {
         return pre === -1 ? 0 : pre === searchResert.length - 1 ? 0 : pre + 1;
@@ -44,7 +40,10 @@ const SearchUser = ({ className, setList }: Props) => {
         return pre === -1 ? 0 : pre === 0 ? searchResert.length - 1 : pre - 1;
       });
     } else if (e.key === 'Enter') {
-      console.log('Enter');
+      const $selected = document.querySelector('.selected') as HTMLLIElement;
+      const id = $selected.id;
+      await setList(id);
+      init();
     }
   };
   const init = () => {
@@ -80,7 +79,7 @@ const SearchUser = ({ className, setList }: Props) => {
               key={person.email}
               id={person.email}
               onClick={async e => {
-                await setList(e);
+                await setList(e.currentTarget.closest('li')?.id || '');
                 init();
               }}
               className={person.selected ? 'selected' : ''}

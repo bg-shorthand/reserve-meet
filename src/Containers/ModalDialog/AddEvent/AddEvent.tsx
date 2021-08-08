@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEventHandler, SyntheticEvent, EventHandler } from 'react';
+import { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, renderEventsState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
@@ -8,7 +8,6 @@ import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
-import { MouseEventHandler } from 'react';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -67,9 +66,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
   };
-  const setAttendantsHandler: EventHandler<SyntheticEvent> = async e => {
-    const target = e.target as Element;
-    const email = target.closest('li')?.id;
+  const setAttendantsHandler = async (email: string) => {
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);
