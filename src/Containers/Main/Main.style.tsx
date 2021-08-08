@@ -5,7 +5,7 @@ const StyledMain = styled.main`
   display: flex;
 
   & > section:first-child {
-    width: 200px;
+    min-width: 200px;
   }
 
   & > section:last-child {

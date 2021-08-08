@@ -4,7 +4,7 @@ import ReserveState from './ReserveState';
 const StyledReserveState = styled(ReserveState)`
   padding: 20px;
 
-  & > * {
+  & > *:not(table) {
     margin: 10px;
   }
 `;
