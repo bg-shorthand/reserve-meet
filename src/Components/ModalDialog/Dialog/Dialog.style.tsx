@@ -9,18 +9,25 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isOpenState } from 'state/state';
 
 const Dialog = ({ className, children }: DefaultProps) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const resetIsOpen = useResetRecoilState(isOpenState);
   const setIsOpen = useSetRecoilState(isOpenState);
 
   const focusFirstHandler: KeyboardEventHandler = e => {
-    if (e.key !== 'Tab') return;
+    if (e.shiftKey || e.key !== 'Tab') return;
     e.preventDefault();
-    const $modal = ref.current as unknown as HTMLElement;
+    const $modal = ref.current as HTMLElement;
     const $firstFocusableElement = $modal.querySelectorAll(
       'button:not(disabled), input, textarea, select',
     )[0] as HTMLElement;
     $firstFocusableElement.focus();
+  };
+  const focusCloseButtonHandler = (e: any) => {
+    if (!e.shiftKey || e.key !== 'Tab') return;
+    e.preventDefault();
+    const $modal = ref.current as HTMLElement;
+    const $closeButton = $modal.querySelector('button:last-child') as HTMLElement;
+    $closeButton.focus();
   };
   const closeByEscHandler: KeyboardEventHandler = e => {
     if (e.key !== 'Escape') return;
@@ -33,11 +40,12 @@ const Dialog = ({ className, children }: DefaultProps) => {
     const $firstFocusableElement = $modal.querySelectorAll(
       'button:not(disabled), input, textarea, select',
     )[0] as HTMLElement;
+    $firstFocusableElement.addEventListener('keydown', focusCloseButtonHandler);
     $firstFocusableElement.focus();
   }, []);
 
   return (
-    <section className={className} ref={ref} onKeyDown={closeByEscHandler}>
+    <section className={className} ref={ref} onKeyUp={closeByEscHandler}>
       {children}
       <button onKeyDown={focusFirstHandler}>
         <CloseIcon />
