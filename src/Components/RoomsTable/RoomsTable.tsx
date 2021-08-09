@@ -1,11 +1,11 @@
 import roomApi from 'api/db/roomApi';
-import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
 import { DefaultProps } from 'const/type';
 import { ChangeEventHandler } from 'react';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { roomsState } from 'state/state';
+import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 
 const RoomsTable = ({ className }: DefaultProps) => {
   const [rooms, setRooms] = useRecoilState(roomsState);
@@ -73,9 +73,7 @@ const RoomsTable = ({ className }: DefaultProps) => {
                 <tr key={roomObj._id}>
                   <th>
                     {roomObj.floor}
-                    <button onClick={deleteFloorhandler}>
-                      <CloseIcon />
-                    </button>
+                    <StyledCloseButton onClick={deleteFloorhandler} />
                   </th>
                   <td>
                     <ul>
@@ -83,9 +81,7 @@ const RoomsTable = ({ className }: DefaultProps) => {
                         ? roomObj.roomsPerFloor.map(room => (
                             <li key={room} id={`${roomObj.floor}-${room}`}>
                               {room}
-                              <button onClick={deleteRoomPerFloorHandler}>
-                                <CloseIcon />
-                              </button>
+                              <StyledCloseButton onClick={deleteRoomPerFloorHandler} />
                             </li>
                           ))
                         : null}

@@ -13,7 +13,7 @@ import {
 } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps } from 'const/type';
-import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import getEventsAsync from 'module/getEventsAsync';
 
 interface Props extends DefaultProps {
@@ -84,11 +84,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   return hasMeeting ? (
     <article className={className} id={eventId} onClick={openViewEventHandler}>
       <h1>{summary}</h1>
-      {!isOld && isCreator ? (
-        <button onClick={deleteEventHandler}>
-          <CloseIcon />
-        </button>
-      ) : null}
+      {!isOld && isCreator ? <StyledCloseButton onClick={deleteEventHandler} /> : null}
     </article>
   ) : null;
 };

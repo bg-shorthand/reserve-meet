@@ -7,7 +7,7 @@ import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
-import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -156,9 +156,7 @@ const AddEvent = ({ className }: DefaultProps) => {
                   <span>{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
-              <button onClick={deleteAttendanthandler}>
-                <CloseIcon />
-              </button>
+              <StyledCloseButton onClick={deleteAttendanthandler} />
             </li>
           );
         })}

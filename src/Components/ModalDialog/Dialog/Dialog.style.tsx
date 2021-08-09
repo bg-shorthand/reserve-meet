@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import { DefaultProps } from 'const/type';
 import { COLORS } from 'const/const';
 import { KeyboardEventHandler } from 'react';
@@ -47,9 +47,13 @@ const Dialog = ({ className, children }: DefaultProps) => {
   return (
     <section className={className} ref={ref} onKeyUp={closeByEscHandler}>
       {children}
-      <button onKeyDown={focusFirstHandler}>
-        <CloseIcon />
-      </button>
+      <StyledCloseButton
+        onKeyDown={focusFirstHandler}
+        onClick={() => {
+          resetIsOpen();
+          setIsOpen(pre => ({ ...pre, spinner: false }));
+        }}
+      />
     </section>
   );
 };

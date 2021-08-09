@@ -3,7 +3,7 @@ import { MouseEventHandler, useEffect, useState, ChangeEventHandler } from 'reac
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, viewEventIdState } from 'state/state';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
-import { ReactComponent as CloseIcon } from 'asset/svg/close.svg';
+import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
@@ -124,9 +124,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
                   <span>{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
-              <button onClick={deleteAttendanthandler}>
-                <CloseIcon />
-              </button>
+              <StyledCloseButton onClick={deleteAttendanthandler} />
             </li>
           );
         })}
