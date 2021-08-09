@@ -16,6 +16,8 @@ const TIME_TABLE = (() => {
   return temp;
 })();
 
+const TABLE_HEIGHT = TABLE_CELL_HEIGHT * TIME_TABLE.length;
+
 const COLORS = {
   BLACK: '#212529',
   GRAY_LEVEL_1: '#f8f9fa',
@@ -38,5 +40,6 @@ export {
   TABLE_CELL_PADDING,
   TABLE_CELL_HEIGHT,
   TIME_TABLE,
+  TABLE_HEIGHT,
   COLORS,
 };
