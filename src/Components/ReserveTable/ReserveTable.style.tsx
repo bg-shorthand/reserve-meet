@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReserveTable from './ReserveTable';
 import { useRecoilValue } from 'recoil';
 import { curDateState } from 'state/state';
-import { COLORS, END_TIME } from 'const/const';
+import { COLORS, END_TIME, TABLE_CELL_HEIGHT, TABLE_CELL_PADDING } from 'const/const';
 
 const StyledReserveTable = styled(ReserveTable)`
   width: 100%;
@@ -36,8 +36,8 @@ const StyledReserveTable = styled(ReserveTable)`
           ? 489
           : curHour >= END_TIME
           ? 489
-          : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * 35 - 1;
-      return (height < 0 ? 0 + 35 : height + 35) + 'px';
+          : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * TABLE_CELL_HEIGHT - 1;
+      return (height < 0 ? 0 + TABLE_CELL_HEIGHT : height + TABLE_CELL_HEIGHT) + 'px';
     }};
     border-bottom: 1px solid red;
     position: absolute;
@@ -53,7 +53,7 @@ const StyledReserveTable = styled(ReserveTable)`
   & td {
     border-bottom: 1px solid ${COLORS.TEAL_LEVEL_2};
     border-right: 1px solid ${COLORS.TEAL_LEVEL_2};
-    padding: 10px;
+    padding: ${TABLE_CELL_PADDING + 'px'} 10px;
   }
 
   & th:last-child,

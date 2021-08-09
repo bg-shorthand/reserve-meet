@@ -1,13 +1,13 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import { COLORS } from 'const/const';
+import { COLORS, FONT_SIZE } from 'const/const';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 
   html {
     font-family: "Noto Sans DemiLight", "Malgun Gothic";
-    font-size: 14px;
+    font-size: ${FONT_SIZE + 'px'};
     color: ${COLORS.BLACK}
   }
   body, body * {

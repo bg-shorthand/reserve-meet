@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import MeetingSummary from './MeetingSummary';
-import { COLORS } from 'const/const';
+import { COLORS, TABLE_CELL_HEIGHT } from 'const/const';
 import { useRecoilValue } from 'recoil';
 import { renderEventsState } from 'state/state';
 
@@ -29,7 +29,7 @@ const StyledMeetingSummary = styled(MeetingSummary)`
       const startMin = +event.startTime.split(':')[1];
       const endHour = +event.endTime.split(':')[0] * 60;
       const endMin = +event.endTime.split(':')[1];
-      return ((endHour + endMin - startHour - startMin) / 30) * 35 + 1 + 'px';
+      return ((endHour + endMin - startHour - startMin) / 30) * TABLE_CELL_HEIGHT + 1 + 'px';
     }
   }};
 
