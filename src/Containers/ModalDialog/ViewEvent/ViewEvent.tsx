@@ -67,6 +67,10 @@ const ViewEvent = ({ className }: DefaultProps) => {
             <td>{viewEvent?.endTime}</td>
           </tr>
           <tr>
+            <th>주최자</th>
+            <td>{viewEvent?.creatorEmail}</td>
+          </tr>
+          <tr>
             <th>참석자</th>
             <td>
               <ul>
