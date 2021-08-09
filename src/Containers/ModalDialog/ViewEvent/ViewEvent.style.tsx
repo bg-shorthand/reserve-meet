@@ -7,13 +7,13 @@ const StyledViewEvent = styled(ViewEvent)`
   flex-flow: column nowrap;
   justify-content: space-around;
 
+  h1 {
+    word-break: break-all;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
-
-    h1 {
-      align-self: center;
-    }
 
     & * {
       padding: 10px;
