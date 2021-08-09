@@ -35,9 +35,11 @@ const AdminList = ({ className }: DefaultProps) => {
       setAlertContent({
         content: '삭제하시겠습니까?',
         yesEvent: async () => {
+          setIsOpen(pre => ({ ...pre, spinner: true }));
           const res = await adminApi.delete(email);
           const newAdmins = await res.data;
           setAdmins([...newAdmins]);
+          setIsOpen(pre => ({ ...pre, spinner: false }));
         },
       });
     }
@@ -47,6 +49,7 @@ const AdminList = ({ className }: DefaultProps) => {
     const res = await adminApi.post(newAdmins);
     const data = await res.data;
     setAdmins([...data]);
+    setNewAdmins([]);
   };
 
   return (
