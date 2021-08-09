@@ -40,8 +40,8 @@ const SearchUser = ({ className, setList }: Props) => {
         return pre === -1 ? 0 : pre === 0 ? searchResert.length - 1 : pre - 1;
       });
     } else if (e.key === 'Enter') {
-      const $selected = document.querySelector('.selected') as HTMLLIElement;
-      const id = $selected.id;
+      if (!document.querySelector('.selected')) return;
+      const id = document.querySelector('.selected')?.id || '';
       await setList(id);
       init();
     }
