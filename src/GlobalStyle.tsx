@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   html {
+    font-family: "Noto Sans DemiLight", "Malgun Gothic";
     font-size: 14px;
     color: ${COLORS.BLACK}
   }
