@@ -83,7 +83,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
 
   return hasMeeting ? (
     <article className={className} id={eventId} onClick={openViewEventHandler}>
-      {summary}
+      <h1>{summary}</h1>
       {!isOld && isCreator ? (
         <button onClick={deleteEventHandler}>
           <CloseIcon />

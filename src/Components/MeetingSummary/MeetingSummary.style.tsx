@@ -33,6 +33,14 @@ const StyledMeetingSummary = styled(MeetingSummary)`
     }
   }};
 
+  h1 {
+    font-size: 1rem;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   button {
     position: absolute;
     top: 3px;
