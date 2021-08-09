@@ -3,6 +3,10 @@ const END_TIME = 17;
 
 const FLOORS = [9, 10, 11, 12, 15];
 
+const FONT_SIZE = 14;
+const TABLE_CELL_PADDING = 25;
+const TABLE_CELL_HEIGHT = FONT_SIZE + TABLE_CELL_PADDING * 2 + 1;
+
 const TIME_TABLE = (() => {
   const temp: string[] = [];
   for (let i = START_TIME; i <= END_TIME - 1; i++) {
@@ -26,4 +30,13 @@ const COLORS = {
   TEAL_LEVEL_4: '#71C9CE',
 };
 
-export { START_TIME, END_TIME, FLOORS, TIME_TABLE, COLORS };
+export {
+  START_TIME,
+  END_TIME,
+  FLOORS,
+  FONT_SIZE,
+  TABLE_CELL_PADDING,
+  TABLE_CELL_HEIGHT,
+  TIME_TABLE,
+  COLORS,
+};
