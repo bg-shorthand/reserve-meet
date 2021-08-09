@@ -1,6 +1,4 @@
 import { COLORS } from 'const/const';
-import { useRecoilValue } from 'recoil';
-import { newEventState } from 'state/state';
 import styled from 'styled-components';
 import AddEvent from './AddEvent';
 

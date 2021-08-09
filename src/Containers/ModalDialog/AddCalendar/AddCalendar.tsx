@@ -27,7 +27,6 @@ const AddCalendar = () => {
       clearTimeout(calendarsTimerId);
 
       if (res && res.result.items) {
-        console.log(res.result.items);
         const newCalendarList = res.result.items
           .filter(calendar => !calendar.description)
           .map(calendar => ({

@@ -56,7 +56,6 @@ const ReserveTable = ({ className, rooms }: props) => {
   };
 
   useEffect(() => {
-    console.log(curHour + ':' + curMin);
     const $table = document.querySelector('table');
     const $td = $table?.querySelectorAll('td');
 
