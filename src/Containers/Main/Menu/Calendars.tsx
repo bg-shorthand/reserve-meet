@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { calendarListState, userState } from 'state/state';
+import { calendarListState, isOpenState, userState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const CalendarList = () => {
   const setCalendarList = useSetRecoilState(calendarListState);
   const isAdmin = useRecoilValue(userState).admin;
+  const setIsOpen = useSetRecoilState(isOpenState);
 
   useEffect(() => {
     let calendarsTimerId: NodeJS.Timeout;
@@ -24,6 +25,7 @@ const CalendarList = () => {
             id: calendar.id ? calendar.id : '',
           }));
         setCalendarList([...newCalendarList]);
+        setIsOpen(pre => ({ ...pre, spinner: false }));
       } else {
         calendarsTimerId = setTimeout(getCalendars, 100);
       }

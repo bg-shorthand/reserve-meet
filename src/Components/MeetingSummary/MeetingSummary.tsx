@@ -62,6 +62,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
       ({ startTime, location }) => startTime === time && location.split(' ')[1] === room,
     );
     if (event) {
+      setIsOpen(pre => ({ ...pre, spinner: true }));
       setHasMeeting(true);
       setSummary(event.summary);
       setEventId(event.id);
@@ -72,6 +73,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
       const curTime = cur.slice(11, 16);
       if (event.date < curDate) setIsOld(true);
       else if (event.date === curDate && event.startTime < curTime) setIsOld(true);
+      setIsOpen(pre => ({ ...pre, spinner: false }));
     }
 
     return () => {
