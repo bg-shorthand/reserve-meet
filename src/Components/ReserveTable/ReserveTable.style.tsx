@@ -7,7 +7,7 @@ import { COLORS, END_TIME, TABLE_CELL_HEIGHT, TABLE_CELL_PADDING, TABLE_HEIGHT }
 const StyledReserveTable = styled(ReserveTable)`
   width: 100%;
   border-collapse: collapse;
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
   table-layout: fixed;
 
   thead {

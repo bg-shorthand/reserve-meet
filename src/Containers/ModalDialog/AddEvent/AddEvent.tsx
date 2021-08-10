@@ -92,7 +92,7 @@ const AddEvent = ({ className }: DefaultProps) => {
 
   return isOpen.addEvent ? (
     <ModalDialog className={className}>
-      <h1>Add Event</h1>
+      <h1>회의 등록</h1>
       <label htmlFor="newEventSummary" className="a11y-hidden">
         회의 이름
       </label>

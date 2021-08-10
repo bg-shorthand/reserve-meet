@@ -1,3 +1,4 @@
+import addPrefix0 from 'module/addPrefix0';
 import { useEffect, useState } from 'react';
 
 const Clock = () => {
@@ -9,9 +10,9 @@ const Clock = () => {
       const year = cur.getFullYear();
       const month = cur.getMonth() + 1;
       const date = cur.getDate();
-      const hour = cur.getHours();
-      const minute = cur.getMinutes();
-      const second = cur.getSeconds();
+      const hour = addPrefix0(cur.getHours());
+      const minute = addPrefix0(cur.getMinutes());
+      const second = addPrefix0(cur.getSeconds());
 
       setCurTime(`${year}.${month}.${date} ${hour}:${minute}:${second}`);
     }, 1000);

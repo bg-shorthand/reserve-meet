@@ -55,30 +55,38 @@ const AdminList = ({ className }: DefaultProps) => {
   };
 
   return (
-    <article className={className}>
-      <ul>
-        {admins.length
-          ? admins.map(admin => (
-              <li key={admin._id}>
-                {admin.email}
-                {admins.length > 1 ? <StyledCloseButton onClick={deleteAdminHandler} /> : null}
-              </li>
-            ))
-          : null}
-      </ul>
-      <StyledSearchUser setList={setNewAdminsHandler} />
-      <ul>
-        {newAdmins.length
-          ? newAdmins.map(user => (
+    <section className={className}>
+      <article>
+        <h3>현재 관리자</h3>
+        <ul>
+          {admins.length
+            ? admins.map(admin => (
+                <li key={admin._id}>
+                  {admin.email}
+                  {admins.length > 1 ? <StyledCloseButton onClick={deleteAdminHandler} /> : null}
+                </li>
+              ))
+            : null}
+        </ul>
+      </article>
+      <article>
+        <h3>추가할 관리자</h3>
+        <StyledSearchUser setList={setNewAdminsHandler} />
+        <ul>
+          {newAdmins.length ? (
+            newAdmins.map(user => (
               <li key={user.email}>
                 {user.email}
                 <StyledCloseButton onClick={deleteNewAdminsHandler} />
               </li>
             ))
-          : null}
-      </ul>
-      <StyledButton onClick={postAdminHandler}>관리자 추가</StyledButton>
-    </article>
+          ) : (
+            <li>관리자를 검색 후 아래 버튼을 눌러주세요</li>
+          )}
+        </ul>
+        <StyledButton onClick={postAdminHandler}>관리자 추가</StyledButton>
+      </article>
+    </section>
   );
 };
 

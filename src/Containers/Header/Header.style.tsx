@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from './Header';
 
 const StyledHeader = styled(Header)`
+  width: 100%;
   height: 100px;
   padding: 50px;
   display: flex;

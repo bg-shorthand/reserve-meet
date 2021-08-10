@@ -4,13 +4,18 @@ import Admin from './Admin';
 const StyledAdmin = styled(Admin)`
   padding: 20px;
 
-  & h2 {
-    font-size: 2rem;
-    margin: 10px 0 20px;
-    font-weight: 700;
+  & > div {
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
-  & > * {
+  & h2 {
+    font-size: 2rem;
+    margin: 20px 0;
+    font-weight: 600;
+  }
+
+  & > div > * {
     margin-bottom: 10px;
   }
 `;

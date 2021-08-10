@@ -6,6 +6,7 @@ import { MouseEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { roomsState } from 'state/state';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledButton from 'Components/Button/Button.style';
 
 const RoomsTable = ({ className }: DefaultProps) => {
   const [rooms, setRooms] = useRecoilState(roomsState);
@@ -72,8 +73,10 @@ const RoomsTable = ({ className }: DefaultProps) => {
             ? rooms.map(roomObj => (
                 <tr key={roomObj._id}>
                   <th>
-                    {roomObj.floor}
-                    <StyledCloseButton onClick={deleteFloorhandler} />
+                    <div>
+                      {roomObj.floor}
+                      <StyledCloseButton onClick={deleteFloorhandler} />
+                    </div>
                   </th>
                   <td>
                     <ul>
@@ -90,10 +93,14 @@ const RoomsTable = ({ className }: DefaultProps) => {
                       <label htmlFor={'addRoomAt' + roomObj.floor} className="a11y-hidden">
                         {roomObj.floor + '층에 추가할 회의실'}
                       </label>
-                      <input type="text" id={'addRoomAt' + roomObj.floor} />
-                      <button id={roomObj.floor + ''} onClick={addRoomPerFloorHandler}>
+                      <input
+                        type="text"
+                        id={'addRoomAt' + roomObj.floor}
+                        placeholder="회의실 이름"
+                      />
+                      <StyledButton id={roomObj.floor + ''} onClick={addRoomPerFloorHandler}>
                         회의실 추가
-                      </button>
+                      </StyledButton>
                     </li>
                   </td>
                 </tr>
@@ -107,16 +114,17 @@ const RoomsTable = ({ className }: DefaultProps) => {
               <input
                 type="text"
                 id="createFloorInput"
+                placeholder="층"
                 value={newFloor}
                 onChange={setNewFloorHandler}
               />
-              <button disabled={!/^[0-9]+$/.test(newFloor)} onClick={addFloor}>
+              <StyledButton disabled={!/^[0-9]+$/.test(newFloor)} onClick={addFloor}>
                 {!/^[0-9]+$/.test(newFloor)
                   ? newFloor === ''
                     ? '층 추가'
                     : '숫자만 입력하세요'
                   : '층 추가'}
-              </button>
+              </StyledButton>
             </td>
           </tr>
         </tbody>

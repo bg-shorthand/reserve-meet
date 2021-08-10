@@ -4,7 +4,6 @@ import SearchUser from './SearchUser';
 
 const StyledSearchUser = styled(SearchUser)`
   position: relative;
-  max-width: 500px;
 
   & * {
     margin: 0;
@@ -19,7 +18,8 @@ const StyledSearchUser = styled(SearchUser)`
     top: 0;
     left: 105%;
     box-shadow: 0 5px 10px ${COLORS.BLACK};
-    width: fit-content;
+    width: 100%;
+    z-index: 999;
 
     & li {
       display: flex;
