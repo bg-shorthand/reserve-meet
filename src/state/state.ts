@@ -132,6 +132,11 @@ const isOpenState = atom({
   },
 });
 
+const isOpenMenuState = atom({
+  key: 'isOpenMenuState',
+  default: false,
+});
+
 const alertContentState = atom({
   key: 'alertContent',
   default: {
@@ -155,5 +160,6 @@ export {
   viewEventState,
   newEventState,
   isOpenState,
+  isOpenMenuState,
   alertContentState,
 };
