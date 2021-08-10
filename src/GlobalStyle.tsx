@@ -8,7 +8,8 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: "Noto Sans DemiLight", "Malgun Gothic";
     font-size: ${FONT_SIZE + 'px'};
-    color: ${COLORS.BLACK}
+    color: ${COLORS.BLACK};
+    background-color: ${COLORS.HEADER_BLACK};
   }
   body, body * {
     box-sizing: border-box;
@@ -26,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     background-color: transparent;
     font: inherit;
+    color: inherit;
 
     &:disabled {
       cursor: not-allowed;
@@ -33,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
   }
   h1 {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .a11y-hidden {

@@ -7,7 +7,8 @@ const StyledFooter = styled(Footer)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${COLORS.TEAL_LEVEL_2};
+  background-color: ${COLORS.HEADER_BLACK};
+  color: ${COLORS.HEADER_WHITE};
 `;
 
 export default StyledFooter;

@@ -47,8 +47,10 @@ const ReserveState = ({ className }: DefaultProps) => {
   return (
     <section className={className}>
       <h1>예약 현황</h1>
-      <StyledDatePicker />
-      <StyledFloor />
+      <section>
+        <StyledDatePicker />
+        <StyledFloor />
+      </section>
       {rooms && <StyledReserveTable rooms={rooms} curTime={new Date()} />}
     </section>
   );

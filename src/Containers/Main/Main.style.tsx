@@ -6,7 +6,8 @@ const StyledMain = styled.main`
 
   & > section:last-child {
     flex-grow: 1;
-    background-color: ${COLORS.GRAY_LEVEL_1};
+    background-color: ${COLORS.MAIN_BACKGROUND};
+    color: ${COLORS.MAIN_FONT};
     padding: 20px 50px;
   }
 `;

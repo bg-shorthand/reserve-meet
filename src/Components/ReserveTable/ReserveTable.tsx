@@ -72,7 +72,7 @@ const ReserveTable = ({ className, rooms }: props) => {
       const $td = $table?.querySelectorAll('td');
 
       $td?.forEach(td => {
-        td.setAttribute('style', `background-color: ${COLORS.GRAY_LEVEL_1}`);
+        td.setAttribute('style', `background-color: ${COLORS.TABLE_BACKGROUND}`);
       });
     };
   });

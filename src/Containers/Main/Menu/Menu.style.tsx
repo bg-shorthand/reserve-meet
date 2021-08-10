@@ -12,11 +12,9 @@ const StyledMenu = styled(Menu)`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  padding: ${() => {
-    const isOpenMenu = useRecoilValue(isOpenMenuState);
-    return isOpenMenu ? '10px' : '0';
-  }};
-  background-color: ${COLORS.GRAY_LEVEL_2};
+  padding-top: 20px;
+  background-color: ${COLORS.MENU_BACKGROUND};
+  color: ${COLORS.HEADER_WHITE};
   position: relative;
   transition: all 100ms;
 
@@ -37,7 +35,7 @@ const StyledMenu = styled(Menu)`
 
   button:last-child {
     position: absolute;
-    background-color: ${COLORS.GRAY_LEVEL_2};
+    background-color: ${COLORS.MENU_BACKGROUND};
     border-radius: 0 5px 5px 0;
     top: 10px;
     left: 100%;

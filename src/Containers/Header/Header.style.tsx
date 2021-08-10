@@ -8,7 +8,24 @@ const StyledHeader = styled(Header)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${COLORS.TEAL_LEVEL_2};
+  background-color: ${COLORS.HEADER_BLACK};
+  color: ${COLORS.HEADER_WHITE};
+
+  h1 {
+    flex-grow: 1;
+  }
+
+  figure {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+
+    img {
+      width: 2em;
+      border-radius: 100%;
+      margin-right: 10px;
+    }
+  }
 `;
 
 export default StyledHeader;

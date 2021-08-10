@@ -7,11 +7,13 @@ import { COLORS, END_TIME, TABLE_CELL_HEIGHT, TABLE_CELL_PADDING, TABLE_HEIGHT }
 const StyledReserveTable = styled(ReserveTable)`
   width: 100%;
   border-collapse: collapse;
-  margin: 0;
+  margin: 0 0 20px 0;
   table-layout: fixed;
 
   thead {
     position: relative;
+    background-color: ${COLORS.TH_BACKGROUND};
+    border-top: 3px solid ${COLORS.TH_BORDER};
   }
 
   thead::after {
@@ -37,7 +39,7 @@ const StyledReserveTable = styled(ReserveTable)`
           : curHour >= END_TIME
           ? TABLE_HEIGHT
           : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * TABLE_CELL_HEIGHT - 1;
-      return (height < 0 ? 0 + TABLE_CELL_HEIGHT : height + TABLE_CELL_HEIGHT) + 'px';
+      return (height < 0 ? 0 + TABLE_CELL_HEIGHT : height + TABLE_CELL_HEIGHT) - 30 + 'px';
     }};
     border-bottom: 1px solid red;
     position: absolute;
@@ -47,30 +49,31 @@ const StyledReserveTable = styled(ReserveTable)`
   td {
     position: relative;
     cursor: pointer;
+    transition: all 200ms;
+  }
+  td:hover {
+    background-color: ${COLORS.GRAY_LEVEL_2} !important;
   }
 
-  & th,
-  & td {
-    border-bottom: 1px solid ${COLORS.TEAL_LEVEL_2};
-    border-right: 1px solid ${COLORS.TEAL_LEVEL_2};
+  th,
+  td {
+    border: 1px solid ${COLORS.TABLE_BORDER};
     padding: ${TABLE_CELL_PADDING + 'px'} 10px;
   }
 
-  & th:last-child,
-  & td:last-child {
-    border-right: none;
+  thead * {
+    padding: 10px;
   }
 
-  & tbody tr:last-child th,
-  & tbody tr:last-child td {
-    border-bottom: none;
+  tbody {
+    border-bottom: 3px solid ${COLORS.TABLE_BORDER};
   }
 
-  & tr th:first-child {
+  tr th:first-child {
     width: 100px;
   }
 
-  & article {
+  article {
     cursor: pointer;
   }
 `;

@@ -6,6 +6,7 @@ import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { MouseEventHandler } from 'react';
 import adminApi from 'api/db/adminApi';
 import { DefaultProps } from 'const/type';
+import StyledButton from 'Components/Button/Button.style';
 
 const AdminList = ({ className }: DefaultProps) => {
   const [admins, setAdmins] = useRecoilState(adminsState);
@@ -76,7 +77,7 @@ const AdminList = ({ className }: DefaultProps) => {
             ))
           : null}
       </ul>
-      <button onClick={postAdminHandler}>관리자 추가</button>
+      <StyledButton onClick={postAdminHandler}>관리자 추가</StyledButton>
     </article>
   );
 };
