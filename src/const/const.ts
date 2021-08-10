@@ -33,14 +33,19 @@ const COLORS = {
 
   HEADER_BLACK: 'rgb(42, 47, 55)',
   HEADER_WHITE: 'rgb(255, 255, 255)',
+
   MAIN_BACKGROUND: '#f9fafa',
   MAIN_FONT: 'rgb(0, 0, 0)',
+  MAIN_GRAY: 'rgb(230, 235, 239)',
+
   TABLE_BORDER: 'rgb(224, 224, 224)',
   TABLE_BACKGROUND: 'rgb(255, 255, 255)',
   TH_BORDER: 'rgb(216, 234, 253)',
   TH_BACKGROUND: 'rgb(216, 234, 253)',
+
   BUTTON_BLUE_1: '#6c97c4',
   BUTTON_BLUE_2: '#007bff',
+
   GREEN_1: '#57d07b',
   GREEN_2: '#218838',
 };
