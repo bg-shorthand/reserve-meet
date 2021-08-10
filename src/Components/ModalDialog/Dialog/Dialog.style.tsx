@@ -30,7 +30,10 @@ const Dialog = ({ className, children }: DefaultProps) => {
     $closeButton.focus();
   };
   const closeByEscHandler: KeyboardEventHandler = e => {
+    const target = e.target as Element;
+
     if (e.key !== 'Escape') return;
+    if (target.matches('input')) return;
     resetIsOpen();
     setIsOpen(pre => ({ ...pre, spinner: false }));
   };

@@ -44,6 +44,8 @@ const SearchUser = ({ className, setList }: Props) => {
       const id = document.querySelector('.selected')?.id || '';
       await setList(id);
       init();
+    } else if (e.key === 'Escape') {
+      init();
     }
   };
   const init = () => {
