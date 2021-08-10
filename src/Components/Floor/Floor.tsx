@@ -20,7 +20,7 @@ const Floor = ({ className }: DefaultProps) => {
           onClick={changeFloorHandler}
           className={floor === curFloor ? 'cur-floor' : ''}
         >
-          {floor + '층'}
+          <button>{floor + '층'}</button>
         </li>
       ))}
     </ul>
