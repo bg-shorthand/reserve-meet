@@ -39,7 +39,7 @@ const StyledReserveTable = styled(ReserveTable)`
           : curHour >= END_TIME
           ? TABLE_HEIGHT
           : Math.floor(((curHour - 10) * 60 + curMin) / 30 + 1) * TABLE_CELL_HEIGHT - 1;
-      return (height < 0 ? 0 + TABLE_CELL_HEIGHT : height + TABLE_CELL_HEIGHT) - 30 + 'px';
+      return (height < 0 ? 0 + TABLE_CELL_HEIGHT : height + TABLE_CELL_HEIGHT) - 32 + 'px';
     }};
     border-bottom: 1px solid red;
     position: absolute;
