@@ -3,7 +3,8 @@ import { GoogleAuth } from 'lib/googleApiLibrary';
 const authApi = {
   async signIn() {
     try {
-      await GoogleAuth.signIn();
+      const GoogleUser = await GoogleAuth.signIn();
+      return !!GoogleUser;
     } catch {
       alert('알서포트 계정으로 로그인해야 합니다.');
     }
@@ -11,8 +12,10 @@ const authApi = {
   async signOut() {
     await GoogleAuth.signOut();
   },
-  async isSign() {
-    return GoogleAuth.isSignedIn.get();
+  isSign() {
+    if (GoogleAuth) {
+      return GoogleAuth.isSignedIn.get();
+    }
   },
 };
 
