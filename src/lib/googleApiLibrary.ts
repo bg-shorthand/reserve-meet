@@ -12,8 +12,10 @@ let GoogleUser: gapi.auth2.GoogleUser;
 
 const observeSigninStatus = (isSignedIn: boolean) => {
   if (isSignedIn) {
+    window.localStorage.setItem('isSignin', 'true');
     console.log('로그인 중');
   } else {
+    window.localStorage.removeItem('isSignin');
     console.log('로그아웃 중');
     if (window.location.pathname !== '/signin') window.location.replace('/signin');
   }

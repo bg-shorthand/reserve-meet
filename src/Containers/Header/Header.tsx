@@ -2,15 +2,17 @@ import { Link } from 'react-router-dom';
 import authApi from 'api/googleLib/authApi';
 import { DefaultProps } from 'const/type';
 import StyledButton from 'Components/Button/Button.style';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from 'state/state';
 import StyledClock from 'Components/Clock/Clock.style';
 
 const Header = ({ className }: DefaultProps) => {
   const { name, imageUrl } = useRecoilValue(userState);
+  const resetUser = useResetRecoilState(userState);
 
   const signout = () => {
     authApi.signOut();
+    resetUser();
   };
 
   return (
