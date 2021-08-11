@@ -21,20 +21,19 @@ const StyledViewEvent = styled(ViewEvent)`
 
     & th,
     & td {
-      border-right: 1px solid ${COLORS.TEAL_LEVEL_2};
-      border-bottom: 1px solid ${COLORS.TEAL_LEVEL_2};
+      border: 1px solid ${COLORS.TABLE_BORDER};
+    }
+    & tr:first-child th,
+    & tr:first-child td {
+      border-top: 3px solid ${COLORS.TABLE_BORDER};
+    }
+    & tr:last-child th,
+    & tr:last-child td {
+      border-bottom: 3px solid ${COLORS.TABLE_BORDER};
     }
     & td * {
       margin: 0;
       padding: 0;
-    }
-
-    & tr:last-child th,
-    & tr:last-child td {
-      border-bottom: none;
-    }
-    & td:last-child {
-      border-right: none;
     }
   }
 `;

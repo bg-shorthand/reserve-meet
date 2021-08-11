@@ -4,7 +4,7 @@ import { DefaultProps } from 'const/type';
 import StyledButton from 'Components/Button/Button.style';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'state/state';
-import Clock from 'Components/Clock/Clock';
+import StyledClock from 'Components/Clock/Clock.style';
 
 const Header = ({ className }: DefaultProps) => {
   const { name, imageUrl } = useRecoilValue(userState);
@@ -18,7 +18,7 @@ const Header = ({ className }: DefaultProps) => {
       <h1>
         <Link to="/">Rsupport Reserve Meet</Link>
       </h1>
-      <Clock />
+      <StyledClock />
       {name ? (
         <figure>
           <img src={imageUrl} alt={name} />

@@ -3,15 +3,17 @@ import reset from 'styled-reset';
 import { COLORS, FONT_SIZE } from 'const/const';
 
 const GlobalStyle = createGlobalStyle`
+  @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
   ${reset}
 
   html {
-    font-family: "Noto Sans DemiLight", "Malgun Gothic";
     font-size: ${FONT_SIZE + 'px'};
     color: ${COLORS.BLACK};
     background-color: ${COLORS.HEADER_BLACK};
   }
   body, body * {
+    font-family: "Noto Sans KR", sans-serif;
     box-sizing: border-box;
   }
   a {

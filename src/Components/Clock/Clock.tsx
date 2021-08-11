@@ -1,7 +1,8 @@
+import { DefaultProps } from 'const/type';
 import addPrefix0 from 'module/addPrefix0';
 import { useEffect, useState } from 'react';
 
-const Clock = () => {
+const Clock = ({ className }: DefaultProps) => {
   const [curTime, setCurTime] = useState('');
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const Clock = () => {
     };
   }, []);
 
-  return <article>{curTime}</article>;
+  return <article className={className}>{curTime}</article>;
 };
 
 export default Clock;
