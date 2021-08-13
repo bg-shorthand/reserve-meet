@@ -62,6 +62,7 @@ const StyledPatchEvent = styled(PatchEvent)`
 
   & > button {
     margin: 0;
+    align-self: center;
   }
 
   & textarea {

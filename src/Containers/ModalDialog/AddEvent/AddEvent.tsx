@@ -8,6 +8,7 @@ import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledButton from 'Components/Button/Button.style';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -67,6 +68,7 @@ const AddEvent = ({ className }: DefaultProps) => {
     }
   };
   const setAttendantsHandler = async (email: string) => {
+    console.log('test');
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);
@@ -161,7 +163,7 @@ const AddEvent = ({ className }: DefaultProps) => {
           );
         })}
       </ul>
-      <button
+      <StyledButton
         disabled={newEvent.summary && !attendants.find(user => user.events.length) ? false : true}
         onClick={() => {
           insertNewEvent(newEvent);
@@ -172,7 +174,7 @@ const AddEvent = ({ className }: DefaultProps) => {
             ? '등록'
             : '참석 불가한 인원이 있습니다.'
           : '회의 이름을 입력하세요'}
-      </button>
+      </StyledButton>
     </ModalDialog>
   ) : null;
 };

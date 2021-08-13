@@ -36,6 +36,10 @@ const StyledViewEvent = styled(ViewEvent)`
       padding: 0;
     }
   }
+
+  button {
+    align-self: center;
+  }
 `;
 
 export default StyledViewEvent;

@@ -61,6 +61,7 @@ const StyledAddEvent = styled(AddEvent)`
 
   & > button {
     margin: 0;
+    align-self: center;
   }
 
   & textarea {

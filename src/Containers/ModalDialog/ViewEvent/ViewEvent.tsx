@@ -5,6 +5,7 @@ import { MouseEventHandler } from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isOpenState, newEventState, userState, viewEventState } from 'state/state';
+import StyledButton from 'Components/Button/Button.style';
 
 const ViewEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).viewEvent;
@@ -82,7 +83,7 @@ const ViewEvent = ({ className }: DefaultProps) => {
           </tr>
         </tbody>
       </table>
-      {isCreator ? <button onClick={setPatchEventHandler}>수정</button> : null}
+      {isCreator ? <StyledButton onClick={setPatchEventHandler}>수정</StyledButton> : null}
     </ModalDialog>
   ) : null;
 };

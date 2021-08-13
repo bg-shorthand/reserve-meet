@@ -7,6 +7,7 @@ import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
+import StyledButton from 'Components/Button/Button.style';
 
 const PatchEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).patchEvent;
@@ -129,7 +130,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
           );
         })}
       </ul>
-      <button
+      <StyledButton
         disabled={newEvent.summary && !attendants.find(user => user.events.length) ? false : true}
         onClick={() => {
           patchEvent(newEvent);
@@ -140,7 +141,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
             ? '등록'
             : '참석 불가한 인원이 있습니다.'
           : '회의 이름을 입력하세요'}
-      </button>
+      </StyledButton>
     </ModalDialog>
   ) : null;
 };
