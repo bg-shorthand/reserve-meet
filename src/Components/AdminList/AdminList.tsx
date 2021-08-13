@@ -48,10 +48,19 @@ const AdminList = ({ className }: DefaultProps) => {
   const postAdminHandler: MouseEventHandler<Element> = async () => {
     if (!newAdmins.length) return;
     await adminApi.post(newAdmins);
-    const res = await adminApi.get();
-    const data = res.data;
-    setAdmins([...data]);
-    setNewAdmins([]);
+
+    const getAdmins = async () => {
+      const res = await adminApi.get();
+      const data = res.data;
+      if (data.length === admins.length) {
+        setTimeout(getAdmins, 100);
+      } else {
+        setAdmins([...data]);
+        setNewAdmins([]);
+      }
+    };
+
+    getAdmins();
   };
 
   return (
