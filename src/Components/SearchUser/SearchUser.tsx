@@ -11,12 +11,13 @@ const SearchUser = ({ className, setList }: Props) => {
   const [searchResert, setSearchResert] = useState<
     { email: string; photo: string; selected: boolean }[]
   >([]);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isFirstKeyUp, setIsFirstKeyUp] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const searchUserHandler: ChangeEventHandler<HTMLInputElement> = async e => {
     if (!e.target.value) {
       setSearchResert([]);
-      setSelectedIndex(-1);
+      setSelectedIndex(0);
       return;
     }
     const res = await peopleApi.searchUser(e.target.value);
@@ -32,14 +33,26 @@ const SearchUser = ({ className, setList }: Props) => {
   };
   const keyboardHandler: KeyboardEventHandler<HTMLInputElement> = async e => {
     if (e.key === 'ArrowDown') {
+      if (isFirstKeyUp) {
+        setIsFirstKeyUp(false);
+        return;
+      }
       setSelectedIndex(pre => {
-        return pre === -1 ? 0 : pre === searchResert.length - 1 ? 0 : pre + 1;
+        return pre === searchResert.length - 1 ? 0 : pre + 1;
       });
     } else if (e.key === 'ArrowUp') {
+      if (isFirstKeyUp) {
+        setIsFirstKeyUp(false);
+        return;
+      }
       setSelectedIndex(pre => {
-        return pre === -1 ? 0 : pre === 0 ? searchResert.length - 1 : pre - 1;
+        return pre === 0 ? searchResert.length - 1 : pre - 1;
       });
     } else if (e.key === 'Enter') {
+      if (isFirstKeyUp) {
+        setIsFirstKeyUp(false);
+        return;
+      }
       if (!document.querySelector('.selected')) return;
       const id = document.querySelector('.selected')?.id || '';
       await setList(id);
@@ -53,6 +66,8 @@ const SearchUser = ({ className, setList }: Props) => {
     $input.value = '';
     setSearchResert([]);
     $input.focus();
+    setSelectedIndex(0);
+    setIsFirstKeyUp(true);
   };
 
   useEffect(() => {
