@@ -11,6 +11,10 @@ const StyledViewEvent = styled(ViewEvent)`
     word-break: break-all;
   }
 
+  pre {
+    line-height: 140%;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
