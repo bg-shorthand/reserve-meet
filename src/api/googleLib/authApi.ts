@@ -6,6 +6,7 @@ const authApi = {
       const GoogleUser = await GoogleAuth.signIn();
       return !!GoogleUser;
     } catch {
+      await GoogleAuth.signOut();
       alert('알서포트 계정으로 로그인해야 합니다.');
     }
   },

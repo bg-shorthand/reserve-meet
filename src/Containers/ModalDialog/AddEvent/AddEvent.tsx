@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState, renderEventsState } from 'state/state';
+import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { END_TIME } from 'const/const';
 import { DefaultProps, Events, newEvent } from 'const/type';
@@ -16,6 +16,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
+  const curUser = useRecoilValue(userState);
 
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
 
@@ -68,7 +69,6 @@ const AddEvent = ({ className }: DefaultProps) => {
     }
   };
   const setAttendantsHandler = async (email: string) => {
-    console.log('test');
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);
@@ -84,6 +84,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   };
 
   useEffect(() => {
+    setAttendantsHandler(curUser.email);
     setAttendants([]);
     setNewEvent(pre => ({ ...pre, summary: '' }));
   }, [isOpen.addEvent]);
