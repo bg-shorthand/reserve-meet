@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 import { COLORS, FONT_SIZE } from 'const/const';
 
 const GlobalStyle = createGlobalStyle`
-  @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+  @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
   ${reset}
 

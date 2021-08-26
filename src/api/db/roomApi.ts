@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const url = 'http://localhost:4001/room';
+const url = 'http://3.38.93.215:4001/room';
 
 const roomApi = {
   async get() {
-    return await axios.get(url);
+    const res = await axios.get(url);
+    console.log(res);
+    return res;
   },
   async deleteFloor(floor: number) {
     return await axios.delete(url + '/' + floor);
