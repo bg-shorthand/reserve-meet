@@ -1,5 +1,5 @@
 const routerAdmin = require('express').Router();
-const Admin = require('./model.ts');
+const Admin = require('./model.js');
 
 routerAdmin.get('/', async (_, res) => {
   try {

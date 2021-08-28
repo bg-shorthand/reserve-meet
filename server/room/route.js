@@ -1,5 +1,5 @@
 const routerRoom = require('express').Router();
-const Room = require('./model.ts');
+const Room = require('./model.js');
 
 routerRoom.get('/', async (_, res) => {
   try {
