@@ -46,8 +46,8 @@ const calendarApi = {
           description,
         },
       });
-      await meetingApi.post(res.result);
-      return res;
+      const dbRes = await meetingApi.post(res.result);
+      return dbRes;
     }
   },
   async deleteEvent(calendarId: string, eventId: string) {

@@ -2,9 +2,8 @@ const routerMeeting = require('express').Router();
 const Meeting = require('./model.js');
 
 routerMeeting.post('/', async (req, res) => {
-  await Meeting.create(req.body);
-  const meetings = await Meeting.findAll();
-  res.send(meetings);
+  const newMeeting = await Meeting.create(req.body);
+  res.send(newMeeting);
 });
 routerMeeting.get('/:date', async (req, res) => {
   const meetings = await Meeting.findOneByDate(req.params.date);

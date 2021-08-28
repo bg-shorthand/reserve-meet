@@ -61,8 +61,8 @@ const AddEvent = ({ className }: DefaultProps) => {
   };
   const insertNewEvent = async (newEvent: newEvent) => {
     const temp = await calendarApi.insertEvent(newEvent);
-    if (temp && temp.result) {
-      const res = temp.result;
+    if (temp && temp.data) {
+      const res = temp.data;
       const newEvents = createEventsFromAsyncRes([res]);
       setEvents(pre => [...pre, ...newEvents]);
       setIsOpen(pre => ({ ...pre, addEvent: false }));

@@ -36,9 +36,11 @@ meetingSchema.statics.create = async function (payload) {
         },
       },
     );
+    return payload;
   } else {
     const meeting = new this({ date: payload.start.dateTime.slice(0, 10), meetings: [payload] });
-    return meeting.save();
+    await meeting.save();
+    return payload;
   }
 };
 
