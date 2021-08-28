@@ -53,4 +53,21 @@ meetingSchema.statics.findOneByDate = async function (date) {
   return await this.findOne({ date });
 };
 
+meetingSchema.statics.patch = async function ({ type, eventId, curDate }) {
+  if (type === 'delete') {
+    const meeting = await this.findOne({ date: curDate });
+    await this.updateOne(
+      { date: curDate },
+      {
+        $set: {
+          date: curDate,
+          meetings: meeting.meetings.filter(meeting => meeting.id !== eventId),
+        },
+      },
+    );
+    const newMeetings = this.findOne({ date: curDate });
+    return newMeetings;
+  }
+};
+
 module.exports = mongooseMeeting.model('Meeting', meetingSchema);

@@ -50,12 +50,13 @@ const calendarApi = {
       return dbRes;
     }
   },
-  async deleteEvent(calendarId: string, eventId: string) {
+  async deleteEvent(calendarId: string, eventId: string, curDate: string) {
     if (GoogleAuth) {
-      return await gapi.client.calendar.events.delete({
+      await gapi.client.calendar.events.delete({
         calendarId,
         eventId,
       });
+      return await meetingApi.patch('delete', curDate, eventId);
     }
   },
   async patchEvent(eventId: string, newEvent: newEvent) {

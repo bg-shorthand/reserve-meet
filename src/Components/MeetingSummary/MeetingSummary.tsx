@@ -13,7 +13,7 @@ import {
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps } from 'const/type';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
-import getEventsAsync from 'module/getEventsAsync';
+import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 interface Props extends DefaultProps {
   time: string;
@@ -39,10 +39,13 @@ const MeetingSummary = ({ time, room, className }: Props) => {
 
   const deleteEventHandler: MouseEventHandler<Element> = async e => {
     const eventId = e.currentTarget.closest('article')?.id;
-    await calendarApi.deleteEvent(calendarId, eventId || '');
+    const res = await calendarApi.deleteEvent(calendarId, eventId!, curDate);
 
-    const newEvents = await getEventsAsync(calendarId, curDate);
-    newEvents && setEvents([...newEvents]);
+    if (res) {
+      const data = await res.data;
+      const newEvents = createEventsFromAsyncRes(data.meetings);
+      data && setEvents([...newEvents]);
+    }
   };
   const openViewEventHandler: MouseEventHandler<Element> = e => {
     const target = e.target as Element;

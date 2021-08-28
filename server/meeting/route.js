@@ -9,5 +9,9 @@ routerMeeting.get('/:date', async (req, res) => {
   const meetings = await Meeting.findOneByDate(req.params.date);
   res.send(meetings);
 });
+routerMeeting.patch('/', async (req, res) => {
+  const newMeetings = await Meeting.patch(req.body);
+  res.send(newMeetings);
+});
 
 module.exports = routerMeeting;
