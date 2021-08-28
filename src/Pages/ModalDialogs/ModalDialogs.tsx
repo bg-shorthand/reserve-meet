@@ -8,12 +8,12 @@ import Spinner from 'Components/Spinner/Spinner';
 const ModalDialogs = () => {
   return (
     <>
+      <Spinner />
       <StyledAddevent />
       <AddCalendar />
       <StyledViewEvent />
       <StyledPatchEvent />
       <StyledAlert />
-      <Spinner />
     </>
   );
 };

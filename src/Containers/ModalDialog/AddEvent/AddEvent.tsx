@@ -69,6 +69,7 @@ const AddEvent = ({ className }: DefaultProps) => {
     }
   };
   const setAttendantsHandler = async (email: string) => {
+    setIsOpen(pre => ({ ...pre, spinner: true }));
     const start = startDate + 'T' + startTime + ':00+09:00';
     const end = startDate + 'T' + endTime + ':00+09:00';
     const res = await calendarApi.getEvents(email!, start, end);
@@ -81,11 +82,15 @@ const AddEvent = ({ className }: DefaultProps) => {
         setAttendants(pre => [...pre, { name: email!, events: events }]);
       }
     }
+    setIsOpen(pre => ({ ...pre, spinner: false }));
   };
 
   useEffect(() => {
-    setAttendantsHandler(curUser.email);
-    setAttendants([]);
+    if (isOpen.addEvent) {
+      setAttendantsHandler(curUser.email);
+    } else {
+      setAttendants([]);
+    }
     setNewEvent(pre => ({ ...pre, summary: '' }));
   }, [isOpen.addEvent]);
 
