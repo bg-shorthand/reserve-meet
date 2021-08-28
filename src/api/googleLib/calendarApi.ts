@@ -1,3 +1,4 @@
+import meetingApi from 'api/db/meetingApi';
 import { newEvent } from 'const/type';
 import { GoogleAuth } from 'lib/googleApiLibrary';
 
@@ -27,7 +28,7 @@ const calendarApi = {
       description,
     } = newEvent;
     if (GoogleAuth) {
-      return await gapi.client.calendar.events.insert({
+      const res = await gapi.client.calendar.events.insert({
         calendarId,
         sendNotifications: true,
         resource: {
@@ -45,6 +46,8 @@ const calendarApi = {
           description,
         },
       });
+      await meetingApi.post(res.result);
+      return res;
     }
   },
   async deleteEvent(calendarId: string, eventId: string) {

@@ -18,6 +18,7 @@ mongoose
 
 app.use('/admin', require('./admin/route.js'));
 app.use('/room', require('./room/route.js'));
+app.use('/meeting', require('./meeting/route.js'));
 
 app.listen(4001, () => console.log(`Server listening on port 4001`));
 
