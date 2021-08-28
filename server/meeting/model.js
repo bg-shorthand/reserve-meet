@@ -6,6 +6,7 @@ const meetingSchema = new mongooseMeeting.Schema(
     meetings: {
       type: [
         {
+          id: { type: String, required: true },
           summary: { type: String, required: true },
           description: { type: String, required: true },
           location: { type: String, required: true },
