@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect('mongodb://bkhan:123951@3.38.93.215:4001/reserve-meet-db', {
+  .connect('mongodb://localhost:27017/reserve-meet-db', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://3.38.93.215:4001/admin';
+const url = 'http://localhost:4001/admin';
 
 const adminApi = {
   async get() {
