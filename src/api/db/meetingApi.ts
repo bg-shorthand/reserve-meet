@@ -6,6 +6,9 @@ const meetingApi = {
   async post(meeting: any) {
     return await axios.post(url, meeting);
   },
+  async get(date: string) {
+    return await axios.get(url + '/' + date);
+  },
 };
 
 export default meetingApi;

@@ -46,4 +46,8 @@ meetingSchema.statics.findAll = function () {
   return this.find({});
 };
 
+meetingSchema.statics.findOneByDate = async function (date) {
+  return await this.findOne({ date });
+};
+
 module.exports = mongooseMeeting.model('Meeting', meetingSchema);

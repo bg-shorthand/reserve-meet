@@ -4,11 +4,11 @@ import { calendarApi } from 'api/googleLib/calendarApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, eventsState, roomsPerFloorState } from 'state/state';
 import { DefaultProps } from 'const/type';
-import getDate from 'module/getDate';
 import StyledReserveTable from 'Components/ReserveTable/ReserveTable.style';
 import StyledFloor from 'Components/Floor/Floor.style';
 import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
+import meetingApi from 'api/db/meetingApi';
 
 type params = {
   calId: string;
@@ -28,13 +28,12 @@ const ReserveState = ({ className }: DefaultProps) => {
     let timerId: NodeJS.Timeout;
 
     const getEvents = async () => {
+      const res = await meetingApi.get(curDate);
+
       clearTimeout(timerId);
 
-      const [start, end] = getDate.today(curDate);
-      const res = await calendarApi.getEvents(calId, start, end);
-
-      if (res && res.result.items) {
-        const items = res.result.items;
+      if (res && res.data.meetings) {
+        const items = res.data.meetings;
         const newEvents = createEventsFromAsyncRes(items);
         setEvents([...newEvents]);
       } else {
