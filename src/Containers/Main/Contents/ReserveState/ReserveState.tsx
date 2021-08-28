@@ -1,40 +1,28 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { calendarApi } from 'api/googleLib/calendarApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, eventsState, roomsPerFloorState } from 'state/state';
 import { DefaultProps } from 'const/type';
-import getDate from 'module/getDate';
 import StyledReserveTable from 'Components/ReserveTable/ReserveTable.style';
 import StyledFloor from 'Components/Floor/Floor.style';
 import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
-
-type params = {
-  calId: string;
-};
+import meetingApi from 'api/db/meetingApi';
 
 const ReserveState = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
   const curDate = useRecoilValue(curDateState);
   const rooms = useRecoilValue(roomsPerFloorState);
 
-  const params: params = useParams();
-  const calId = params.calId
-    ? params.calId.slice(1)
-    : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com';
-
   useEffect(() => {
     let timerId: NodeJS.Timeout;
 
     const getEvents = async () => {
+      const res = await meetingApi.get(curDate);
+
       clearTimeout(timerId);
 
-      const [start, end] = getDate.today(curDate);
-      const res = await calendarApi.getEvents(calId, start, end);
-
-      if (res && res.result.items) {
-        const items = res.result.items;
+      if (res && res.data.meetings) {
+        const items = res.data.meetings;
         const newEvents = createEventsFromAsyncRes(items);
         setEvents([...newEvents]);
       } else {
@@ -42,7 +30,7 @@ const ReserveState = ({ className }: DefaultProps) => {
       }
     };
     getEvents();
-  }, [params, curDate]);
+  }, [curDate]);
 
   return (
     <section className={className}>

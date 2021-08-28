@@ -1,5 +1,4 @@
 import { MouseEventHandler } from 'react';
-import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { curDateState, curFloorState, isOpenState, newEventState } from 'state/state';
 import { DefaultProps } from 'const/type';
@@ -12,10 +11,8 @@ interface props extends DefaultProps {
   rooms: string[];
   curTime: Date;
 }
-type params = { calId: string };
 
 const ReserveTable = ({ className, rooms }: props) => {
-  const params = useParams<params>();
   const curFloor = useRecoilValue(curFloorState);
   const curDate = useRecoilValue(curDateState);
   const setNewEvent = useSetRecoilState(newEventState);
@@ -39,9 +36,7 @@ const ReserveTable = ({ className, rooms }: props) => {
 
     setNewEvent(pre => ({
       ...pre,
-      calendarId: params.calId
-        ? params.calId.slice(1)
-        : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com',
+      calendarId: 'primary',
       floor: curFloor + '',
       room: e.currentTarget.id.split('-')[1],
       startDate: curDate,

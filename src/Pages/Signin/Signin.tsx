@@ -23,7 +23,6 @@ const Signin = ({ className }: DefaultProps) => {
 
       if (isInit) {
         clearTimeout(timerId);
-        console.log(authApi.isSign());
         if (authApi.isSign()) {
           history.push('/');
         } else {

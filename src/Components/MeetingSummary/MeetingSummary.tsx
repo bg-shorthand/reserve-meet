@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { MouseEventHandler } from 'react';
-import { useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   curDateState,
@@ -36,10 +35,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const setViewEventId = useSetRecoilState(viewEventIdState);
   const setNewEvent = useSetRecoilState(newEventState);
 
-  const params = useParams() as { calId: string };
-  const calendarId = params.calId
-    ? params.calId.slice(1)
-    : 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com';
+  const calendarId = 'primary';
 
   const deleteEventHandler: MouseEventHandler<Element> = async e => {
     const eventId = e.currentTarget.closest('article')?.id;

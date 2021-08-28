@@ -1,3 +1,4 @@
+import meetingApi from 'api/db/meetingApi';
 import { newEvent } from 'const/type';
 import { GoogleAuth } from 'lib/googleApiLibrary';
 
@@ -27,7 +28,7 @@ const calendarApi = {
       description,
     } = newEvent;
     if (GoogleAuth) {
-      return await gapi.client.calendar.events.insert({
+      const res = await gapi.client.calendar.events.insert({
         calendarId,
         sendNotifications: true,
         resource: {
@@ -45,6 +46,8 @@ const calendarApi = {
           description,
         },
       });
+      const dbRes = await meetingApi.post(res.result);
+      return dbRes;
     }
   },
   async deleteEvent(calendarId: string, eventId: string) {
@@ -87,13 +90,6 @@ const calendarApi = {
           attendees,
           description,
         },
-      });
-    }
-  },
-  async getMainCalendar() {
-    if (GoogleAuth) {
-      return await gapi.client.calendar.calendars.get({
-        calendarId: 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com',
       });
     }
   },
