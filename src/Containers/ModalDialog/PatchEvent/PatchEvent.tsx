@@ -18,6 +18,7 @@ import StyledButton from 'Components/Button/Button.style';
 const PatchEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).patchEvent;
   const resetIsOpen = useResetRecoilState(isOpenState);
+  const setIsOpen = useSetRecoilState(isOpenState);
   const eventId = useRecoilValue(viewEventIdState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { summary, description, floor, room, startDate, startTime, endTime, attendees } = newEvent;
@@ -53,6 +54,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
     }
   };
   const patchEvent = async (newEvent: newEvent) => {
+    setIsOpen(pre => ({ ...pre, spinner: true }));
     const res = await calendarApi.patchEvent(eventId, newEvent, curDate);
     const data = res?.data;
     if (data) {
@@ -60,6 +62,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
       setEvents([...newEvents]);
       resetIsOpen();
     }
+    setIsOpen(pre => ({ ...pre, spinner: false }));
   };
 
   useEffect(() => {

@@ -14,19 +14,12 @@ const ReserveState = ({ className }: DefaultProps) => {
   const rooms = useRecoilValue(roomsPerFloorState);
 
   useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
     const getEvents = async () => {
       const res = await meetingApi.get(curDate);
-
-      clearTimeout(timerId);
-
       if (res && res.data.meetings) {
         const items = res.data.meetings;
         const newEvents = createEventsFromAsyncRes(items);
         setEvents([...newEvents]);
-      } else {
-        timerId = setTimeout(getEvents, 100);
       }
     };
     getEvents();

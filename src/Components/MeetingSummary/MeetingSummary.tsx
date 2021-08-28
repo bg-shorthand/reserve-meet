@@ -38,6 +38,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const calendarId = 'primary';
 
   const deleteEventHandler: MouseEventHandler<Element> = async e => {
+    setIsOpen(pre => ({ ...pre, spinner: true }));
     const eventId = e.currentTarget.closest('article')?.id;
     const res = await calendarApi.deleteEvent(calendarId, eventId!, curDate);
 
@@ -46,6 +47,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
       const newEvents = createEventsFromAsyncRes(data.meetings);
       data && setEvents([...newEvents]);
     }
+    setIsOpen(pre => ({ ...pre, spinner: false }));
   };
   const openViewEventHandler: MouseEventHandler<Element> = e => {
     const target = e.target as Element;

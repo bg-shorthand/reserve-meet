@@ -60,6 +60,7 @@ const AddEvent = ({ className }: DefaultProps) => {
     setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
   };
   const insertNewEvent = async (newEvent: newEvent) => {
+    setIsOpen(pre => ({ ...pre, spinner: true }));
     const temp = await calendarApi.insertEvent(newEvent);
     if (temp && temp.data) {
       const res = temp.data;
@@ -67,6 +68,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       setEvents(pre => [...pre, ...newEvents]);
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
+    setIsOpen(pre => ({ ...pre, spinner: false }));
   };
   const setAttendantsHandler = async (email: string) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
