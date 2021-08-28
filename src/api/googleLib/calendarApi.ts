@@ -93,13 +93,6 @@ const calendarApi = {
       });
     }
   },
-  async getMainCalendar() {
-    if (GoogleAuth) {
-      return await gapi.client.calendar.calendars.get({
-        calendarId: 'c_bhb42o4d3r12i60rvsl9jkddms@group.calendar.google.com',
-      });
-    }
-  },
   async getCalendarList() {
     if (GoogleAuth) {
       return await gapi.client.calendar.calendarList.list({});
