@@ -9,8 +9,8 @@ const meetingApi = {
   async get(date: string) {
     return await axios.get(url + '/' + date);
   },
-  async patch(type: 'delete' | 'patch', curDate: string, eventId: string) {
-    return await axios.patch(url, { type, curDate, eventId });
+  async patch(type: 'delete' | 'patch', curDate: string, eventId: string, newEvent?: any) {
+    return await axios.patch(url, { type, curDate, eventId, newEvent });
   },
 };
 

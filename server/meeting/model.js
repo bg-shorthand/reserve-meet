@@ -53,7 +53,7 @@ meetingSchema.statics.findOneByDate = async function (date) {
   return await this.findOne({ date });
 };
 
-meetingSchema.statics.patch = async function ({ type, eventId, curDate }) {
+meetingSchema.statics.patch = async function ({ type, eventId, curDate, newEvent }) {
   if (type === 'delete') {
     const meeting = await this.findOne({ date: curDate });
     await this.updateOne(
@@ -66,6 +66,19 @@ meetingSchema.statics.patch = async function ({ type, eventId, curDate }) {
       },
     );
     const newMeetings = this.findOne({ date: curDate });
+    return newMeetings;
+  } else if (type === 'patch') {
+    const meeting = await this.findOne({ date: curDate });
+    await this.updateOne(
+      { date: curDate },
+      {
+        $set: {
+          date: curDate,
+          meetings: meeting.meetings.map(meeting => (meeting.id === eventId ? newEvent : meeting)),
+        },
+      },
+    );
+    const newMeetings = await this.findOne({ date: curDate });
     return newMeetings;
   }
 };

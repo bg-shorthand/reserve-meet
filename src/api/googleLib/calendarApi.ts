@@ -59,7 +59,7 @@ const calendarApi = {
       return await meetingApi.patch('delete', curDate, eventId);
     }
   },
-  async patchEvent(eventId: string, newEvent: newEvent) {
+  async patchEvent(eventId: string, newEvent: newEvent, curDate: string) {
     const {
       calendarId,
       summary,
@@ -74,7 +74,7 @@ const calendarApi = {
     } = newEvent;
 
     if (GoogleAuth) {
-      return await gapi.client.calendar.events.patch({
+      const res = await gapi.client.calendar.events.patch({
         calendarId,
         eventId,
         resource: {
@@ -92,6 +92,8 @@ const calendarApi = {
           description,
         },
       });
+      const dbRes = await meetingApi.patch('patch', curDate, eventId, res.result);
+      return dbRes;
     }
   },
   async getCalendarList() {

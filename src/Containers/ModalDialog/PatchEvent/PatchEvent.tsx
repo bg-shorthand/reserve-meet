@@ -1,7 +1,13 @@
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import { MouseEventHandler, useEffect, useState, ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState, viewEventIdState } from 'state/state';
+import {
+  curDateState,
+  eventsState,
+  isOpenState,
+  newEventState,
+  viewEventIdState,
+} from 'state/state';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import { DefaultProps, Events, newEvent } from 'const/type';
@@ -16,6 +22,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { summary, description, floor, room, startDate, startTime, endTime, attendees } = newEvent;
   const setEvents = useSetRecoilState(eventsState);
+  const curDate = useRecoilValue(curDateState);
 
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
 
@@ -46,12 +53,11 @@ const PatchEvent = ({ className }: DefaultProps) => {
     }
   };
   const patchEvent = async (newEvent: newEvent) => {
-    const res = await calendarApi.patchEvent(eventId, newEvent);
-    if (res && res.result) {
-      const patchedEvent = createEventsFromAsyncRes([res?.result])[0];
-      setEvents(pre =>
-        pre.map(event => (event.id === patchedEvent.id ? { ...patchedEvent } : event)),
-      );
+    const res = await calendarApi.patchEvent(eventId, newEvent, curDate);
+    const data = res?.data;
+    if (data) {
+      const newEvents = createEventsFromAsyncRes(data.meetings);
+      setEvents([...newEvents]);
       resetIsOpen();
     }
   };
