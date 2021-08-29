@@ -79,8 +79,9 @@ const MeetingSummary = ({ time, room, className }: Props) => {
 
     return () => {
       setHasMeeting(false);
+      setIsOld(false);
     };
-  }, [renderEvents, room, time, curUser.email]);
+  }, [renderEvents, room, time, curUser.email, setIsOpen]);
 
   return hasMeeting ? (
     <article className={className} id={eventId} onClick={openViewEventHandler}>
