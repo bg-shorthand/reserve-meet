@@ -6,7 +6,7 @@ import StyledSignin from 'Pages/Signin/Signin.style';
 import Index from 'Pages/Main/Index';
 import Spinner from 'Components/Spinner/Spinner';
 import ModalDialogs from 'Pages/ModalDialogs/ModalDialogs';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 const App = () => {
   useEffect(() => {
@@ -17,10 +17,10 @@ const App = () => {
 
     loadGoogleApiLibrary();
 
-    const socket = io('http://localhost:4001');
-    socket.on('test', test => {
-      console.log(test);
-    });
+    // const socket = io('http://localhost:4001');
+    // socket.on('test', test => {
+    //   console.log(test);
+    // });
   }, []);
 
   return (

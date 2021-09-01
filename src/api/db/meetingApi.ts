@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const url = 'http://localhost:4001/meeting';
+// const url = process.env.REACT_APP_DB_URL;
 
 const meetingApi = {
   async post(meeting: any) {
