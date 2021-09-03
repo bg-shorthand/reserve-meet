@@ -1,17 +1,20 @@
 import { userApi } from 'api/googleLib/userApi';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { adminsState, userState } from 'state/state';
+import { adminsState, isOpenState, userState } from 'state/state';
 
 const CurrentUserInfo = () => {
   const [user, setUser] = useRecoilState(userState);
   const admins = useRecoilValue(adminsState);
   const { name, imageUrl } = user;
+  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;
 
     const getProfile = async () => {
+      if (!isOpen.spinner) setIsOpen(pre => ({ ...pre, spinner: true }));
+
       const profile = await userApi.getProfile();
       if (profile) {
         clearTimeout(timerId);
@@ -25,6 +28,8 @@ const CurrentUserInfo = () => {
           email,
           admin: !!admins.find(admin => admin.email === email),
         });
+
+        if (isOpen.spinner) setIsOpen(pre => ({ ...pre, spinner: false }));
       } else {
         timerId = setTimeout(getProfile, 100);
       }
