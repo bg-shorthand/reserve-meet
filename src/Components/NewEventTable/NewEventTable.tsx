@@ -1,6 +1,5 @@
 import { TIME_TABLE } from 'const/const';
 import createEndTimes from 'module/createEndTimes';
-import { useEffect, useRef } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newEventState, renderEventsState, roomsState } from 'state/state';
@@ -10,8 +9,6 @@ const NewEventTable = () => {
   const rooms = useRecoilValue(roomsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
-
-  const $roomForNewEvent = useRef<HTMLSelectElement>(null);
 
   const changeFloorHandler: ChangeEventHandler<HTMLSelectElement> = e => {
     const firstRoomPerFloor = rooms.find(room => room.floor === +e.currentTarget.value)
@@ -34,10 +31,6 @@ const NewEventTable = () => {
   const changeEndTimeHandler: ChangeEventHandler<HTMLSelectElement> = e => {
     setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
   };
-
-  useEffect(() => {
-    console.log(newEvent);
-  }, [newEvent]);
 
   return (
     <table>
@@ -64,7 +57,6 @@ const NewEventTable = () => {
               name="roomForNewEvent"
               id="roomForNewEvent"
               value={room}
-              ref={$roomForNewEvent}
               onChange={changeRoomHandler}
             >
               {rooms
