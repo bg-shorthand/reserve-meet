@@ -1,6 +1,13 @@
 import { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
+import {
+  eventsState,
+  isOpenState,
+  newEventState,
+  renderEventsState,
+  roomsState,
+  userState,
+} from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
@@ -9,11 +16,13 @@ import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import StyledButton from 'Components/Button/Button.style';
 import createEndTimes from 'module/createEndTimes';
+import { TIME_TABLE } from 'const/const';
 
 const AddEvent = ({ className }: DefaultProps) => {
-  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const renderEvents = useRecoilValue(renderEventsState);
+  const rooms = useRecoilValue(roomsState);
   const setEvents = useSetRecoilState(eventsState);
+  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
 
@@ -100,15 +109,46 @@ const AddEvent = ({ className }: DefaultProps) => {
         <tbody>
           <tr>
             <th>장소</th>
-            <td>{`${floor}층 ${room}`}</td>
+            <td>
+              <select name="floorForNewEvent" id="floorForNewEvent" value={floor}>
+                {rooms.map(rooms => {
+                  return <option value={rooms.floor}>{rooms.floor}</option>;
+                })}
+              </select>
+              <span>층 </span>
+              <select name="roomForNewEvent" id="roomForNewEvent" value={room}>
+                {rooms
+                  .find(room => room.floor === +floor)
+                  ?.roomsPerFloor.map((room, index) => {
+                    return (
+                      <option value={room} key={room + index}>
+                        {room}
+                      </option>
+                    );
+                  })}
+              </select>
+            </td>
           </tr>
           <tr>
             <th>날짜</th>
-            <td>{startDate}</td>
+            <td>
+              <label htmlFor="startDateForNewEvent" className="a11y-hidden"></label>
+              <input id="startDateForNewEvent" type="date" value={startDate} />
+            </td>
           </tr>
           <tr>
             <th>시작</th>
-            <td>{startTime}</td>
+            <td>
+              <select name="startTime" id="startTimeForNewEvent" value={startTime}>
+                {TIME_TABLE.map(time => {
+                  return (
+                    <option value={time} key={time}>
+                      {time}
+                    </option>
+                  );
+                })}
+              </select>
+            </td>
           </tr>
           <tr>
             <th>종료</th>
