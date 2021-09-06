@@ -65,12 +65,28 @@ const AddEvent = ({ className }: DefaultProps) => {
     } else {
       setAttendants([]);
     }
-    setNewEvent(pre => ({ ...pre, summary: '' }));
+    setNewEvent(pre => ({ ...pre, summary: '', description: '' }));
   }, [isOpen.addEvent]);
 
   useEffect(() => {
     setNewEvent(pre => ({ ...pre, attendees: attendants.map(user => ({ email: user.name })) }));
-  }, [attendants.length]);
+  }, [attendants]);
+
+  useEffect(() => {
+    setIsOpen(pre => ({ ...pre, spinner: true }));
+    attendants.forEach(async user => {
+      const email = user.name;
+      const start = startDate + 'T' + startTime + ':00+09:00';
+      const end = startDate + 'T' + endTime + ':00+09:00';
+      const res = await calendarApi.getEvents(email!, start, end);
+
+      if (res && res.result.items) {
+        const events = createEventsFromAsyncRes(res.result.items);
+        setAttendants(pre => pre.map(user => (user.name === email ? { ...user, events } : user)));
+      }
+    });
+    setIsOpen(pre => ({ ...pre, spinner: false }));
+  }, [newEvent.startDate, newEvent.startTime, newEvent.endTime]);
 
   return isOpen.addEvent ? (
     <ModalDialog className={className}>
