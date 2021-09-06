@@ -2,13 +2,13 @@ import { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'reac
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventsState, isOpenState, newEventState, renderEventsState, userState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
-import { END_TIME } from 'const/const';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import StyledButton from 'Components/Button/Button.style';
+import createEndTimes from 'module/createEndTimes';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
@@ -16,33 +16,9 @@ const AddEvent = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
+
   const curUser = useRecoilValue(userState);
-
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
-
-  const endTimes = () => {
-    const res: string[] = [];
-    let temp = startTime;
-    const nextEvent = renderEvents.find(
-      event => event.startTime > startTime && event.location === `${floor}층 ${room}`,
-    );
-
-    if (nextEvent) {
-      while (temp < nextEvent.startTime) {
-        const tempHour = temp.slice(0, 2);
-        temp = /00$/.test(temp) ? tempHour + ':30' : +tempHour + 1 + ':00';
-        res.push(temp);
-      }
-    } else {
-      while (temp < END_TIME + ':00') {
-        const tempHour = temp.slice(0, 2);
-        temp = /00$/.test(temp) ? tempHour + ':30' : +tempHour + 1 + ':00';
-        res.push(temp);
-      }
-    }
-
-    return res;
-  };
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
@@ -144,7 +120,7 @@ const AddEvent = ({ className }: DefaultProps) => {
                   value={endTime}
                   onChange={changeEndTime}
                 >
-                  {endTimes().map(time => (
+                  {createEndTimes(startTime, renderEvents, floor, room).map(time => (
                     <option key={time}>{time}</option>
                   ))}
                 </select>
