@@ -1,13 +1,6 @@
 import { useState, useEffect, ChangeEventHandler, MouseEventHandler } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  eventsState,
-  isOpenState,
-  newEventState,
-  renderEventsState,
-  roomsState,
-  userState,
-} from 'state/state';
+import { eventsState, isOpenState, newEventState, userState } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
@@ -15,16 +8,13 @@ import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import StyledButton from 'Components/Button/Button.style';
-import createEndTimes from 'module/createEndTimes';
-import { TIME_TABLE } from 'const/const';
+import NewEventTable from 'Components/NewEventTable/NewEventTable';
 
 const AddEvent = ({ className }: DefaultProps) => {
-  const renderEvents = useRecoilValue(renderEventsState);
-  const rooms = useRecoilValue(roomsState);
   const setEvents = useSetRecoilState(eventsState);
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
-  const { floor, room, startDate, startTime, endTime } = newEvent;
+  const { startDate, startTime, endTime } = newEvent;
 
   const curUser = useRecoilValue(userState);
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
@@ -40,9 +30,6 @@ const AddEvent = ({ className }: DefaultProps) => {
     if (target.closest('li')) {
       setAttendants(pre => pre.filter(user => user.name !== target.closest('li')?.id));
     }
-  };
-  const changeEndTime: ChangeEventHandler<HTMLSelectElement> = e => {
-    setNewEvent(pre => ({ ...pre, endTime: e.currentTarget.value }));
   };
   const insertNewEvent = async (newEvent: newEvent) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
@@ -105,70 +92,7 @@ const AddEvent = ({ className }: DefaultProps) => {
         placeholder="회의 내용"
         onChange={setDescriptionHandler}
       />
-      <table>
-        <tbody>
-          <tr>
-            <th>장소</th>
-            <td>
-              <select name="floorForNewEvent" id="floorForNewEvent" value={floor}>
-                {rooms.map(rooms => {
-                  return <option value={rooms.floor}>{rooms.floor}</option>;
-                })}
-              </select>
-              <span>층 </span>
-              <select name="roomForNewEvent" id="roomForNewEvent" value={room}>
-                {rooms
-                  .find(room => room.floor === +floor)
-                  ?.roomsPerFloor.map((room, index) => {
-                    return (
-                      <option value={room} key={room + index}>
-                        {room}
-                      </option>
-                    );
-                  })}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>날짜</th>
-            <td>
-              <label htmlFor="startDateForNewEvent" className="a11y-hidden"></label>
-              <input id="startDateForNewEvent" type="date" value={startDate} />
-            </td>
-          </tr>
-          <tr>
-            <th>시작</th>
-            <td>
-              <select name="startTime" id="startTimeForNewEvent" value={startTime}>
-                {TIME_TABLE.map(time => {
-                  return (
-                    <option value={time} key={time}>
-                      {time}
-                    </option>
-                  );
-                })}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>종료</th>
-            <td>
-              {
-                <select
-                  name="endTime"
-                  id="newEventEndTime"
-                  value={endTime}
-                  onChange={changeEndTime}
-                >
-                  {createEndTimes(startTime, renderEvents, floor, room).map(time => (
-                    <option key={time}>{time}</option>
-                  ))}
-                </select>
-              }
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <NewEventTable />
       <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
         {attendants.map(user => {
