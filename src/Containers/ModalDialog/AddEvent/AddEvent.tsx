@@ -25,7 +25,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   const setDescriptionHandler: ChangeEventHandler<HTMLTextAreaElement> = e => {
     setNewEvent(pre => ({ ...pre, description: e.currentTarget.value }));
   };
-  const deleteAttendanthandler: MouseEventHandler<HTMLButtonElement> = e => {
+  const deleteAttendantHandler: MouseEventHandler<HTMLButtonElement> = e => {
     const target = e.target as Element;
     if (target.closest('li')) {
       setAttendants(pre => pre.filter(user => user.name !== target.closest('li')?.id));
@@ -106,7 +106,7 @@ const AddEvent = ({ className }: DefaultProps) => {
                   <span>{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
-              <StyledCloseButton onClick={deleteAttendanthandler} />
+              <StyledCloseButton onClick={deleteAttendantHandler} />
             </li>
           );
         })}
