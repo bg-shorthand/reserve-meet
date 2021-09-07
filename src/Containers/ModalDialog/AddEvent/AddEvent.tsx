@@ -9,15 +9,17 @@ import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
 import StyledButton from 'Components/Button/Button.style';
 import NewEventTable from 'Components/NewEventTable/NewEventTable';
+import meetingApi from 'api/db/meetingApi';
 
 const AddEvent = ({ className }: DefaultProps) => {
+  const curUser = useRecoilValue(userState);
   const setEvents = useSetRecoilState(eventsState);
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
-  const { startDate, startTime, endTime } = newEvent;
+  const { startDate, startTime, endTime, floor, room } = newEvent;
 
-  const curUser = useRecoilValue(userState);
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
+  const [hasEventAlert, setHasEventAlert] = useState<Events>([]);
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
@@ -33,6 +35,26 @@ const AddEvent = ({ className }: DefaultProps) => {
   };
   const insertNewEvent = async (newEvent: newEvent) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
+
+    const res = await meetingApi.get(startDate);
+    const reservedEvents = createEventsFromAsyncRes(res.data.meetings);
+    const hasEvent = reservedEvents
+      .filter(event => event.location === floor + '층 ' + room)
+      .filter(event => {
+        if (event.startTime > startTime) {
+          return event.startTime > endTime;
+        } else if (event.startTime < startTime) {
+          return event.endTime >= endTime;
+        } else {
+          return true;
+        }
+      });
+    if (hasEvent.length) {
+      setHasEventAlert([...hasEvent]);
+      setIsOpen(pre => ({ ...pre, spinner: false }));
+      return;
+    }
+
     const temp = await calendarApi.insertEvent(newEvent);
     if (temp && temp.data) {
       const res = temp.data;
@@ -40,6 +62,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       setEvents(pre => [...pre, ...newEvents]);
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
+
     setIsOpen(pre => ({ ...pre, spinner: false }));
   };
   const setAttendantsHandler = async (email: string) => {
@@ -109,6 +132,7 @@ const AddEvent = ({ className }: DefaultProps) => {
         onChange={setDescriptionHandler}
       />
       <NewEventTable />
+      {hasEventAlert.length ? <p>이미 예약된 회의실입니다. ({hasEventAlert[0].summary})</p> : null}
       <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
         {attendants.map(user => {
