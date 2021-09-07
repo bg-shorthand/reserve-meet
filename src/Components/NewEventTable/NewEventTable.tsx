@@ -9,11 +9,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { newEventState, renderEventsState, roomsState } from 'state/state';
+import { newEventState, renderEventsState, roomsState, viewEventIdState } from 'state/state';
 
 const NewEventTable = () => {
   const renderEvents = useRecoilValue(renderEventsState);
   const rooms = useRecoilValue(roomsState);
+  const viewEventId = useRecoilValue(viewEventIdState);
   const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const { floor, room, startDate, startTime, endTime } = newEvent;
 
@@ -66,7 +67,7 @@ const NewEventTable = () => {
     const curMonth = addPrefix0(date.getMonth() + 1);
     const curDate = addPrefix0(date.getDate());
     setToday(curYear + '-' + curMonth + '-' + curDate);
-    setReservedEvents([...renderEvents]);
+    setReservedEvents([...renderEvents.filter(event => event.id !== viewEventId)]);
   }, []);
 
   useEffect(() => {
@@ -93,8 +94,8 @@ const NewEventTable = () => {
   }, [startDate, floor, room, reservedEvents]);
 
   useEffect(() => {
-    setEndTimes(createEndTimes(startTime, renderEvents, floor, room));
-  }, [startTime]);
+    setEndTimes(createEndTimes(startTime, reservedEvents, floor, room));
+  }, [floor, reservedEvents, room, startTime]);
 
   return (
     <table>
