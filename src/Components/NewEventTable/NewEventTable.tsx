@@ -15,6 +15,7 @@ const NewEventTable = () => {
 
   const [startTimes, setStartTimes] = useState<string[]>([]);
   const [endTimes, setEndTimes] = useState<string[]>([]);
+  const [today, setToday] = useState('');
 
   const changeFloorHandler: ChangeEventHandler<HTMLSelectElement> = e => {
     const firstRoomPerFloor = rooms.find(room => room.floor === +e.currentTarget.value)
@@ -48,8 +49,12 @@ const NewEventTable = () => {
   };
 
   useEffect(() => {
-    console.log(newEvent);
-  }, [newEvent]);
+    const date = new Date();
+    const curYear = date.getFullYear();
+    const curMonth = addPrefix0(date.getMonth() + 1);
+    const curDate = addPrefix0(date.getDate());
+    setToday(curYear + '-' + curMonth + '-' + curDate);
+  }, []);
 
   useEffect(() => {
     const date = new Date();
@@ -118,6 +123,7 @@ const NewEventTable = () => {
               type="date"
               value={startDate}
               onChange={changeDateHandler}
+              min={today}
             />
           </td>
         </tr>
