@@ -14,6 +14,8 @@ import { DefaultProps, Events, newEvent } from 'const/type';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledButton from 'Components/Button/Button.style';
+import NewEventTable from 'Components/NewEventTable/NewEventTable';
+import meetingApi from 'api/db/meetingApi';
 
 const PatchEvent = ({ className }: DefaultProps) => {
   const isOpen = useRecoilValue(isOpenState).patchEvent;
@@ -26,6 +28,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
   const curDate = useRecoilValue(curDateState);
 
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
+  const [hasEventAlert, setHasEventAlert] = useState<Events>([]);
 
   const deleteAttendanthandler: MouseEventHandler<HTMLButtonElement> = e => {
     const target = e.target as Element;
@@ -55,13 +58,34 @@ const PatchEvent = ({ className }: DefaultProps) => {
   };
   const patchEvent = async (newEvent: newEvent) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
-    const res = await calendarApi.patchEvent(eventId, newEvent, curDate);
-    const data = res?.data;
+
+    const res = await meetingApi.get(startDate);
+    const reservedEvents = createEventsFromAsyncRes(res.data.meetings);
+    const hasEvent = reservedEvents
+      .filter(event => event.location === floor + '층 ' + room)
+      .filter(event => {
+        if (event.startTime > startTime) {
+          return event.startTime < endTime;
+        } else if (event.startTime < startTime) {
+          return event.endTime >= endTime;
+        } else {
+          return true;
+        }
+      });
+    if (hasEvent.length) {
+      setHasEventAlert([...hasEvent]);
+      setIsOpen(pre => ({ ...pre, spinner: false }));
+      return;
+    }
+
+    const temp = await calendarApi.patchEvent(eventId, newEvent, curDate);
+    const data = temp?.data;
     if (data) {
       const newEvents = createEventsFromAsyncRes(data.meetings);
       setEvents([...newEvents]);
       resetIsOpen();
     }
+
     setIsOpen(pre => ({ ...pre, spinner: false }));
   };
 
@@ -101,26 +125,13 @@ const PatchEvent = ({ className }: DefaultProps) => {
         value={description}
         onChange={changeDescriptionHandler}
       />
-      <table>
-        <tbody>
-          <tr>
-            <th>장소</th>
-            <td>{`${floor} ${room}`}</td>
-          </tr>
-          <tr>
-            <th>날짜</th>
-            <td>{startDate}</td>
-          </tr>
-          <tr>
-            <th>시작</th>
-            <td>{startTime}</td>
-          </tr>
-          <tr>
-            <th>종료</th>
-            <td>{endTime}</td>
-          </tr>
-        </tbody>
-      </table>
+      <NewEventTable />
+      {hasEventAlert.length ? (
+        <p>
+          이미 예약된 회의실입니다. ({hasEventAlert[0].summary} {hasEventAlert[0].startTime}~
+          {hasEventAlert[0].endTime})
+        </p>
+      ) : null}
       <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
         {attendants.map(user => {
