@@ -42,7 +42,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       .filter(event => event.location === floor + '층 ' + room)
       .filter(event => {
         if (event.startTime > startTime) {
-          return event.startTime > endTime;
+          return event.startTime < endTime;
         } else if (event.startTime < startTime) {
           return event.endTime >= endTime;
         } else {
@@ -87,6 +87,7 @@ const AddEvent = ({ className }: DefaultProps) => {
       setAttendantsHandler(curUser.email);
     } else {
       setAttendants([]);
+      setHasEventAlert([]);
     }
     setNewEvent(pre => ({ ...pre, summary: '', description: '' }));
   }, [isOpen.addEvent]);
@@ -132,7 +133,12 @@ const AddEvent = ({ className }: DefaultProps) => {
         onChange={setDescriptionHandler}
       />
       <NewEventTable />
-      {hasEventAlert.length ? <p>이미 예약된 회의실입니다. ({hasEventAlert[0].summary})</p> : null}
+      {hasEventAlert.length ? (
+        <p>
+          이미 예약된 회의실입니다. ({hasEventAlert[0].summary} {hasEventAlert[0].startTime}~
+          {hasEventAlert[0].endTime})
+        </p>
+      ) : null}
       <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
         {attendants.map(user => {
