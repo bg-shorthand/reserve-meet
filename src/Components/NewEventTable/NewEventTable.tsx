@@ -1,4 +1,5 @@
 import meetingApi from 'api/db/meetingApi';
+import Select from 'Components/Select/Select';
 import { TIME_TABLE } from 'const/const';
 import { Events } from 'const/type';
 import addPrefix0 from 'module/addPrefix0';
@@ -103,37 +104,19 @@ const NewEventTable = () => {
         <tr>
           <th>장소</th>
           <td>
-            <select
-              name="floorForNewEvent"
-              id="floorForNewEvent"
+            <Select
+              id="floorForNewEvnet"
               value={floor}
+              list={rooms.map(room => room.floor + '')}
               onChange={changeFloorHandler}
-            >
-              {rooms.map((rooms, index) => {
-                return (
-                  <option value={rooms.floor} key={rooms.floor + index}>
-                    {rooms.floor}
-                  </option>
-                );
-              })}
-            </select>
+            />
             <span>층 </span>
-            <select
-              name="roomForNewEvent"
+            <Select
               id="roomForNewEvent"
               value={room}
+              list={rooms.find(room => room.floor === +floor)?.roomsPerFloor!}
               onChange={changeRoomHandler}
-            >
-              {rooms
-                .find(room => room.floor === +floor)
-                ?.roomsPerFloor.map((room, index) => {
-                  return (
-                    <option value={room} key={room + index}>
-                      {room}
-                    </option>
-                  );
-                })}
-            </select>
+            />
           </td>
         </tr>
         <tr>
@@ -152,39 +135,23 @@ const NewEventTable = () => {
         <tr>
           <th>시작</th>
           <td>
-            <select
-              name="startTime"
+            <Select
               id="startTimeForNewEvent"
               value={startTime}
+              list={startTimes}
               onChange={changeStartTimeHandler}
-            >
-              {startTimes.map(time => {
-                return (
-                  <option value={time} key={time}>
-                    {time}
-                  </option>
-                );
-              })}
-            </select>
+            />
           </td>
         </tr>
         <tr>
           <th>종료</th>
           <td>
-            {
-              <select
-                name="endTime"
-                id="newEventEndTime"
-                value={endTime}
-                onChange={changeEndTimeHandler}
-              >
-                {endTimes.map(time => (
-                  <option value={time} key={time}>
-                    {time}
-                  </option>
-                ))}
-              </select>
-            }
+            <Select
+              id="newEventEndTime"
+              value={endTime}
+              list={endTimes}
+              onChange={changeEndTimeHandler}
+            />
           </td>
         </tr>
       </tbody>
