@@ -127,12 +127,12 @@ const PatchEvent = ({ className }: DefaultProps) => {
       />
       <StyledNewEventTable />
       {hasEventAlert.length ? (
-        <p className="imposible">
-          이미 예약된 회의실입니다.
-          <div>
+        <>
+          <p className="imposible">이미 예약된 회의실입니다.</p>
+          <p className="imposible">
             ({hasEventAlert[0].summary} {hasEventAlert[0].startTime}~{hasEventAlert[0].endTime})
-          </div>
-        </p>
+          </p>
+        </>
       ) : null}
       <StyledSearchUser setList={setAttendantsHandler} />
       <ul>
