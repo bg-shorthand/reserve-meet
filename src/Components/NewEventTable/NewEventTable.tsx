@@ -104,11 +104,6 @@ const NewEventTable = () => {
     if (newTimes.indexOf(endTime) < 0) setNewEvent(pre => ({ ...pre, endTime: newTimes[0] }));
   }, [floor, reservedEvents, room, startTime]);
 
-  useEffect(() => {
-    console.log(startTime, startTimes);
-    console.log(endTime, endTimes);
-  }, [startTimes, endTimes, startTime, endTime]);
-
   return (
     <table>
       <tbody>
