@@ -1,6 +1,6 @@
 import meetingApi from 'api/db/meetingApi';
 import Select from 'Components/Select/Select';
-import { TIME_TABLE } from 'const/const';
+import { END_TIME, TIME_TABLE } from 'const/const';
 import { Events } from 'const/type';
 import addPrefix0 from 'module/addPrefix0';
 import compareStartTimeWithEvents from 'module/compareStartTimeWithEvents';
@@ -20,8 +20,8 @@ const NewEventTable = () => {
   const { floor, room, startDate, startTime, endTime } = newEvent;
 
   const [reservedEvents, setReservedEvents] = useState<Events>([]);
-  const [startTimes, setStartTimes] = useState<string[]>([]);
-  const [endTimes, setEndTimes] = useState<string[]>([]);
+  const [startTimes, setStartTimes] = useState<string[]>([...TIME_TABLE]);
+  const [endTimes, setEndTimes] = useState<string[]>([...TIME_TABLE, END_TIME + ':00']);
   const [today, setToday] = useState('');
 
   const changeFloorHandler: ChangeEventHandler<HTMLSelectElement> = e => {
@@ -89,14 +89,25 @@ const NewEventTable = () => {
     if (startDate === curYear + '-' + curMonth + '-' + curDate) {
       const nextTimes = times.filter(time => time > curHour + ':' + curMinute);
       setStartTimes([...nextTimes]);
+      if (nextTimes.indexOf(startTime) < 0)
+        setNewEvent(pre => ({ ...pre, startTime: nextTimes[0] }));
     } else {
       setStartTimes([...times]);
+      if (times.indexOf(startTime) < 0) setNewEvent(pre => ({ ...pre, startTime: times[0] }));
     }
   }, [startDate, floor, room, reservedEvents]);
 
   useEffect(() => {
-    setEndTimes(createEndTimes(startTime, reservedEvents, floor, room));
+    const newTimes = createEndTimes(startTime, reservedEvents, floor, room);
+    setEndTimes([...newTimes]);
+    console.log(newTimes.indexOf(endTime));
+    if (newTimes.indexOf(endTime) < 0) setNewEvent(pre => ({ ...pre, endTime: newTimes[0] }));
   }, [floor, reservedEvents, room, startTime]);
+
+  useEffect(() => {
+    console.log(startTime, startTimes);
+    console.log(endTime, endTimes);
+  }, [startTimes, endTimes, startTime, endTime]);
 
   return (
     <table>
