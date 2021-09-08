@@ -100,7 +100,6 @@ const NewEventTable = () => {
   useEffect(() => {
     const newTimes = createEndTimes(startTime, reservedEvents, floor, room);
     setEndTimes([...newTimes]);
-    console.log(newTimes.indexOf(endTime));
     if (newTimes.indexOf(endTime) < 0) setNewEvent(pre => ({ ...pre, endTime: newTimes[0] }));
   }, [floor, reservedEvents, room, startTime]);
 
