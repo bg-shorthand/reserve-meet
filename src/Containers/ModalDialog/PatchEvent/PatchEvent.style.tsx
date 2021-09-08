@@ -1,4 +1,3 @@
-import { COLORS } from 'const/const';
 import styled from 'styled-components';
 import PatchEvent from './PatchEvent';
 
@@ -7,42 +6,8 @@ const StyledPatchEvent = styled(PatchEvent)`
   flex-flow: column nowrap;
   justify-content: space-around;
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    h1 {
-      align-self: center;
-    }
-
-    & * {
-      padding: 10px;
-    }
-
-    & th,
-    & td {
-      border-right: 1px solid ${COLORS.TEAL_LEVEL_2};
-      border-bottom: 1px solid ${COLORS.TEAL_LEVEL_2};
-    }
-
-    & tr:last-child th,
-    & tr:last-child td {
-      border-bottom: none;
-    }
-    & td:last-child {
-      border-right: none;
-    }
-
-    select {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
   .imposible {
-    span {
-      color: red;
-    }
+    color: red;
   }
 
   & li {

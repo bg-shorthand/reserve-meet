@@ -14,7 +14,7 @@ import { DefaultProps, Events, newEvent } from 'const/type';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import StyledButton from 'Components/Button/Button.style';
-import NewEventTable from 'Components/NewEventTable/NewEventTable';
+import StyledNewEventTable from 'Components/NewEventTable/NewEventTable.style';
 import meetingApi from 'api/db/meetingApi';
 
 const PatchEvent = ({ className }: DefaultProps) => {
@@ -125,11 +125,13 @@ const PatchEvent = ({ className }: DefaultProps) => {
         value={description}
         onChange={changeDescriptionHandler}
       />
-      <NewEventTable />
+      <StyledNewEventTable />
       {hasEventAlert.length ? (
-        <p>
-          이미 예약된 회의실입니다. ({hasEventAlert[0].summary} {hasEventAlert[0].startTime}~
-          {hasEventAlert[0].endTime})
+        <p className="imposible">
+          이미 예약된 회의실입니다.
+          <div>
+            ({hasEventAlert[0].summary} {hasEventAlert[0].startTime}~{hasEventAlert[0].endTime})
+          </div>
         </p>
       ) : null}
       <StyledSearchUser setList={setAttendantsHandler} />
@@ -138,11 +140,11 @@ const PatchEvent = ({ className }: DefaultProps) => {
           const { name, events } = user;
 
           return (
-            <li key={name} id={name} className={events.length ? 'imposible' : ''}>
+            <li key={name} id={name}>
               <p>
                 {name}{' '}
                 {events.length ? (
-                  <span>{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
+                  <span className="imposible">{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
               <StyledCloseButton onClick={deleteAttendanthandler} />

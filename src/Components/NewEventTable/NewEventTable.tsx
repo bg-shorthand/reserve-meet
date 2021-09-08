@@ -1,7 +1,7 @@
 import meetingApi from 'api/db/meetingApi';
 import Select from 'Components/Select/Select';
 import { END_TIME, TIME_TABLE } from 'const/const';
-import { Events } from 'const/type';
+import { DefaultProps, Events } from 'const/type';
 import addPrefix0 from 'module/addPrefix0';
 import compareStartTimeWithEvents from 'module/compareStartTimeWithEvents';
 import createEndTimes from 'module/createEndTimes';
@@ -12,7 +12,7 @@ import { ChangeEventHandler } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newEventState, renderEventsState, roomsState, viewEventIdState } from 'state/state';
 
-const NewEventTable = () => {
+const NewEventTable = ({ className }: DefaultProps) => {
   const renderEvents = useRecoilValue(renderEventsState);
   const rooms = useRecoilValue(roomsState);
   const viewEventId = useRecoilValue(viewEventIdState);
@@ -104,7 +104,7 @@ const NewEventTable = () => {
   }, [floor, reservedEvents, room, startTime]);
 
   return (
-    <table>
+    <table className={className}>
       <tbody>
         <tr>
           <th>장소</th>
