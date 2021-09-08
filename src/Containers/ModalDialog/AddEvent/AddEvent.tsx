@@ -112,6 +112,10 @@ const AddEvent = ({ className }: DefaultProps) => {
     setIsOpen(pre => ({ ...pre, spinner: false }));
   }, [newEvent.startDate, newEvent.startTime, newEvent.endTime]);
 
+  useEffect(() => {
+    setHasEventAlert([]);
+  }, [newEvent]);
+
   return isOpen.addEvent ? (
     <ModalDialog className={className}>
       <h1>회의 등록</h1>
