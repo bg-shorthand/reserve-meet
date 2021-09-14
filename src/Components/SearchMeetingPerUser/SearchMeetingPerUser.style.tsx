@@ -1,18 +1,22 @@
 import { COLORS } from 'const/const';
 import styled from 'styled-components';
-import ViewEvent from './ViewEvent';
+import SearchMeetingPerUser from './SearchMeetingPerUser';
 
-const StyledViewEvent = styled(ViewEvent)`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
+const StyledSearchMeetingPerUser = styled(SearchMeetingPerUser)`
+  background-color: ${COLORS.MAIN_GRAY};
+  padding: 15px 50px;
+  border-radius: 5px;
 
-  h1 {
-    word-break: break-all;
+  & > *:not(:last-child) {
+    margin-bottom: 1em;
   }
 
-  pre {
-    line-height: 140%;
+  h2 {
+    font-weight: 500;
+  }
+
+  div {
+    max-width: 500px;
   }
 
   table {
@@ -26,6 +30,7 @@ const StyledViewEvent = styled(ViewEvent)`
     & th,
     & td {
       border: 1px solid ${COLORS.TABLE_BORDER};
+      text-align: center;
     }
     & tr:first-child th,
     & tr:first-child td {
@@ -39,11 +44,11 @@ const StyledViewEvent = styled(ViewEvent)`
       margin: 0;
       padding: 0;
     }
-  }
 
-  button {
-    align-self: center;
+    .isMeeting {
+      cursor: pointer;
+    }
   }
 `;
 
-export default StyledViewEvent;
+export default StyledSearchMeetingPerUser;

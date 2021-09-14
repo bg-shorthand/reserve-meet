@@ -11,8 +11,7 @@ const StyledReserveState = styled(ReserveState)`
 
   & > section {
     background-color: ${COLORS.MAIN_GRAY};
-    padding: 15px;
-    padding-left: 50px;
+    padding: 15px 50px;
     border-radius: 5px;
     display: flex;
   }

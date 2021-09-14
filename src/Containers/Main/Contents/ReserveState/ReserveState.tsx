@@ -7,6 +7,7 @@ import StyledFloor from 'Components/Floor/Floor.style';
 import StyledDatePicker from 'Components/DatePicker/DatePicker.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 import meetingApi from 'api/db/meetingApi';
+import StyledSearchMeetingPerUser from 'Components/SearchMeetingPerUser/SearchMeetingPerUser.style';
 
 const ReserveState = ({ className }: DefaultProps) => {
   const setEvents = useSetRecoilState(eventsState);
@@ -32,6 +33,7 @@ const ReserveState = ({ className }: DefaultProps) => {
         <StyledDatePicker />
         <StyledFloor />
       </section>
+      <StyledSearchMeetingPerUser />
       {rooms && <StyledReserveTable rooms={rooms} curTime={new Date()} />}
     </section>
   );
