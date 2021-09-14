@@ -37,22 +37,24 @@ const AddEvent = ({ className }: DefaultProps) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
 
     const res = await meetingApi.get(startDate);
-    const reservedEvents = createEventsFromAsyncRes(res.data.meetings);
-    const hasEvent = reservedEvents
-      .filter(event => event.location === floor + '층 ' + room)
-      .filter(event => {
-        if (event.startTime > startTime) {
-          return event.startTime < endTime;
-        } else if (event.startTime < startTime) {
-          return event.endTime >= endTime;
-        } else {
-          return true;
-        }
-      });
-    if (hasEvent.length) {
-      setHasEventAlert([...hasEvent]);
-      setIsOpen(pre => ({ ...pre, spinner: false }));
-      return;
+    if (res.data) {
+      const reservedEvents = createEventsFromAsyncRes(res.data.meetings);
+      const hasEvent = reservedEvents
+        .filter(event => event.location === floor + '층 ' + room)
+        .filter(event => {
+          if (event.startTime > startTime) {
+            return event.startTime < endTime;
+          } else if (event.startTime < startTime) {
+            return event.endTime >= endTime;
+          } else {
+            return true;
+          }
+        });
+      if (hasEvent.length) {
+        setHasEventAlert([...hasEvent]);
+        setIsOpen(pre => ({ ...pre, spinner: false }));
+        return;
+      }
     }
 
     const temp = await calendarApi.insertEvent(newEvent);
