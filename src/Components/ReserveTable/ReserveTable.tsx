@@ -58,7 +58,7 @@ const ReserveTable = ({ className, rooms }: props) => {
     $td?.forEach(td => {
       if (curDate < today) {
         td.setAttribute('style', 'background-color: rgba(219, 216, 216, 0.2); cursor: not-allowed');
-      } else if (curDate === today && td.id.slice(0, 5) < curHour + ':' + curMin) {
+      } else if (curDate === today && td.id.slice(0, 5) <= curHour + ':' + curMin) {
         td.setAttribute('style', 'background-color: rgba(219, 216, 216, 0.2); cursor: not-allowed');
       }
     });
