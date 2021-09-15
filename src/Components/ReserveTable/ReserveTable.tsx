@@ -52,7 +52,6 @@ const ReserveTable = ({ className, rooms }: props) => {
 
   useEffect(() => {
     const $table = document.querySelector('main > section > table');
-    console.log($table);
     const $td = $table?.querySelectorAll('td');
 
     $td?.forEach(td => {
