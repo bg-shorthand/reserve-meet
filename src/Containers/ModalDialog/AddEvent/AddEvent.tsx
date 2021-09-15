@@ -108,7 +108,21 @@ const AddEvent = ({ className }: DefaultProps) => {
 
       if (res && res.result.items) {
         const events = createEventsFromAsyncRes(res.result.items);
-        setAttendants(pre => pre.map(user => (user.name === email ? { ...user, events } : user)));
+        if (
+          events.filter(event => {
+            if (event.startTime > startTime) {
+              return event.startTime < endTime;
+            } else if (event.startTime < startTime) {
+              return event.endTime >= endTime;
+            } else {
+              return true;
+            }
+          }).length
+        ) {
+          return;
+        } else {
+          setAttendants(pre => pre.map(user => (user.name === email ? { ...user, events } : user)));
+        }
       }
     });
     setIsOpen(pre => ({ ...pre, spinner: false }));

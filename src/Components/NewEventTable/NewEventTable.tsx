@@ -101,7 +101,7 @@ const NewEventTable = ({ className }: DefaultProps) => {
     const newTimes = createEndTimes(startTime, reservedEvents, floor, room);
     setEndTimes([...newTimes]);
     if (newTimes.indexOf(endTime) < 0) setNewEvent(pre => ({ ...pre, endTime: newTimes[0] }));
-  }, [floor, reservedEvents, room, startTime]);
+  }, [floor, reservedEvents, room, startTime, endTime]);
 
   return (
     <table className={className}>
