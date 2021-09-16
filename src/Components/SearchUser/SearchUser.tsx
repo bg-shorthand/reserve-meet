@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
+import { useState, ChangeEventHandler, KeyboardEventHandler, useEffect, useRef } from 'react';
 import peopleApi from 'api/googleLib/peopleApi';
 import debounce from 'lodash/debounce';
 import { DefaultProps } from 'const/type';
@@ -8,6 +8,8 @@ interface Props extends DefaultProps {
 }
 
 const SearchUser = ({ className, setList }: Props) => {
+  const ref = useRef<HTMLInputElement>(null);
+
   const [searchResert, setSearchResert] = useState<
     { email: string; photo: string; selected: boolean }[]
   >([]);
@@ -62,7 +64,7 @@ const SearchUser = ({ className, setList }: Props) => {
     }
   };
   const init = () => {
-    const $input = document.getElementById('searchUserInput') as HTMLInputElement;
+    const $input = ref.current as HTMLInputElement;
     $input.value = '';
     setSearchResert([]);
     $input.focus();
@@ -88,6 +90,7 @@ const SearchUser = ({ className, setList }: Props) => {
         onChange={debounce(searchUserHandler, 200)}
         onKeyUp={keyboardHandler}
         autoComplete="off"
+        ref={ref}
       />
       {searchResert.length ? (
         <ul>
