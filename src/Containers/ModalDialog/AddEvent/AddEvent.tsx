@@ -10,6 +10,7 @@ import StyledIconButton from 'Components/IconButton/IconButton.style';
 import StyledButton from 'Components/Button/Button.style';
 import StyledNewEventTable from 'Components/NewEventTable/NewEventTable.style';
 import meetingApi from 'api/db/meetingApi';
+import addPrefix0 from 'module/addPrefix0';
 
 const AddEvent = ({ className }: DefaultProps) => {
   const curUser = useRecoilValue(userState);
@@ -20,6 +21,7 @@ const AddEvent = ({ className }: DefaultProps) => {
 
   const [attendants, setAttendants] = useState<{ name: string; events: Events }[]>([]);
   const [hasEventAlert, setHasEventAlert] = useState<Events>([]);
+  const [isWeekly, setIsWeekly] = useState(false);
 
   const setSummaryHandler: ChangeEventHandler<HTMLInputElement> = e => {
     setNewEvent(pre => ({ ...pre, summary: e.currentTarget.value }));
@@ -65,6 +67,26 @@ const AddEvent = ({ className }: DefaultProps) => {
       setIsOpen(pre => ({ ...pre, addEvent: false }));
     }
 
+    if (isWeekly) {
+      let reserveDate = newEvent.startDate;
+
+      const addSevenDates = (date: string) => {
+        const arr = date.split('-');
+        arr[2] = addPrefix0(+arr[2] + 7) + '';
+        return arr.join('-');
+      };
+
+      while (!isNaN(new Date(addSevenDates(reserveDate)).valueOf())) {
+        await calendarApi.insertEvent({
+          ...newEvent,
+          endDate: addSevenDates(reserveDate),
+          startDate: addSevenDates(reserveDate),
+        });
+
+        reserveDate = addSevenDates(reserveDate);
+      }
+    }
+
     setIsOpen(pre => ({ ...pre, spinner: false }));
   };
   const setAttendantsHandler = async (email: string) => {
@@ -87,6 +109,7 @@ const AddEvent = ({ className }: DefaultProps) => {
   useEffect(() => {
     if (isOpen.addEvent) {
       setAttendantsHandler(curUser.email);
+      setIsWeekly(false);
     } else {
       setAttendants([]);
       setHasEventAlert([]);
@@ -179,6 +202,10 @@ const AddEvent = ({ className }: DefaultProps) => {
           );
         })}
       </ul>
+      <label>
+        <input type="checkbox" checked={isWeekly} onChange={() => setIsWeekly(pre => !pre)} />
+        주간 회의
+      </label>
       <StyledButton
         disabled={newEvent.summary && !attendants.find(user => user.events.length) ? false : true}
         onClick={() => {
