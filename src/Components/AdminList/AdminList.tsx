@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { adminsState, alertContentState, isOpenState } from 'state/state';
-import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledIconButton from 'Components/IconButton/IconButton.style';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import { MouseEventHandler } from 'react';
 import adminApi from 'api/db/adminApi';
@@ -72,7 +72,9 @@ const AdminList = ({ className }: DefaultProps) => {
             ? admins.map(admin => (
                 <li key={admin._id}>
                   {admin.email}
-                  {admins.length > 1 ? <StyledCloseButton onClick={deleteAdminHandler} /> : null}
+                  {admins.length > 1 ? (
+                    <StyledIconButton onClick={deleteAdminHandler} type="del" />
+                  ) : null}
                 </li>
               ))
             : null}
@@ -86,7 +88,7 @@ const AdminList = ({ className }: DefaultProps) => {
             newAdmins.map(user => (
               <li key={user.email}>
                 {user.email}
-                <StyledCloseButton onClick={deleteNewAdminsHandler} />
+                <StyledIconButton onClick={deleteNewAdminsHandler} type="del" />
               </li>
             ))
           ) : (

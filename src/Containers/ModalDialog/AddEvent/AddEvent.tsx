@@ -6,7 +6,7 @@ import { DefaultProps, Events, newEvent } from 'const/type';
 import ModalDialog from 'Components/ModalDialog/ModalDialog';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
-import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledIconButton from 'Components/IconButton/IconButton.style';
 import StyledButton from 'Components/Button/Button.style';
 import StyledNewEventTable from 'Components/NewEventTable/NewEventTable.style';
 import meetingApi from 'api/db/meetingApi';
@@ -174,7 +174,7 @@ const AddEvent = ({ className }: DefaultProps) => {
                   <span className="imposible">{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
-              <StyledCloseButton onClick={deleteAttendantHandler} />
+              <StyledIconButton onClick={deleteAttendantHandler} type="del" />
             </li>
           );
         })}

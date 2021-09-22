@@ -12,7 +12,7 @@ import {
 } from 'state/state';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import { DefaultProps } from 'const/type';
-import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledIconButton from 'Components/IconButton/IconButton.style';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
 
 interface Props extends DefaultProps {
@@ -86,7 +86,7 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   return hasMeeting ? (
     <article className={className} id={eventId} onClick={openViewEventHandler}>
       <h1>{summary}</h1>
-      {!isOld && isCreator ? <StyledCloseButton onClick={deleteEventHandler} /> : null}
+      {!isOld && isCreator ? <StyledIconButton onClick={deleteEventHandler} type="close" /> : null}
     </article>
   ) : null;
 };

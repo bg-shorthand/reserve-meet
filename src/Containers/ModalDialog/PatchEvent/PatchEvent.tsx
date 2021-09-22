@@ -9,7 +9,7 @@ import {
   viewEventIdState,
 } from 'state/state';
 import StyledSearchUser from 'Components/SearchUser/SearchUser.style';
-import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledIconButton from 'Components/IconButton/IconButton.style';
 import { DefaultProps, Events, newEvent } from 'const/type';
 import { calendarApi } from 'api/googleLib/calendarApi';
 import createEventsFromAsyncRes from 'module/createEventsFromAsyncRes';
@@ -147,7 +147,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
                   <span className="imposible">{`(${events[0].summary} ${events[0].startTime}~${events[0].endTime})`}</span>
                 ) : null}
               </p>
-              <StyledCloseButton onClick={deleteAttendanthandler} />
+              <StyledIconButton onClick={deleteAttendanthandler} type="del" />
             </li>
           );
         })}

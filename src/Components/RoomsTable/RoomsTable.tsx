@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
 import { roomsState } from 'state/state';
-import StyledCloseButton from 'Components/CloseButton/CloseButton.style';
+import StyledIconButton from 'Components/IconButton/IconButton.style';
 import StyledButton from 'Components/Button/Button.style';
 
 const RoomsTable = ({ className }: DefaultProps) => {
@@ -75,7 +75,7 @@ const RoomsTable = ({ className }: DefaultProps) => {
                   <th>
                     <div>
                       {roomObj.floor}
-                      <StyledCloseButton onClick={deleteFloorhandler} />
+                      <StyledIconButton onClick={deleteFloorhandler} type="del" />
                     </div>
                   </th>
                   <td>
@@ -84,7 +84,7 @@ const RoomsTable = ({ className }: DefaultProps) => {
                         ? roomObj.roomsPerFloor.map(room => (
                             <li key={room} id={`${roomObj.floor}-${room}`}>
                               {room}
-                              <StyledCloseButton onClick={deleteRoomPerFloorHandler} />
+                              <StyledIconButton onClick={deleteRoomPerFloorHandler} type="del" />
                             </li>
                           ))
                         : null}
