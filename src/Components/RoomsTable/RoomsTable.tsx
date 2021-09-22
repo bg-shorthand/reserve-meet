@@ -3,13 +3,15 @@ import { DefaultProps } from 'const/type';
 import { ChangeEventHandler } from 'react';
 import { useState } from 'react';
 import { MouseEventHandler } from 'react';
-import { useRecoilState } from 'recoil';
-import { roomsState } from 'state/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { alertContentState, isOpenState, roomsState } from 'state/state';
 import StyledIconButton from 'Components/IconButton/IconButton.style';
 import StyledButton from 'Components/Button/Button.style';
 
 const RoomsTable = ({ className }: DefaultProps) => {
   const [rooms, setRooms] = useRecoilState(roomsState);
+  const setIsOpen = useSetRecoilState(isOpenState);
+  const setAlertContent = useSetRecoilState(alertContentState);
   const [newFloor, setNewFloor] = useState('');
 
   const setNewFloorHandler: ChangeEventHandler<HTMLInputElement> = e => {
@@ -18,9 +20,15 @@ const RoomsTable = ({ className }: DefaultProps) => {
   const deleteFloorhandler: MouseEventHandler<Element> = async e => {
     const floor = e.currentTarget.closest('th')?.textContent;
     if (floor) {
-      const res = await roomApi.deleteFloor(+floor);
-      const newRooms = await res.data;
-      setRooms(newRooms);
+      setAlertContent({
+        content: '삭제하시겠습니까?',
+        yesEvent: async () => {
+          const res = await roomApi.deleteFloor(+floor);
+          const newRooms = await res.data;
+          setRooms(newRooms);
+        },
+      });
+      setIsOpen(pre => ({ ...pre, alert: true }));
     }
   };
   const addFloor: MouseEventHandler<Element> = async () => {
@@ -47,15 +55,21 @@ const RoomsTable = ({ className }: DefaultProps) => {
     const floorRoom = e.currentTarget.closest('li')?.id.split('-');
 
     if (floorRoom) {
-      const [floor, room] = floorRoom;
-      const newRooms = rooms
-        .find(roomObj => roomObj.floor === +floor)
-        ?.roomsPerFloor.filter(v => v !== room);
-      if (newRooms) {
-        const res = await roomApi.updateRoomsPerFloor(+floor, newRooms);
-        const data = await res.data;
-        setRooms([...data]);
-      }
+      setAlertContent({
+        content: '삭제하시겠습니까?',
+        yesEvent: async () => {
+          const [floor, room] = floorRoom;
+          const newRooms = rooms
+            .find(roomObj => roomObj.floor === +floor)
+            ?.roomsPerFloor.filter(v => v !== room);
+          if (newRooms) {
+            const res = await roomApi.updateRoomsPerFloor(+floor, newRooms);
+            const data = await res.data;
+            setRooms([...data]);
+          }
+        },
+      });
+      setIsOpen(pre => ({ ...pre, alert: true }));
     }
   };
 

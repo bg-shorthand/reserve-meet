@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { MouseEventHandler } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  alertContentState,
   curDateState,
   eventsState,
   isOpenState,
@@ -34,20 +35,28 @@ const MeetingSummary = ({ time, room, className }: Props) => {
   const setIsOpen = useSetRecoilState(isOpenState);
   const setViewEventId = useSetRecoilState(viewEventIdState);
   const setNewEvent = useSetRecoilState(newEventState);
+  const setAlertContent = useSetRecoilState(alertContentState);
 
   const calendarId = 'primary';
 
   const deleteEventHandler: MouseEventHandler<Element> = async e => {
-    setIsOpen(pre => ({ ...pre, spinner: true }));
     const eventId = e.currentTarget.closest('article')?.id;
-    const res = await calendarApi.deleteEvent(calendarId, eventId!, curDate);
 
-    if (res) {
-      const data = await res.data;
-      const newEvents = createEventsFromAsyncRes(data.meetings);
-      data && setEvents([...newEvents]);
-    }
-    setIsOpen(pre => ({ ...pre, spinner: false }));
+    setAlertContent({
+      content: '삭제하시겠습니까?',
+      yesEvent: async () => {
+        setIsOpen(pre => ({ ...pre, spinner: true }));
+        const res = await calendarApi.deleteEvent(calendarId, eventId!, curDate);
+
+        if (res) {
+          const data = await res.data;
+          const newEvents = createEventsFromAsyncRes(data.meetings);
+          data && setEvents([...newEvents]);
+        }
+        setIsOpen(pre => ({ ...pre, spinner: false }));
+      },
+    });
+    setIsOpen(pre => ({ ...pre, alert: true }));
   };
   const openViewEventHandler: MouseEventHandler<Element> = e => {
     const target = e.target as Element;
