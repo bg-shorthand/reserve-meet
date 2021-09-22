@@ -6,6 +6,11 @@ const StyledAddEvent = styled(AddEvent)`
   flex-flow: column nowrap;
   justify-content: space-around;
 
+  ul {
+    max-height: 6em;
+    overflow: scroll;
+  }
+
   .imposible {
     color: red;
   }
