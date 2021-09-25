@@ -72,18 +72,19 @@ const PatchEvent = ({ className }: DefaultProps) => {
           return true;
         }
       });
-    if (hasEvent.length) {
+
+    if (!hasEvent.length || (hasEvent.length === 1 && hasEvent[0].id === eventId)) {
+      const temp = await calendarApi.patchEvent(eventId, newEvent, curDate);
+      const data = temp?.data;
+      if (data) {
+        const newEvents = createEventsFromAsyncRes(data.meetings);
+        setEvents([...newEvents]);
+        resetIsOpen();
+      }
+    } else if (hasEvent.length) {
       setHasEventAlert([...hasEvent]);
       setIsOpen(pre => ({ ...pre, spinner: false }));
       return;
-    }
-
-    const temp = await calendarApi.patchEvent(eventId, newEvent, curDate);
-    const data = temp?.data;
-    if (data) {
-      const newEvents = createEventsFromAsyncRes(data.meetings);
-      setEvents([...newEvents]);
-      resetIsOpen();
     }
 
     setIsOpen(pre => ({ ...pre, spinner: false }));
