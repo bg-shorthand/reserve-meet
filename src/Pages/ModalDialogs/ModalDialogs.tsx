@@ -4,6 +4,7 @@ import StyledViewEvent from 'Containers/ModalDialog/ViewEvent/ViewEvent.style';
 import StyledPatchEvent from 'Containers/ModalDialog/PatchEvent/PatchEvent.style';
 import StyledAlert from 'Containers/ModalDialog/Alert/Alert.style';
 import Spinner from 'Components/Spinner/Spinner';
+import StyledRapidAddEvent from 'Containers/ModalDialog/RapidAddEvent/RapidAddEvent.style';
 
 const ModalDialogs = () => {
   return (
@@ -14,6 +15,7 @@ const ModalDialogs = () => {
       <StyledViewEvent />
       <StyledPatchEvent />
       <StyledAlert />
+      <StyledRapidAddEvent />
     </>
   );
 };

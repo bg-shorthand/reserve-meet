@@ -13,16 +13,18 @@ const Alert = ({ className }: DefaultProps) => {
       <h1>확인</h1>
       <p>{content}</p>
       <div>
-        <StyledButton
-          onClick={e => {
-            yesEvent(e);
-            setIsOpen(pre => ({ ...pre, alert: false }));
-          }}
-        >
-          네
-        </StyledButton>
+        {yesEvent && (
+          <StyledButton
+            onClick={e => {
+              yesEvent(e);
+              setIsOpen(pre => ({ ...pre, alert: false }));
+            }}
+          >
+            네
+          </StyledButton>
+        )}
         <StyledButton onClick={() => setIsOpen(pre => ({ ...pre, alert: false }))}>
-          아니오
+          {yesEvent ? '아니오' : '확인'}
         </StyledButton>
       </div>
     </ModalDialog>

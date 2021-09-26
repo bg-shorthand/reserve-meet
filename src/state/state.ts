@@ -129,6 +129,7 @@ const isOpenState = atom({
     patchEvent: false,
     alert: false,
     spinner: true,
+    rapidAddEvent: false,
   },
 });
 
@@ -141,7 +142,7 @@ const alertContentState = atom({
   key: 'alertContent',
   default: {
     content: '',
-    yesEvent: (() => {}) as MouseEventHandler,
+    yesEvent: (() => {}) as MouseEventHandler | null,
   },
 });
 

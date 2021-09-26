@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${COLORS.HEADER_BLACK};
   }
   body, body * {
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: "Nato Sans KR", sans-serif;
     box-sizing: border-box;
   }
   a {

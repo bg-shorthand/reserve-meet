@@ -14,6 +14,10 @@ const StyledReserveState = styled(ReserveState)`
     padding: 15px 50px;
     border-radius: 5px;
     display: flex;
+
+    & > *:last-child {
+      margin-left: auto;
+    }
   }
 `;
 
