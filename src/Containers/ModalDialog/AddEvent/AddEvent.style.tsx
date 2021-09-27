@@ -6,7 +6,7 @@ const StyledAddEvent = styled(AddEvent)`
   flex-flow: column nowrap;
   justify-content: space-around;
 
-  ul {
+  & > ul {
     max-height: 6em;
     overflow: scroll;
   }

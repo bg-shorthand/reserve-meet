@@ -16,7 +16,7 @@ const StyledSearchUser = styled(SearchUser)`
     border-radius: 5px;
     position: absolute;
     top: 0;
-    left: 105%;
+    left: calc(100% + 10px);
     box-shadow: 0 5px 10px ${COLORS.BLACK};
     width: 100%;
     z-index: 999;
