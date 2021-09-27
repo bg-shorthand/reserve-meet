@@ -22,7 +22,6 @@ import {
 
 const RapidAddEvent = ({ className }: DefaultProps) => {
   const [isOpen, setIsOpen] = useRecoilState(isOpenState);
-  const [newEvent, setNewEvent] = useRecoilState(newEventState);
   const curDate = useRecoilValue(curDateState);
   const curFloor = useRecoilValue(curFloorState);
   const floors = useRecoilValue(floorsState);
