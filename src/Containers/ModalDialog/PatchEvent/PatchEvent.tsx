@@ -60,6 +60,18 @@ const PatchEvent = ({ className }: DefaultProps) => {
     setIsOpen(pre => ({ ...pre, spinner: true }));
 
     const res = await meetingApi.get(startDate);
+
+    if (!res.data.meetings) {
+      const temp = await calendarApi.patchEvent(eventId, newEvent, curDate);
+      const data = temp?.data;
+      if (data) {
+        const newEvents = createEventsFromAsyncRes(data.meetings);
+        setEvents([...newEvents]);
+        resetIsOpen();
+      }
+      setIsOpen(pre => ({ ...pre, spinner: false }));
+      return;
+    }
     const reservedEvents = createEventsFromAsyncRes(res.data.meetings);
     const hasEvent = reservedEvents
       .filter(event => event.location === floor + '층 ' + room)
@@ -97,6 +109,7 @@ const PatchEvent = ({ className }: DefaultProps) => {
 
     return () => {
       setAttendants([]);
+      setHasEventAlert([]);
     };
   }, [isOpen]);
 
