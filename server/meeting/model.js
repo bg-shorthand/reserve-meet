@@ -68,18 +68,60 @@ meetingSchema.statics.patch = async function ({ type, eventId, curDate, newEvent
     const newMeetings = this.findOne({ date: curDate });
     return newMeetings;
   } else if (type === 'patch') {
-    const meeting = await this.findOne({ date: curDate });
-    await this.updateOne(
-      { date: curDate },
-      {
-        $set: {
-          date: curDate,
-          meetings: meeting.meetings.map(meeting => (meeting.id === eventId ? newEvent : meeting)),
+    console.log(curDate, newEvent.start.dateTime.slice(0, 10));
+    if (curDate !== newEvent.start.dateTime.slice(0, 10)) {
+      let meeting = await this.findOne({ date: curDate });
+      await this.updateOne(
+        { date: curDate },
+        {
+          $set: {
+            date: curDate,
+            meetings: meeting.meetings.filter(meeting => meeting.id !== eventId),
+          },
         },
-      },
-    );
-    const newMeetings = await this.findOne({ date: curDate });
-    return newMeetings;
+      );
+
+      const date = newEvent.start.dateTime.slice(0, 10);
+      meeting = await this.findOne({ date });
+      if (meeting) {
+        await this.updateOne(
+          { date },
+          {
+            $set: {
+              date,
+              meetings: [...meeting.meetings, newEvent],
+            },
+          },
+        );
+        const newMeetings = await this.findOne({ date });
+        return newMeetings;
+      } else {
+        const meeting = new this({
+          date: newEvent.start.dateTime.slice(0, 10),
+          meetings: [newEvent],
+        });
+        await meeting.save();
+
+        const newMeetings = await this.findOne({ date: curDate });
+        return newMeetings;
+      }
+    } else {
+      const meeting = await this.findOne({ date: curDate });
+      await this.updateOne(
+        { date: curDate },
+        {
+          $set: {
+            date: curDate,
+            meetings: meeting.meetings.map(meeting =>
+              meeting.id === eventId ? newEvent : meeting,
+            ),
+          },
+        },
+      );
+
+      const newMeetings = await this.findOne({ date: curDate });
+      return newMeetings;
+    }
   }
 };
 
