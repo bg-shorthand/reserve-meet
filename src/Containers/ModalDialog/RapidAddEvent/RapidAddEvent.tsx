@@ -16,7 +16,6 @@ import {
   eventsState,
   floorsState,
   isOpenState,
-  newEventState,
   roomsState,
 } from 'state/state';
 
@@ -44,6 +43,57 @@ const RapidAddEvent = ({ className }: DefaultProps) => {
   };
   const setNewEventAndOpenAlertHandler: MouseEventHandler<HTMLButtonElement> = async () => {
     const res = await meetingApi.get(reserveDate);
+
+    if (!res.data.meetings) {
+      const temp = new Date();
+      const today =
+        temp.getFullYear() +
+        '-' +
+        addPrefix0(temp.getMonth() + 1) +
+        '-' +
+        addPrefix0(temp.getDate());
+      const curHour = addPrefix0(temp.getHours());
+      const curMin = addPrefix0(temp.getMinutes());
+
+      const posibleTimes =
+        curDate === today ? TIME_TABLE.filter(time => time > curHour + ':' + curMin) : TIME_TABLE;
+
+      const reserveRoom = rooms.find(v => v.floor === curFloor)?.roomsPerFloor[0];
+
+      if (posibleTimes.length) {
+        setAlertContent(() => ({
+          content: `${posibleTimes[0]}부터 30분간 ${reserveRoom}에 회의를 예약합니다`,
+          yesEvent: async () => {
+            const temp = await calendarApi.insertEvent({
+              calendarId: 'primary',
+              summary: reserveSummary,
+              description: '',
+              startDate: reserveDate,
+              startTime: posibleTimes[0],
+              endDate: reserveDate,
+              endTime:
+                posibleTimes[0].split(':')[1] === '00'
+                  ? posibleTimes[0].replace('00', '30')
+                  : +posibleTimes[0].split(':')[0] + 1 + ':00',
+              attendees: [],
+              floor: reserveFloor,
+              room: reserveRoom!,
+            });
+            if (temp && temp.data) {
+              const res = temp.data;
+              const newEvents = createEventsFromAsyncRes([res]);
+              setEvents(pre => [...pre, ...newEvents]);
+            }
+          },
+        }));
+      } else {
+        setAlertContent({ content: '예약 가능한 회의실이 없습니다', yesEvent: null });
+      }
+
+      setIsOpen(pre => ({ ...pre, alert: true, rapidAddEvent: false }));
+      return;
+    }
+
     const meetings = createEventsFromAsyncRes(res.data.meetings);
 
     if (meetings) {
