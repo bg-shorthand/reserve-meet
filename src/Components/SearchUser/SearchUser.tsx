@@ -1,4 +1,11 @@
-import { useState, ChangeEventHandler, KeyboardEventHandler, useEffect, useRef } from 'react';
+import {
+  useState,
+  ChangeEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useRef,
+  FocusEventHandler,
+} from 'react';
 import peopleApi from 'api/googleLib/peopleApi';
 import debounce from 'lodash/debounce';
 import { DefaultProps } from 'const/type';
@@ -63,6 +70,13 @@ const SearchUser = ({ className, setList }: Props) => {
       init();
     }
   };
+  const focusoutHandler: FocusEventHandler<HTMLInputElement> = () => {
+    const $input = ref.current as HTMLInputElement;
+    $input.value = '';
+    setSearchResert([]);
+    setSelectedIndex(0);
+    setIsFirstKeyUp(true);
+  };
   const init = () => {
     const $input = ref.current as HTMLInputElement;
     $input.value = '';
@@ -89,6 +103,7 @@ const SearchUser = ({ className, setList }: Props) => {
         placeholder="이름을 입력하세요"
         onChange={debounce(searchUserHandler, 200)}
         onKeyUp={keyboardHandler}
+        onBlur={focusoutHandler}
         autoComplete="off"
         ref={ref}
       />
