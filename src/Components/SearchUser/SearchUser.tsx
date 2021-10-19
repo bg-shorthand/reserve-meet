@@ -23,6 +23,15 @@ const SearchUser = ({ className, setList }: Props) => {
   const [isFirstKeyUp, setIsFirstKeyUp] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const init = () => {
+    const $input = ref.current as HTMLInputElement;
+    $input.value = '';
+    setSearchResert([]);
+    $input.focus();
+    setSelectedIndex(0);
+    setIsFirstKeyUp(true);
+  };
+
   const searchUserHandler: ChangeEventHandler<HTMLInputElement> = async e => {
     if (!e.target.value) {
       setSearchResert([]);
@@ -74,14 +83,6 @@ const SearchUser = ({ className, setList }: Props) => {
     const $input = ref.current as HTMLInputElement;
     $input.value = '';
     setSearchResert([]);
-    setSelectedIndex(0);
-    setIsFirstKeyUp(true);
-  };
-  const init = () => {
-    const $input = ref.current as HTMLInputElement;
-    $input.value = '';
-    setSearchResert([]);
-    $input.focus();
     setSelectedIndex(0);
     setIsFirstKeyUp(true);
   };
